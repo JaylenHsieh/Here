@@ -4,10 +4,8 @@ import android.support.v7.app.AppCompatActivity
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.widget.TextView
 import android.widget.Toast
 import com.hdu.newe.here.R
-import com.hdu.newe.here.page.base.BaseFragment
 import com.hdu.newe.here.page.main.profile.ProfileFragment
 import com.hdu.newe.here.page.main.profile.ProfilePresenter
 import com.jonnyhsia.uilib.widget.BottomNavigation
@@ -22,10 +20,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val navItems = Arrays.asList(
-                BottomNavigation.BottomNavItem("", R.mipmap.ic_eip),
-                BottomNavigation.BottomNavItem("", R.mipmap.ic_eip),
-                BottomNavigation.BottomNavItem("", R.mipmap.ic_eip),
-                BottomNavigation.BottomNavItem("", R.mipmap.ic_eip))
+                BottomNavigation.BottomNavItem("attendance", R.drawable.ic_attendance),
+                BottomNavigation.BottomNavItem("data", R.drawable.ic_data),
+                BottomNavigation.BottomNavItem("notification", R.drawable.ic_notification),
+                BottomNavigation.BottomNavItem("profile", R.drawable.ic_profile))
         bottomBar.setNavItems(navItems)
                 .addItemSelectListener { oldPos, pos, _ ->
                     showFragmentByPosition(oldPos, pos)

@@ -17,7 +17,9 @@
         android:layout_height="?actionBarSize"
         android:layout_gravity="bottom"
         android:elevation="6dp"
+        android:background="@color/white"
         app:primaryEnable="true"
         app:primaryIcon="@mipmap/ic_eip"/>
+        app:primaryIcon="@drawable/ic_leave"/>
 
 </FrameLayout>
