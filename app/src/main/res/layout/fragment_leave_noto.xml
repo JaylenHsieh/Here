@@ -10,7 +10,6 @@
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        app:navigationIcon="@drawable/ic_logout"
         app:title="申请请假条"/>
 
     <ScrollView
@@ -32,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/ripple_click_leave_noto"
                 android:clickable="true"
-                android:elevation="8dp"
+                android:elevation="2dp"
                 android:padding="16dp">
 
                 <TextView
@@ -127,10 +126,10 @@
                 android:id="@+id/view_noto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="0dp"
                 android:background="@drawable/ripple_click_leave_noto"
                 android:clickable="true"
-                android:elevation="8dp"
+                android:elevation="2dp"
                 android:padding="16dp">
 
                 <EditText
@@ -154,9 +153,9 @@
                 android:id="@+id/view_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="0dp"
                 android:background="@drawable/ripple_click_leave_noto"
-                android:elevation="8dp"
+                android:elevation="2dp"
                 android:padding="16dp">
 
 
@@ -227,8 +226,8 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/ripple_click_leave_noto"
                 android:clickable="true"
-                android:elevation="12dp"
                 android:padding="16dp"
+                android:elevation="4dp"
                 android:layout_marginBottom="50dp">
 
                 <TextView
