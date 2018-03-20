@@ -1,11 +1,13 @@
 package com.hdu.newe.here.page.main
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.widget.Toast
 import com.hdu.newe.here.R
+import com.hdu.newe.here.page.main.leavenoto.LeaveNotoActivity
 import com.hdu.newe.here.page.main.leavenoto.LeaveNotoFragment
 import com.hdu.newe.here.page.main.profile.ProfileFragment
 import com.hdu.newe.here.page.main.profile.ProfilePresenter
@@ -31,7 +33,8 @@ class MainActivity : AppCompatActivity() {
                     showFragmentByPosition(oldPos, pos)
                 }
                 .addPrimarySelectListener {
-
+                    val intent = Intent(this@MainActivity, LeaveNotoActivity::class.java)
+                    startActivity(intent)
                 }
                 .addItemReselectListener { pos, _ ->
                     Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show()
