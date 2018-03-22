@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import com.hdu.newe.here.R;
 import com.hdu.newe.here.biz.profile.Bean.FunctionBean;
-import com.hdu.newe.here.biz.profile.adapter.FunctionAdapter;
+import com.hdu.newe.here.page.main.profile.adapter.FunctionAdapter;
 import com.hdu.newe.here.page.base.BaseFragment;
 import com.hdu.newe.here.utils.MultiItemDivider;
 
@@ -55,17 +55,17 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     }
 
     private void initList(){
-        FunctionBean information = new FunctionBean(R.drawable.ic_people,"个人信息");
+        FunctionBean information = new FunctionBean(R.drawable.ic_people,"个人信息","personalData");
         mFunctionBeanList.add(information);
-        FunctionBean changePhone = new FunctionBean(R.drawable.ic_phone,"更换手机");
+        FunctionBean changePhone = new FunctionBean(R.drawable.ic_phone,"更换手机","changeNumber");
         mFunctionBeanList.add(changePhone);
-        FunctionBean checkVersion = new FunctionBean(R.drawable.ic_check,"版本检测");
+        FunctionBean checkVersion = new FunctionBean(R.drawable.ic_check,"版本检测","checkVersion");
         mFunctionBeanList.add(checkVersion);
-        FunctionBean feedBack = new FunctionBean(R.drawable.ic_feedback,"意见反馈");
+        FunctionBean feedBack = new FunctionBean(R.drawable.ic_feedback,"意见反馈","feedback");
         mFunctionBeanList.add(feedBack);
-        FunctionBean aboutUs = new FunctionBean(R.drawable.ic_about,"关于我们");
+        FunctionBean aboutUs = new FunctionBean(R.drawable.ic_about,"关于我们","aboutUs");
         mFunctionBeanList.add(aboutUs);
-        FunctionBean logout = new FunctionBean(R.drawable.ic_logout,"退出账号");
+        FunctionBean logout = new FunctionBean(R.drawable.ic_logout,"退出账号","Logout");
         mFunctionBeanList.add(logout);
     }
 }

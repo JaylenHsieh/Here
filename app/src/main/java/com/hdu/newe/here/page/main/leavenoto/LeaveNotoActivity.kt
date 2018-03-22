@@ -14,8 +14,6 @@ class LeaveNotoActivity : AppCompatActivity() {
                 .beginTransaction()
                 .add(R.id.container,LeaveNotoFragment())
                 .commit()
-
-
     }
 
 }

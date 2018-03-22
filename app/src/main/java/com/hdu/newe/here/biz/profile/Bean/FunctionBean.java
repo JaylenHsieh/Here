@@ -7,10 +7,12 @@ package com.hdu.newe.here.biz.profile.Bean;
 public class FunctionBean {
     private int imageId;
     private String name;
+    private String arg;
 
-    public FunctionBean(int imageId, String name) {
+    public FunctionBean(int imageId, String name,String arg) {
         this.imageId = imageId;
         this.name = name;
+        this.arg = arg;
     }
 
     public int getImageId() {
@@ -27,5 +29,13 @@ public class FunctionBean {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getArg() {
+        return arg;
+    }
+
+    public void setArg(String arg) {
+        this.arg = arg;
     }
 }

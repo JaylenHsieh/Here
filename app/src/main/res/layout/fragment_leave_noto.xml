@@ -184,13 +184,15 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
                 <TextView
-                    android:id="@+id/tv_start_time"
+                    android:id="@+id/startTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_marginTop="8dp"
                     android:paddingStart="8dp"
                     android:paddingEnd="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:text="2018年2月29日"
                     android:background="@drawable/bg_edittext"
                     android:textSize="14sp"
@@ -207,18 +209,20 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
                 <TextView
-                    android:id="@+id/tv_finish_time"
+                    android:id="@+id/finishTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_marginTop="8dp"
                     android:text="2018年2月30日"
                     android:paddingStart="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:paddingEnd="8dp"
                     android:background="@drawable/bg_edittext"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_start_time" />
+                    app:layout_constraintTop_toBottomOf="@+id/startTime" />
 
 
             </android.support.constraint.ConstraintLayout>

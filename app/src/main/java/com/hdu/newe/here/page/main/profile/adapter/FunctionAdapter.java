@@ -1,4 +1,4 @@
-package com.hdu.newe.here.biz.profile.adapter;
+package com.hdu.newe.here.page.main.profile.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
