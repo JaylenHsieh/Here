@@ -55,17 +55,17 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     }
 
     private void initList(){
-        FunctionBean information = new FunctionBean(R.drawable.ic_people,"个人信息","personalData");
+        FunctionBean information = new FunctionBean(R.drawable.ic_people,"个人信息");
         mFunctionBeanList.add(information);
-        FunctionBean changePhone = new FunctionBean(R.drawable.ic_phone,"更换手机","changeNumber");
+        FunctionBean changePhone = new FunctionBean(R.drawable.ic_phone,"更换手机");
         mFunctionBeanList.add(changePhone);
-        FunctionBean checkVersion = new FunctionBean(R.drawable.ic_check,"版本检测","checkVersion");
+        FunctionBean checkVersion = new FunctionBean(R.drawable.ic_check,"版本检测");
         mFunctionBeanList.add(checkVersion);
-        FunctionBean feedBack = new FunctionBean(R.drawable.ic_feedback,"意见反馈","feedback");
+        FunctionBean feedBack = new FunctionBean(R.drawable.ic_feedback,"意见反馈");
         mFunctionBeanList.add(feedBack);
-        FunctionBean aboutUs = new FunctionBean(R.drawable.ic_about,"关于我们","aboutUs");
+        FunctionBean aboutUs = new FunctionBean(R.drawable.ic_about,"关于我们");
         mFunctionBeanList.add(aboutUs);
-        FunctionBean logout = new FunctionBean(R.drawable.ic_logout,"退出账号","Logout");
+        FunctionBean logout = new FunctionBean(R.drawable.ic_logout,"退出账号");
         mFunctionBeanList.add(logout);
     }
 }
