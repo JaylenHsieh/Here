@@ -1,6 +1,8 @@
 package com.hdu.newe.here.page.main.profile.adapter;
 
+import android.content.Context;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,8 @@ import android.widget.Toast;
 
 import com.hdu.newe.here.R;
 import com.hdu.newe.here.biz.profile.Bean.FunctionBean;
+import com.hdu.newe.here.page.main.MainActivity;
+import com.hdu.newe.here.page.main.profile.EditPhoneNumberDialog;
 
 import java.util.List;
 
@@ -20,6 +24,7 @@ import java.util.List;
 
 public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.ViewHolder> {
     private List<FunctionBean> mFunctionBeanList;
+    private Context mContext;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         View functionView;
@@ -34,8 +39,9 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.ViewHo
         }
     }
 
-    public FunctionAdapter(List<FunctionBean> functionBeanList) {
+    public FunctionAdapter(List<FunctionBean> functionBeanList, Context context) {
         mFunctionBeanList = functionBeanList;
+        this.mContext = context;
     }
 
     @Override
@@ -52,14 +58,18 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.ViewHo
                         Toast.makeText(view.getContext(), "个人信息", Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
+                        EditPhoneNumberDialog editDialog = new EditPhoneNumberDialog();
+                        editDialog.show(((MainActivity)mContext).getSupportFragmentManager(),"editDialog");
                         Toast.makeText(view.getContext(), "更换手机", Toast.LENGTH_SHORT).show();
                         break;
                     case 2:
-                        Toast.makeText(view.getContext(), "这已经是一个船新的版本了", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(view.getContext(), "介已经系船新的版本了", Toast.LENGTH_SHORT).show();
                         break;
                     case 3:
+                        Toast.makeText(view.getContext(), "意见反馈", Toast.LENGTH_SHORT).show();
                         break;
                     case 4:
+                        Toast.makeText(view.getContext(), "通信工程新维工作室", Toast.LENGTH_SHORT).show();
                         break;
                     case 5:
                         Snackbar.make(view,"若要退出请前往设置清除数据",Snackbar.LENGTH_LONG).show();
@@ -82,4 +92,6 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.ViewHo
     public int getItemCount() {
         return mFunctionBeanList.size();
     }
+
+
 }

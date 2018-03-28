@@ -1,5 +1,6 @@
 package com.hdu.newe.here.page.main.profile;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -42,8 +43,8 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         recyclerView.setLayoutManager(layoutManager);
-        FunctionAdapter adapter = new FunctionAdapter(mFunctionBeanList);
-        MultiItemDivider itemDivider = new MultiItemDivider(getContext(), MultiItemDivider.Companion.getVERTICAL_LIST());
+        FunctionAdapter adapter = new FunctionAdapter(mFunctionBeanList,mContext);
+        MultiItemDivider itemDivider = new MultiItemDivider(mContext, MultiItemDivider.Companion.getVERTICAL_LIST());
 
         //最后一个item下没有分割线
         itemDivider.setDividerMode(MultiItemDivider.Companion.getINSIDE());
@@ -51,6 +52,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         itemDivider.clipToChildPadding(true);
         recyclerView.addItemDecoration(itemDivider);
         recyclerView.setAdapter(adapter);
+
         return view;
     }
 
