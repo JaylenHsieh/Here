@@ -15,6 +15,7 @@ import com.hdu.newe.here.R;
 import com.hdu.newe.here.biz.profile.Bean.FunctionBean;
 import com.hdu.newe.here.page.main.MainActivity;
 import com.hdu.newe.here.page.main.profile.EditPhoneNumberDialog;
+import com.hdu.newe.here.page.main.profile.FeedbackDialog;
 
 import java.util.List;
 
@@ -66,6 +67,8 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.ViewHo
                         Toast.makeText(view.getContext(), "介已经系船新的版本了", Toast.LENGTH_SHORT).show();
                         break;
                     case 3:
+                        FeedbackDialog feedbackDialog = new FeedbackDialog();
+                        feedbackDialog.show(((MainActivity)mContext).getSupportFragmentManager(),"feedbackDialog");
                         Toast.makeText(view.getContext(), "意见反馈", Toast.LENGTH_SHORT).show();
                         break;
                     case 4:
