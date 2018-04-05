@@ -19,14 +19,17 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven {
+            url "https://raw.github.com/bmob/bmob-android-sdk/master"
+        }
     }
-}
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
-}
+//    task clean(type: Delete) {
+//        delete rootProject.buildDir
+//    }
 
-ext {
-    supportLibraryVersion = "27.1.0"
-}
+    ext {
+        supportLibraryVersion = "27.1.0"
+    }
 
+}
