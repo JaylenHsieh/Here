@@ -8,9 +8,9 @@ import android.widget.Toast
 import cn.bmob.v3.Bmob
 import com.hdu.newe.here.R
 import com.hdu.newe.here.page.main.leavenoto.LeaveNotoActivity
-import com.hdu.newe.here.page.main.leavenoto.LeaveNotoFragment
 import com.hdu.newe.here.page.main.profile.ProfileFragment
 import com.hdu.newe.here.page.main.profile.ProfilePresenter
+import com.hdu.newe.here.page.main.variousdata.VariousDataFragment
 import com.jonnyhsia.uilib.widget.BottomNavigation
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
          */
         return when (pos) {
             0 -> ProfileFragment()
-            1 -> LeaveNotoFragment()
+            1 -> VariousDataFragment()
             3 -> Fragment()
             4 -> ProfileFragment().apply { bindPresenter(ProfilePresenter(this)) }
             else -> throw Exception("Position 不可以是 0,1,3,4 以外的数")
