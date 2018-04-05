@@ -1,17 +1,10 @@
 package com.hdu.newe.here.page.base;
 
 /**
- *
- * @author Jaylen Hsieh
- * @date 2017/11/19
+ * Created by Jaylen Hsieh on 2017/11/19.
  */
 
-public interface BaseView<T> {
-
-    void showProgressBar(String text);
-
-    void hideProgressBar();
-
+public interface BaseView<T extends BasePresenter> {
     void bindPresenter(T presenter);
 
     void showMessage(String text);
