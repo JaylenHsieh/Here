@@ -1,31 +1,26 @@
-package com.hdu.newe.here.page.main.leavenoto
+package com.hdu.newe.here.page.main.leaverequest
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
-import android.text.format.Time
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 
 import com.hdu.newe.here.R
 import com.hdu.newe.here.utils.AdvancedTimePicker
+import kotlinx.android.synthetic.main.fragment_leave_request.*
 
-import kotlinx.android.synthetic.main.fragment_leave_noto.*
-import java.text.SimpleDateFormat
 import java.util.*
-import java.util.regex.Pattern
 
 /**
  * A simple [Fragment] subclass.
  */
-class LeaveNotoFragment : Fragment(), View.OnClickListener {
+class LeaveRequestFragment : Fragment(), View.OnClickListener {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_leave_noto, container, false)
+        return inflater.inflate(R.layout.fragment_leave_request, container, false)
     }
 
     override fun onResume() {

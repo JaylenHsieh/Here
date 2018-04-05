@@ -1,4 +1,4 @@
-package com.hdu.newe.here.page.main.leavenoto
+package com.hdu.newe.here.page.main.leaverequest
 
 import com.hdu.newe.here.page.base.BasePresenter
 import com.hdu.newe.here.page.base.BaseView
@@ -7,7 +7,7 @@ import com.hdu.newe.here.page.base.BaseView
  * Created by Jaylen Hsieh on 2018/03/16.
  */
 
-interface LeaveNotoContract{
+interface LeaveRequestContract{
     interface Presenter : BasePresenter {
 
         fun inputReason(reason : String)

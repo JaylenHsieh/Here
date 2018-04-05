@@ -4,6 +4,6 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.hdu.newe.here.page.main.leavenoto.LeaveNotoActivity">
+    tools:context="com.hdu.newe.here.page.main.leaverequest.LeaveRequestActivity">
 
 </FrameLayout>

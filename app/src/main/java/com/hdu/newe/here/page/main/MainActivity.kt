@@ -5,11 +5,10 @@ import android.support.v7.app.AppCompatActivity
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
 import android.widget.Toast
 import com.hdu.newe.here.R
-import com.hdu.newe.here.page.main.leavenoto.LeaveNotoActivity
-import com.hdu.newe.here.page.main.leavenoto.LeaveNotoFragment
+import com.hdu.newe.here.page.main.leaverequest.LeaveRequestActivity
+import com.hdu.newe.here.page.main.leaverequest.LeaveRequestFragment
 import com.hdu.newe.here.page.main.profile.ProfileFragment
 import com.hdu.newe.here.page.main.profile.ProfilePresenter
 import com.jonnyhsia.uilib.widget.BottomNavigation
@@ -34,7 +33,7 @@ class MainActivity : AppCompatActivity() {
                     showFragmentByPosition(oldPos, pos)
                 }
                 .addPrimarySelectListener {
-                    val intent = Intent(this@MainActivity, LeaveNotoActivity::class.java)
+                    val intent = Intent(this@MainActivity, LeaveRequestActivity::class.java)
                     startActivity(intent)
                 }
                 .addItemReselectListener { pos, _ ->
@@ -78,7 +77,7 @@ class MainActivity : AppCompatActivity() {
          */
         return when (pos) {
             0 -> ProfileFragment()
-            1 -> LeaveNotoFragment()
+            1 -> LeaveRequestFragment()
             3 -> Fragment()
             4 -> ProfileFragment().apply { bindPresenter(ProfilePresenter(this)) }
             else -> throw Exception("Position 不可以是 0,1,3,4 以外的数")

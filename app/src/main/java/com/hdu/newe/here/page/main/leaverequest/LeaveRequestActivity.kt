@@ -1,18 +1,17 @@
-package com.hdu.newe.here.page.main.leavenoto
+package com.hdu.newe.here.page.main.leaverequest
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toolbar
 import com.hdu.newe.here.R
 
-class LeaveNotoActivity : AppCompatActivity() {
+class LeaveRequestActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_leave_noto)
+        setContentView(R.layout.activity_leave_request)
         supportFragmentManager
                 .beginTransaction()
-                .add(R.id.container,LeaveNotoFragment())
+                .add(R.id.container,LeaveRequestFragment())
                 .commit()
     }
 

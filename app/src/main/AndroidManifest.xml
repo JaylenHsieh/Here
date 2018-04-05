@@ -22,9 +22,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".page.main.leavenoto.LeaveNotoActivity"
+            android:name=".page.main.leaverequest.LeaveRequestActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".page.main.login.LoginActivity"></activity>
+        <activity android:name=".page.main.login.LoginActivity">
+
+        </activity>
     </application>
 
 </manifest>

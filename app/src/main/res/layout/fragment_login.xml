@@ -16,7 +16,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="256dp"
-        android:background="@drawable/ripple_click_leave_noto"
+        android:background="@drawable/ripple_click_leave_request"
         android:elevation="2dp"
         app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintTop_toTopOf="parent"
