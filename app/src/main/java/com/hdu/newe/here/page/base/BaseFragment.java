@@ -21,7 +21,7 @@ public class BaseFragment<T extends BasePresenter> extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter.onCreate();
+//        mPresenter.onCreate();
     }
 
     public void showMessage(String text) {
