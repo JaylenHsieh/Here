@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
+
 import cn.bmob.v3.Bmob
+import com.hdu.newe.here.LBSFragment
 import com.hdu.newe.here.R
 import com.hdu.newe.here.page.main.leaverequest.LeaveRequestActivity
 import com.hdu.newe.here.page.main.profile.ProfileFragment
@@ -80,7 +82,7 @@ class MainActivity : AppCompatActivity() {
          * 中间那个按钮是创建请假条的 Activity
          */
         return when (pos) {
-            0 -> ProfileFragment()
+            0 -> LBSFragment()
             1 -> VariousDataFragment()
             3 -> Fragment()
             4 -> ProfileFragment().apply { bindPresenter(ProfilePresenter(this)) }

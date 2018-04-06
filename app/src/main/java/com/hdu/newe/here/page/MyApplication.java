@@ -1,6 +1,9 @@
 package com.hdu.newe.here.page;
 
 import android.app.Application;
+import android.content.Context;
+
+import com.baidu.mapapi.SDKInitializer;
 
 /**
  *
@@ -17,6 +20,9 @@ public class MyApplication extends Application {
         super.onCreate();
 
         INSTANCE = this;
+        //初始化百度地图相关SDK
+        SDKInitializer.initialize(this);
         //TODO 各个页面的Model层在此初始化
     }
+
 }

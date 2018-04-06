@@ -14,5 +14,4 @@ public class ProfilePresenter extends BasePresenterImpl implements ProfileContra
         mView.bindPresenter(this);
     }
 
-
 }
