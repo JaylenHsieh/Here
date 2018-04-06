@@ -1,7 +1,6 @@
 package com.hdu.newe.here.app;
 
 import android.app.Application;
-import android.content.Context;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.hdu.newe.here.biz.ModelFactory;
@@ -24,7 +23,7 @@ public class MyApplication extends Application {
 
         INSTANCE = this;
 
-        //初始化Bmob
+        // Bmob
         Bmob.initialize(this, "5ba25b0b532dddb1661a151f38b84349");
 
         //初始化百度地图相关SDK
