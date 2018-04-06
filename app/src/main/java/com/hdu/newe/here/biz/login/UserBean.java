@@ -4,16 +4,16 @@ package com.hdu.newe.here.biz.login;
  * Created by Jaylen Hsieh on 2018/04/05.
  */
 public class UserBean {
-    private String studentNumber;
+    private String userNumber;
     private String imei;
     private boolean isTeacher;
 
-    public String getStudentNumber() {
-        return studentNumber;
+    public String getUserNumber() {
+        return userNumber;
     }
 
-    public void setStudentNumber(String studentNumber) {
-        this.studentNumber = studentNumber;
+    public void setUserNumber(String userNumber) {
+        this.userNumber = userNumber;
     }
 
     public String getImei() {

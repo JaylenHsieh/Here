@@ -1,6 +1,5 @@
 package com.hdu.newe.here.page.main.profile;
 
-import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,7 +12,7 @@ import android.view.ViewGroup;
 import com.hdu.newe.here.R;
 import com.hdu.newe.here.biz.profile.Bean.FunctionBean;
 import com.hdu.newe.here.page.main.profile.adapter.FunctionAdapter;
-import com.hdu.newe.here.page.base.BaseFragment;
+import com.hdu.newe.here.page.base.BaseFragmentK;
 import com.hdu.newe.here.utils.MultiItemDivider;
 
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ import java.util.List;
  * Created by Jaylen Hsieh on 2017/11/19.
  */
 
-public class ProfileFragment extends BaseFragment implements ProfileContract.View{
+public class ProfileFragmentK extends BaseFragmentK implements ProfileContract.View{
 
     ProfileContract.Presenter mPresenter;
 
