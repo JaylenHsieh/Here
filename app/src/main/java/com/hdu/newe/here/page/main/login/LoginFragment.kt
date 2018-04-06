@@ -9,10 +9,10 @@ import android.view.ViewGroup
 import com.hdu.newe.here.R
 import com.hdu.newe.here.app.AppError
 import com.hdu.newe.here.biz.login.UserBean
-import com.hdu.newe.here.page.base.BaseFragmentK
+import com.hdu.newe.here.page.base.BaseFragment
 
 
-class LoginFragmentK : BaseFragmentK <LoginContract.Presenter>(), LoginContract.View {
+class LoginFragment : BaseFragment<LoginContract.Presenter>(), LoginContract.View {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
