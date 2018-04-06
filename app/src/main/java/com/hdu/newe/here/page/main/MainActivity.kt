@@ -1,19 +1,21 @@
 package com.hdu.newe.here.page.main
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
-
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
+
+import cn.bmob.v3.Bmob
+import com.hdu.newe.here.LBSFragment
 import com.hdu.newe.here.R
 import com.hdu.newe.here.page.main.leaverequest.LeaveRequestActivity
-import com.hdu.newe.here.page.main.leaverequest.LeaveRequestFragment
 import com.hdu.newe.here.page.main.profile.ProfileFragment
 import com.hdu.newe.here.page.main.profile.ProfilePresenter
+import com.hdu.newe.here.page.main.variousdata.VariousDataFragment
 import com.jonnyhsia.uilib.widget.BottomNavigation
-import java.util.Arrays
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -21,6 +23,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
+
+        //初始化Bmob
+        Bmob.initialize(this, "5ba25b0b532dddb1661a151f38b84349")
+
         setContentView(R.layout.activity_main)
 
         val navItems = Arrays.asList(
@@ -76,8 +82,8 @@ class MainActivity : AppCompatActivity() {
          * 中间那个按钮是创建请假条的 Activity
          */
         return when (pos) {
-            0 -> ProfileFragment()
-            1 -> LeaveRequestFragment()
+            0 -> LBSFragment()
+            1 -> VariousDataFragment()
             3 -> Fragment()
             4 -> ProfileFragment().apply { bindPresenter(ProfilePresenter(this)) }
             else -> throw Exception("Position 不可以是 0,1,3,4 以外的数")
