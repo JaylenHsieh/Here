@@ -1,4 +1,4 @@
-package com.hdu.newe.here.bean;
+package com.hdu.newe.here.biz.user.entity;
 
 import java.net.URL;
 
@@ -15,16 +15,17 @@ public class UserBean extends BmobObject {
 
     /**
      * 用户数据表关键字
-     * 姓名 学号 班级 班级号 专业 学院 手机序列号 辅导员 头像
+     * 姓名 学/工号 班级 班级号 专业 学院 手机序列号 辅导员 是否为教师 头像
      */
     private String userName;
-    private String userStudentNum;
+    private String userNumber;
     private String userClass;
     private String userClassNum;
     private String userMajor;
     private String userCollege;
-    private String userIMEI;
     private String userInstructor;
+    private String imei;
+    private boolean isTeacher;
     private URL userAvatar;
 
     public String getUserName() {
@@ -35,12 +36,12 @@ public class UserBean extends BmobObject {
         this.userName = userName;
     }
 
-    public String getUserStudentNum() {
-        return userStudentNum;
+    public String getUserNumber() {
+        return userNumber;
     }
 
-    public void setUserStudentNum(String userStudentNum) {
-        this.userStudentNum = userStudentNum;
+    public void setUserNumber(String userNumber) {
+        this.userNumber = userNumber;
     }
 
     public String getUserClass() {
@@ -75,14 +76,6 @@ public class UserBean extends BmobObject {
         this.userCollege = userCollege;
     }
 
-    public String getUserIMEI() {
-        return userIMEI;
-    }
-
-    public void setUserIMEI(String userIMEI) {
-        this.userIMEI = userIMEI;
-    }
-
     public String getUserInstructor() {
         return userInstructor;
     }
@@ -95,7 +88,23 @@ public class UserBean extends BmobObject {
         return userAvatar;
     }
 
+    public String getImei() {
+        return imei;
+    }
+
+    public void setImei(String imei) {
+        this.imei = imei;
+    }
+
     public void setUserAvatar(URL userAvatar) {
         this.userAvatar = userAvatar;
+    }
+
+    public boolean isTeacher() {
+        return isTeacher;
+    }
+
+    public void setIsTeacher(boolean teacher) {
+        isTeacher = teacher;
     }
 }

@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 
 import com.hdu.newe.here.R;
 
@@ -13,6 +14,13 @@ import com.hdu.newe.here.R;
  * A simple {@link Fragment} subclass.
  */
 public class BuffDataFragment extends Fragment {
+
+    private CompoundButton.OnCheckedChangeListener mCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton button, boolean isChecked) {
+
+        }
+    };
 
 
     public BuffDataFragment() {

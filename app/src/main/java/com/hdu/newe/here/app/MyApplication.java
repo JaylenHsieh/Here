@@ -1,9 +1,12 @@
-package com.hdu.newe.here.page;
+package com.hdu.newe.here.app;
 
 import android.app.Application;
 import android.content.Context;
 
 import com.baidu.mapapi.SDKInitializer;
+import com.hdu.newe.here.biz.ModelFactory;
+
+import cn.bmob.v3.Bmob;
 
 /**
  *
@@ -20,9 +23,15 @@ public class MyApplication extends Application {
         super.onCreate();
 
         INSTANCE = this;
+
+        //初始化Bmob
+        Bmob.initialize(this, "5ba25b0b532dddb1661a151f38b84349");
+
         //初始化百度地图相关SDK
         SDKInitializer.initialize(this);
         //TODO 各个页面的Model层在此初始化
+
+        ModelFactory.init(this);
     }
 
 }

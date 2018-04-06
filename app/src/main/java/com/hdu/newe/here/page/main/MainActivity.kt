@@ -9,10 +9,13 @@ import android.widget.Toast
 import cn.bmob.v3.Bmob
 import com.hdu.newe.here.LBSFragment
 import com.hdu.newe.here.R
+import com.hdu.newe.here.biz.ModelFactory
 import com.hdu.newe.here.page.main.leaverequest.LeaveRequestActivity
+import com.hdu.newe.here.page.main.login.LoginActivity
 import com.hdu.newe.here.page.main.profile.ProfileFragment
 import com.hdu.newe.here.page.main.profile.ProfilePresenter
 import com.hdu.newe.here.page.main.variousdata.VariousDataFragment
+import com.hdu.newe.here.utils.navigate
 import com.jonnyhsia.uilib.widget.BottomNavigation
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
@@ -24,10 +27,23 @@ class MainActivity : AppCompatActivity() {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
 
-        //初始化Bmob
-        Bmob.initialize(this, "5ba25b0b532dddb1661a151f38b84349")
-
         setContentView(R.layout.activity_main)
+
+        if (ModelFactory.getUserInterface().isUserLogin.not()) {
+            val bundle = Bundle().apply {
+                putString("test", "lallala")
+                putInt("int", 1213123)
+            }
+
+
+            navigate(LoginActivity::class.java) {
+                putString("s", "dashjfdgshgf")
+            }
+
+
+            // startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        }
 
         val navItems = Arrays.asList(
                 BottomNavigation.BottomNavItem("attendance", R.drawable.ic_attendance),

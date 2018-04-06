@@ -1,6 +1,8 @@
 package com.hdu.newe.here.page.main.login
 
-import com.hdu.newe.here.biz.login.UserBean
+import com.hdu.newe.here.app.AppError
+import com.hdu.newe.here.biz.ModelFactory
+import com.hdu.newe.here.biz.user.UserInterface
 
 /**
  * Created by Jaylen Hsieh on 2018/04/05.
@@ -8,13 +10,11 @@ import com.hdu.newe.here.biz.login.UserBean
  */
 class LoginPresenter(
         private val view: LoginContract.View
-) : LoginContract.Presenter{
-    override fun clickLogin(user: UserBean) {
+) : LoginContract.Presenter {
 
-    }
+    private val loginInterface = ModelFactory.getUserInterface();
 
     override fun onCreate() {
-
     }
 
     override fun onStart() {
@@ -23,6 +23,22 @@ class LoginPresenter(
 
     override fun onResume() {
 
+    }
+
+    override fun clickLogin(userNumber: String, imei: String, isTeacher: Boolean) {
+        loginInterface.login(userNumber, imei, isTeacher, object : UserInterface.LoginLister {
+            override fun onStartLogin() {
+
+            }
+
+            override fun onLoginSuccess() {
+
+            }
+
+            override fun onFailure(error: String) {
+
+            }
+        })
     }
 
     override fun onDestroy() {

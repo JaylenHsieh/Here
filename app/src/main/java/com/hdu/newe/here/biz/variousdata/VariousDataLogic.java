@@ -5,6 +5,7 @@ import android.content.Context;
 import com.hdu.newe.here.bean.AttendanceDataBean;
 import com.hdu.newe.here.bean.BuffDataBean;
 import com.hdu.newe.here.bean.HistoryDataBean;
+import com.hdu.newe.here.biz.BaseLogic;
 
 import java.lang.ref.WeakReference;
 
@@ -18,21 +19,9 @@ import cn.bmob.v3.listener.QueryListener;
  * @date 2018/4/6
  */
 
-public class VariousDataLogic implements VariousDataInterface {
+public class VariousDataLogic extends BaseLogic implements VariousDataInterface {
 
-    private WeakReference<Context> mContextReference;
     private static VariousDataLogic INSTANCE;
-
-    public VariousDataLogic(Context context) {
-        mContextReference = new WeakReference<Context>(context);
-    }
-
-    public static VariousDataLogic getINSTANCE(Context context){
-        if (INSTANCE == null) {
-            INSTANCE = new VariousDataLogic(context);
-        }
-        return INSTANCE;
-    }
 
     /**
      * 获取出勤率的Model层数据逻辑
@@ -90,5 +79,16 @@ public class VariousDataLogic implements VariousDataInterface {
                 }
             }
         });
+    }
+
+    private static class Holder {
+        static VariousDataLogic INSTANCE = new VariousDataLogic();
+    }
+
+    public static VariousDataLogic getInstance(){
+        return Holder.INSTANCE;
+    }
+
+    private VariousDataLogic(){
     }
 }

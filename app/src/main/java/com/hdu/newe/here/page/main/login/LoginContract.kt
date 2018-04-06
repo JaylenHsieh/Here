@@ -1,7 +1,5 @@
 package com.hdu.newe.here.page.main.login
 
-import com.hdu.newe.here.app.AppError
-import com.hdu.newe.here.biz.login.UserBean
 import com.hdu.newe.here.page.base.BasePresenter
 import com.hdu.newe.here.page.base.BaseView
 
@@ -10,18 +8,12 @@ import com.hdu.newe.here.page.base.BaseView
  */
 interface LoginContract {
     interface Presenter : BasePresenter {
-        fun clickLogin(user: UserBean)
+
+        fun clickLogin(userNumber: String, imei: String, isTeacher: Boolean)
+
     }
 
     interface View : BaseView<Presenter>{
-        fun showLoggingIndicator()
-
-        fun showLoginSuccess(stuNumber: String)
-
-        fun showLoginFailure(description: String)
-
-        fun showLoginInfo(user: UserBean)
-
-        fun showFailureMessage(error: AppError)
+        fun render()
     }
 }

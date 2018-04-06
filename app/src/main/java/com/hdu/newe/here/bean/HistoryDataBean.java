@@ -1,5 +1,7 @@
 package com.hdu.newe.here.bean;
 
+import com.hdu.newe.here.biz.user.entity.UserBean;
+
 /**
  *
  * @author pope

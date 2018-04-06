@@ -2,6 +2,8 @@ package com.hdu.newe.here.biz;
 
 import android.content.Context;
 
+import com.hdu.newe.here.biz.user.UserInterface;
+import com.hdu.newe.here.biz.user.UserLogic;
 import com.hdu.newe.here.biz.variousdata.VariousDataInterface;
 import com.hdu.newe.here.biz.variousdata.VariousDataLogic;
 
@@ -15,14 +17,17 @@ import java.lang.ref.WeakReference;
 
 public class ModelFactory {
 
-    private static WeakReference<Context> mContextReference;
 
     public static void init(Context context) {
-        mContextReference = new WeakReference<Context>(context);
+        BaseLogic.initialize(context);
     }
 
     public static VariousDataInterface getVariousDataInterface(){
-        return VariousDataLogic.getINSTANCE(mContextReference.get());
+        return VariousDataLogic.getInstance();
+    }
+
+    public static UserInterface getUserInterface() {
+        return UserLogic.getInstance();
     }
 
 }
