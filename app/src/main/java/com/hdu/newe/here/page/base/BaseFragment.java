@@ -18,12 +18,6 @@ public class BaseFragment<T extends BasePresenter> extends Fragment {
 
     public T mPresenter;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-//        mPresenter.onCreate();
-    }
-
     public void showMessage(String text) {
         Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
     }
@@ -40,4 +34,38 @@ public class BaseFragment<T extends BasePresenter> extends Fragment {
         mPresenter = presenter;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mPresenter.onCreate();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mPresenter.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mPresenter.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.onStop();
+    }
 }

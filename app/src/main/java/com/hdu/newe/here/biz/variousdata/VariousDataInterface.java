@@ -17,7 +17,7 @@ public interface VariousDataInterface {
 
         /**
          * 出勤数据获取成功回调出勤数据的Bean
-         * @param attendanceDataBean
+         * @param attendanceDataBean 传入AttendanceDataBean
          */
         void onGetSuccess(AttendanceDataBean attendanceDataBean);
 
@@ -27,7 +27,7 @@ public interface VariousDataInterface {
 
         /**
          * 历史数据获取成功回调历史数据的Bean
-         * @param historyDataBean
+         * @param historyDataBean 传入HistoryDataBean
          */
         void onGetSuccess(HistoryDataBean historyDataBean);
     }
@@ -36,7 +36,7 @@ public interface VariousDataInterface {
 
         /**
          * 标识数据获取成功回调出标识数据的Bean
-         * @param buffDataBean
+         * @param buffDataBean 传入BuffDataBean
          */
         void onGetSuccess(BuffDataBean buffDataBean);
 

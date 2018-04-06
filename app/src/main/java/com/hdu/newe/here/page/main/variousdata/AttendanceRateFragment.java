@@ -11,6 +11,7 @@ import com.hdu.newe.here.R;
 
 /**
  * A simple {@link Fragment} subclass.
+ * @author pope
  */
 public class AttendanceRateFragment extends Fragment {
 

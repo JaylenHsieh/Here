@@ -22,16 +22,10 @@ import java.util.List;
  * Created by Jaylen Hsieh on 2017/11/19.
  */
 
-public class ProfileFragment extends BaseFragment implements ProfileContract.View{
-
-    ProfileContract.Presenter mPresenter;
+public class ProfileFragment extends BaseFragment<ProfileContract.Presenter>
+        implements ProfileContract.View{
 
     private List<FunctionBean> mFunctionBeanList = new ArrayList<>();
-
-    @Override
-    public void bindPresenter(ProfileContract.Presenter presenter) {
-        mPresenter = presenter;
-    }
 
     @Nullable
     @Override

@@ -5,13 +5,11 @@ import android.content.Context;
 import com.hdu.newe.here.bean.AttendanceDataBean;
 import com.hdu.newe.here.bean.BuffDataBean;
 import com.hdu.newe.here.bean.HistoryDataBean;
+import com.hdu.newe.here.page.base.BmobQueryListener;
+import com.hdu.newe.here.utils.BmobUtil;
 import com.hdu.newe.here.biz.BaseLogic;
 
 import java.lang.ref.WeakReference;
-
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.QueryListener;
 
 /**
  * Moael层业务逻辑 继承Model层接口并实现其中的方法
@@ -33,17 +31,15 @@ public class VariousDataLogic extends BaseLogic implements VariousDataInterface 
         //开始获取数据
         onAttendanceDataCallback.onStartGetData();
         //利用BmobQuery查询表中数据
-        BmobQuery<AttendanceDataBean> query = new BmobQuery<>();
-        query.getObject(objectId, new QueryListener<AttendanceDataBean>() {
+        BmobUtil.queryById(objectId, new BmobQueryListener<AttendanceDataBean>() {
             @Override
-            public void done(AttendanceDataBean attendanceDataBean, BmobException e) {
-                if (e == null){
-                    //登录成功 回调中传入出勤率数据
-                    onAttendanceDataCallback.onGetSuccess(attendanceDataBean);
-                }else{
-                    //登录失败 回调中传入错误信息
-                    onAttendanceDataCallback.onGetFailed(e.toString());
-                }
+            public void onSuccess(AttendanceDataBean data) {
+                onAttendanceDataCallback.onGetSuccess(data);
+            }
+
+            @Override
+            public void onFailed(String e) {
+                onAttendanceDataCallback.onGetFailed(e);
             }
         });
     }
@@ -52,15 +48,15 @@ public class VariousDataLogic extends BaseLogic implements VariousDataInterface 
     @Override
     public void getHistoryData(String objectId, final OnHistoryDataCallback onHistoryDataCallback) {
         onHistoryDataCallback.onStartGetData();
-        BmobQuery<HistoryDataBean> query = new BmobQuery<>();
-        query.getObject(objectId, new QueryListener<HistoryDataBean>() {
+        BmobUtil.queryById(objectId, new BmobQueryListener<HistoryDataBean>() {
             @Override
-            public void done(HistoryDataBean historyDataBean, BmobException e) {
-                if (e == null){
-                    onHistoryDataCallback.onGetSuccess(historyDataBean);
-                }else{
-                    onHistoryDataCallback.onGetFailed(e.toString());
-                }
+            public void onSuccess(HistoryDataBean data) {
+                onHistoryDataCallback.onGetSuccess(data);
+            }
+
+            @Override
+            public void onFailed(String e) {
+                onHistoryDataCallback.onGetFailed(e);
             }
         });
     }
@@ -68,15 +64,16 @@ public class VariousDataLogic extends BaseLogic implements VariousDataInterface 
     @Override
     public void getBuffData(String objectId, final OnBuffDataCallback onBuffDataCallback) {
         onBuffDataCallback.onStartGetData();
-        BmobQuery<BuffDataBean> query = new BmobQuery<>();
-        query.getObject(objectId, new QueryListener<BuffDataBean>() {
+
+        BmobUtil.queryById(objectId, new BmobQueryListener<BuffDataBean>() {
             @Override
-            public void done(BuffDataBean buffDataBean, BmobException e) {
-                if (e == null){
-                    onBuffDataCallback.onGetSuccess(buffDataBean);
-                }else{
-                    onBuffDataCallback.onGetFailed(e.toString());
-                }
+            public void onSuccess(BuffDataBean data) {
+                onBuffDataCallback.onGetSuccess(data);
+            }
+
+            @Override
+            public void onFailed(String e) {
+                onBuffDataCallback.onGetFailed(e);
             }
         });
     }

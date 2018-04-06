@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.TextureMapView;
@@ -40,9 +39,9 @@ public class LBSFragment extends Fragment {
     }
     @Override
     public void onDestroy() {
-        super.onDestroy();
         //在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
         mMapView.onDestroy();
+        super.onDestroy();
     }
     @Override
     public void onResume() {

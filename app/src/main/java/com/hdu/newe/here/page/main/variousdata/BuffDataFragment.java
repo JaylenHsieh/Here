@@ -9,11 +9,18 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
 import com.hdu.newe.here.R;
+import com.hdu.newe.here.bean.AttendanceDataBean;
+import com.hdu.newe.here.bean.BuffDataBean;
+import com.hdu.newe.here.bean.HistoryDataBean;
+import com.hdu.newe.here.page.base.BaseFragment;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
+ * @author pope
  */
-public class BuffDataFragment extends Fragment {
+public class BuffDataFragment extends BaseFragment<VariousDataContract.Presenter> implements VariousDataContract.View {
 
     private CompoundButton.OnCheckedChangeListener mCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
@@ -35,4 +42,18 @@ public class BuffDataFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_buff_data, container, false);
     }
 
+    @Override
+    public void loadAttendanceData(List<AttendanceDataBean> attendanceDataBeanList) {
+
+    }
+
+    @Override
+    public void loadHistoryData(List<HistoryDataBean> historyDataBeanList) {
+
+    }
+
+    @Override
+    public void loadBuffHistoryData(List<BuffDataBean> buffDataBeanList) {
+
+    }
 }

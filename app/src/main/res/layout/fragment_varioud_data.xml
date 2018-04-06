@@ -6,18 +6,26 @@
     android:layout_height="match_parent"
     tools:context="com.hdu.newe.here.page.main.variousdata.VariousDataFragment">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_data"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:paddingTop="24dp"
+        android:background="@drawable/bg_toolbar"
+        android:elevation="4dp"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager_variousdata"
-        android:layout_width="368dp"
-        android:layout_height="495dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_data">
 
         <android.support.v4.view.PagerTabStrip
             android:id="@+id/pagertitle"

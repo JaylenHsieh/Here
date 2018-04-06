@@ -33,7 +33,6 @@ public interface VariousDataContract {
         void loadHistoryData(List<HistoryDataBean> historyDataBeanList);
 
         void loadBuffHistoryData(List<BuffDataBean> buffDataBeanList);
-
     }
 
 }
