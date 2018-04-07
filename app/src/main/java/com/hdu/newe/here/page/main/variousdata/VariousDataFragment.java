@@ -3,6 +3,7 @@ package com.hdu.newe.here.page.main.variousdata;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
@@ -11,11 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hdu.newe.here.R;
-import com.hdu.newe.here.adapter.MyPagerAdapter;
 import com.hdu.newe.here.bean.AttendanceDataBean;
 import com.hdu.newe.here.bean.BuffDataBean;
 import com.hdu.newe.here.bean.HistoryDataBean;
 import com.hdu.newe.here.page.base.BaseFragment;
+import com.hdu.newe.here.page.main.variousdata.adapter.MyPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,16 +33,21 @@ import butterknife.Unbinder;
 public class VariousDataFragment extends BaseFragment<VariousDataContract.Presenter> implements VariousDataContract.View {
 
 
-    @BindView(R.id.viewpager_variousdata)
-    ViewPager viewpagerVariousdata;
     Unbinder unbinder;
     @BindView(R.id.toolbar_data)
     Toolbar toolbar;
+    @BindView(R.id.tablayout_various_data)
+    TabLayout tablayoutVariousData;
+    @BindView(R.id.viewpager_various_data)
+    ViewPager viewpagerVariousData;
 
-    private ViewPager viewPager;
-    private ArrayList<View> viewList;
-    private ArrayList<String> titleList;
+    private List<Fragment> fragmentList;
+    private List<String> titleList;
     private MyPagerAdapter myPagerAdapter;
+
+    private AttendanceRateFragment attendanceRateFragment;
+    private HistoryDataFragment historyDataFragment;
+    private BuffDataFragment buffDataFragment;
 
     public VariousDataFragment() {
         // Required empty public constructor
@@ -86,18 +92,27 @@ public class VariousDataFragment extends BaseFragment<VariousDataContract.Presen
 
     public void initTab() {
 
-        viewList = new ArrayList<>();
+        attendanceRateFragment = new AttendanceRateFragment();
+        historyDataFragment = new HistoryDataFragment();
+        buffDataFragment = new BuffDataFragment();
+
+        fragmentList = new ArrayList<>();
         titleList = new ArrayList<>();
         LayoutInflater layoutInflater = getLayoutInflater();
-        viewList.add(layoutInflater.inflate(R.layout.fragment_history_data, null, false));
-        viewList.add(layoutInflater.inflate(R.layout.fragment_attendance_rate, null, false));
-        viewList.add(layoutInflater.inflate(R.layout.fragment_buff_data, null, false));
+        fragmentList.add(historyDataFragment);
+        fragmentList.add(attendanceRateFragment);
+        fragmentList.add(buffDataFragment);
         titleList.add("历史数据");
         titleList.add("出勤数据");
         titleList.add("标识数据");
-        myPagerAdapter = new MyPagerAdapter(viewList, titleList);
-        viewpagerVariousdata.setAdapter(myPagerAdapter);
-        viewpagerVariousdata.setCurrentItem(1);
+        tablayoutVariousData.setTabMode(TabLayout.MODE_FIXED);
+        tablayoutVariousData.addTab(tablayoutVariousData.newTab().setText(titleList.get(0)));
+        tablayoutVariousData.addTab(tablayoutVariousData.newTab().setText(titleList.get(1)));
+        tablayoutVariousData.addTab(tablayoutVariousData.newTab().setText(titleList.get(2)));
+        myPagerAdapter = new MyPagerAdapter(getActivity().getSupportFragmentManager(),fragmentList,titleList);
+        viewpagerVariousData.setAdapter(myPagerAdapter);
+        tablayoutVariousData.setupWithViewPager(viewpagerVariousData);
+        viewpagerVariousData.setCurrentItem(1);
 
     }
 
