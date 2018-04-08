@@ -1,13 +1,14 @@
 package com.hdu.newe.here.biz.user;
 
 import com.hdu.newe.here.app.AppError;
+import com.hdu.newe.here.biz.user.entity.UserBean;
 
 /**
  * Created by Jaylen Hsieh on 2018/04/05.
  */
 public interface UserInterface {
 
-    interface LoginListener {
+    interface LoginLister {
 
         void onStartLogin();
 
@@ -24,7 +25,9 @@ public interface UserInterface {
      * 获取登录状态的监听，比如获得学号和 IMEI，是否是教师，填入 view 中
      */
     interface GetLoginInfoLister {
-
+        /**
+         * 成功
+         */
         void onSuccess();
 
         /**
@@ -38,7 +41,7 @@ public interface UserInterface {
      * 登录
      * @param lister 监听
      */
-    void login(String userNumber, String imei, boolean isTeacher, LoginListener lister);
+    void login(String userNumber, String imei, boolean isTeacher, LoginLister lister);
 
 
     /**

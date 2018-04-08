@@ -5,15 +5,13 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
-
-import com.hdu.newe.here.page.sign_on.LBSFragment
-
 import com.hdu.newe.here.R
 import com.hdu.newe.here.page.main.leaverequest.LeaveRequestActivity
 import com.hdu.newe.here.page.main.profile.ProfileFragment
 import com.hdu.newe.here.page.main.profile.ProfilePresenter
-import com.hdu.newe.here.page.main.variousdata.VariousDaraPresenter
+import com.hdu.newe.here.page.main.sign_on.LBSFragment
 import com.hdu.newe.here.page.main.variousdata.VariousDataFragment
+import com.hdu.newe.here.page.main.variousdata.VariousDataPresenter
 import com.jonnyhsia.uilib.widget.BottomNavigation
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
@@ -91,7 +89,7 @@ class MainActivity : AppCompatActivity() {
          */
         return when (pos) {
             0 -> LBSFragment()
-            1 -> VariousDataFragment().also { VariousDaraPresenter(it) }
+            1 -> VariousDataFragment().also { VariousDataPresenter(it) }
             3 -> Fragment()
             4 -> ProfileFragment().also { ProfilePresenter(it) }
             else -> throw Exception("Position 不可以是 0,1,3,4 以外的数")

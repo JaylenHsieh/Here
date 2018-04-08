@@ -1,8 +1,6 @@
 package com.hdu.newe.here.biz.variousdata;
 
-import com.hdu.newe.here.bean.AttendanceDataBean;
-import com.hdu.newe.here.bean.BuffDataBean;
-import com.hdu.newe.here.bean.HistoryDataBean;
+import com.hdu.newe.here.biz.variousdata.bean.VariousDataBean;
 import com.hdu.newe.here.page.base.BaseDataCallback;
 
 /**
@@ -13,39 +11,16 @@ import com.hdu.newe.here.page.base.BaseDataCallback;
 
 public interface VariousDataInterface {
 
-    interface OnAttendanceDataCallback extends BaseDataCallback {
+    interface OnVariousDataCallback extends BaseDataCallback {
 
         /**
          * 出勤数据获取成功回调出勤数据的Bean
-         * @param attendanceDataBean 传入AttendanceDataBean
+         * @param variousDataBean 传入VariousDataBean
          */
-        void onGetSuccess(AttendanceDataBean attendanceDataBean);
+        void onGetSuccess(VariousDataBean variousDataBean);
 
     }
 
-    interface OnHistoryDataCallback extends BaseDataCallback{
-
-        /**
-         * 历史数据获取成功回调历史数据的Bean
-         * @param historyDataBean 传入HistoryDataBean
-         */
-        void onGetSuccess(HistoryDataBean historyDataBean);
-    }
-
-    interface OnBuffDataCallback extends BaseDataCallback{
-
-        /**
-         * 标识数据获取成功回调出标识数据的Bean
-         * @param buffDataBean 传入BuffDataBean
-         */
-        void onGetSuccess(BuffDataBean buffDataBean);
-
-    }
-
-    void getAttendanceData(String objectId,OnAttendanceDataCallback onAttendanceDataCallback);
-
-    void getHistoryData(String objectId,OnHistoryDataCallback onHistoryDataCallback);
-
-    void getBuffData(String objectId,OnBuffDataCallback onBuffDataCallback);
+    void getAttendanceData(String objectId,OnVariousDataCallback onVariousDataCallback);
 
 }
