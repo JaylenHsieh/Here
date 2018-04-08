@@ -2,6 +2,7 @@ package com.hdu.newe.here.page.main.variousdata;
 
 import com.hdu.newe.here.biz.ModelFactory;
 import com.hdu.newe.here.biz.variousdata.VariousDataInterface;
+import com.hdu.newe.here.biz.variousdata.bean.VariousDataBean;
 import com.hdu.newe.here.page.base.BasePresenterImpl;
 
 /**
@@ -20,8 +21,32 @@ public class VariousDataPresenter extends BasePresenterImpl implements VariousDa
         view.bindPresenter(this);
     }
 
+
     @Override
     public void getVariousData(String objectId) {
+
+        variousDataInterface.getAttendanceData(objectId, new VariousDataInterface.OnVariousDataCallback() {
+
+            @Override
+            public void onGetSuccess(VariousDataBean variousDataBean) {
+                view.loadVariousData(variousDataBean);
+            }
+
+            @Override
+            public void onStartGetData() {
+                // 根据需要添加
+            }
+
+            @Override
+            public void onGetSuccess() {
+                // 根据需要添加
+            }
+
+            @Override
+            public void onGetFailed(String errorMsg) {
+                view.showMessage(errorMsg);
+            }
+        });
 
     }
 }

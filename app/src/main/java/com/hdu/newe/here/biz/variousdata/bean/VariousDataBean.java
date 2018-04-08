@@ -2,6 +2,8 @@ package com.hdu.newe.here.biz.variousdata.bean;
 
 import com.hdu.newe.here.biz.user.entity.UserBean;
 
+import java.util.List;
+
 /**
  * 数据模块的全部数据的Bean
  * @author pope
@@ -10,34 +12,34 @@ import com.hdu.newe.here.biz.user.entity.UserBean;
 
 public class VariousDataBean extends UserBean {
 
-    private String subjectName;
-    private Number attendanceRate;
+    private List<String> subjectName;
+    private List<Number> attendanceRate;
     private String buffType;
     /**
      * 历史数据表关键字：
      * 请假类型 请假原因 请假状态 警告标题 警告内容 手机更换历史标题 手机更换历史内容
      */
-    private String leaveRequestType;
-    private String leaveRequestReason;
-    private String leaveRequestState;
-    private String warningTitle;
-    private String warningContent;
-    private String changeHistoryTitle;
-    private String changeHistoryContent;
+    private List<String> leaveRequestType;
+    private List<String> leaveRequestReason;
+    private List<String> leaveRequestState;
+    private List<String> warningTitle;
+    private List<String> warningContent;
+    private List<String> changeHistoryTitle;
+    private List<String> changeHistoryContent;
 
-    public String getSubjectName() {
+    public List<String> getSubjectName() {
         return subjectName;
     }
 
-    public void setSubjectName(String subjectName) {
+    public void setSubjectName(List<String> subjectName) {
         this.subjectName = subjectName;
     }
 
-    public Number getAttendanceRate() {
+    public List<Number> getAttendanceRate() {
         return attendanceRate;
     }
 
-    public void setAttendanceRate(Number attendanceRate) {
+    public void setAttendanceRate(List<Number> attendanceRate) {
         this.attendanceRate = attendanceRate;
     }
 
@@ -49,59 +51,59 @@ public class VariousDataBean extends UserBean {
         this.buffType = buffType;
     }
 
-    public String getLeaveRequestType() {
+    public List<String> getLeaveRequestType() {
         return leaveRequestType;
     }
 
-    public void setLeaveRequestType(String leaveRequestType) {
+    public void setLeaveRequestType(List<String> leaveRequestType) {
         this.leaveRequestType = leaveRequestType;
     }
 
-    public String getLeaveRequestReason() {
+    public List<String> getLeaveRequestReason() {
         return leaveRequestReason;
     }
 
-    public void setLeaveRequestReason(String leaveRequestReason) {
+    public void setLeaveRequestReason(List<String> leaveRequestReason) {
         this.leaveRequestReason = leaveRequestReason;
     }
 
-    public String getLeaveRequestState() {
+    public List<String> getLeaveRequestState() {
         return leaveRequestState;
     }
 
-    public void setLeaveRequestState(String leaveRequestState) {
+    public void setLeaveRequestState(List<String> leaveRequestState) {
         this.leaveRequestState = leaveRequestState;
     }
 
-    public String getWarningTitle() {
+    public List<String> getWarningTitle() {
         return warningTitle;
     }
 
-    public void setWarningTitle(String warningTitle) {
+    public void setWarningTitle(List<String> warningTitle) {
         this.warningTitle = warningTitle;
     }
 
-    public String getWarningContent() {
+    public List<String> getWarningContent() {
         return warningContent;
     }
 
-    public void setWarningContent(String warningContent) {
+    public void setWarningContent(List<String> warningContent) {
         this.warningContent = warningContent;
     }
 
-    public String getChangeHistoryTitle() {
+    public List<String> getChangeHistoryTitle() {
         return changeHistoryTitle;
     }
 
-    public void setChangeHistoryTitle(String changeHistoryTitle) {
+    public void setChangeHistoryTitle(List<String> changeHistoryTitle) {
         this.changeHistoryTitle = changeHistoryTitle;
     }
 
-    public String getChangeHistoryContent() {
+    public List<String> getChangeHistoryContent() {
         return changeHistoryContent;
     }
 
-    public void setChangeHistoryContent(String changeHistoryContent) {
+    public void setChangeHistoryContent(List<String> changeHistoryContent) {
         this.changeHistoryContent = changeHistoryContent;
     }
 }

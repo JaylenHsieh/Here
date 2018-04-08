@@ -15,11 +15,12 @@ import com.hdu.newe.here.R;
  */
 public class HistoryDataFragment extends Fragment {
 
-
-    public HistoryDataFragment() {
-        // Required empty public constructor
+    public static HistoryDataFragment newInstance(){
+        HistoryDataFragment fragment = new HistoryDataFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

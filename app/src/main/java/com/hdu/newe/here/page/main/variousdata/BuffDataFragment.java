@@ -6,28 +6,22 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 
 import com.hdu.newe.here.R;
 
 /**
  * A simple {@link Fragment} subclass.
+ *
  * @author pope
  */
-public class BuffDataFragment extends Fragment{
+public class BuffDataFragment extends Fragment {
 
-    private CompoundButton.OnCheckedChangeListener mCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(CompoundButton button, boolean isChecked) {
-
-        }
-    };
-
-
-    public BuffDataFragment() {
-        // Required empty public constructor
+    public static BuffDataFragment newInstance(){
+        BuffDataFragment fragment = new BuffDataFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

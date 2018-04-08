@@ -47,11 +47,6 @@ public class VariousDataFragment extends BaseFragment<VariousDataContract.Presen
     private HistoryDataFragment historyDataFragment;
     private BuffDataFragment buffDataFragment;
 
-    public VariousDataFragment() {
-        // Required empty public constructor
-    }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -62,6 +57,13 @@ public class VariousDataFragment extends BaseFragment<VariousDataContract.Presen
         initToolbar();
 
         return view;
+    }
+
+    public static VariousDataFragment newInstance(){
+        VariousDataFragment fragment = new VariousDataFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     /**
@@ -113,5 +115,19 @@ public class VariousDataFragment extends BaseFragment<VariousDataContract.Presen
     @Override
     public void loadVariousData(VariousDataBean variousDataBean) {
 
+        if (attendanceRateFragment == null){
+            attendanceRateFragment = AttendanceRateFragment.newInstance();
+        }
+        if (historyDataFragment == null){
+            historyDataFragment = HistoryDataFragment.newInstance();
+        }
+        if (buffDataFragment == null){
+            buffDataFragment = BuffDataFragment.newInstance();
+        }
+        attendanceRateFragment.loadAttendanceRate(variousDataBean.getSubjectName(),variousDataBean.getAttendanceRate());
+
     }
+
+
+
 }

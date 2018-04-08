@@ -5,13 +5,13 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
-import com.hdu.newe.here.LBSFragment
 import com.hdu.newe.here.R
 import com.hdu.newe.here.page.main.leaverequest.LeaveRequestActivity
 import com.hdu.newe.here.page.main.profile.ProfileFragment
 import com.hdu.newe.here.page.main.profile.ProfilePresenter
-import com.hdu.newe.here.page.main.variousdata.VariousDataPresenter
+import com.hdu.newe.here.page.main.sign_on.LBSFragment
 import com.hdu.newe.here.page.main.variousdata.VariousDataFragment
+import com.hdu.newe.here.page.main.variousdata.VariousDataPresenter
 import com.jonnyhsia.uilib.widget.BottomNavigation
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
