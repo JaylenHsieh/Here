@@ -10,7 +10,7 @@ import com.hdu.newe.here.R
 import com.hdu.newe.here.page.main.leaverequest.LeaveRequestActivity
 import com.hdu.newe.here.page.main.profile.ProfileFragment
 import com.hdu.newe.here.page.main.profile.ProfilePresenter
-import com.hdu.newe.here.page.main.variousdata.VariousDaraPresenter
+import com.hdu.newe.here.page.main.variousdata.VariousDataPresenter
 import com.hdu.newe.here.page.main.variousdata.VariousDataFragment
 import com.jonnyhsia.uilib.widget.BottomNavigation
 import kotlinx.android.synthetic.main.activity_main.*
@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity() {
          */
         return when (pos) {
             0 -> LBSFragment()
-            1 -> VariousDataFragment().also { VariousDaraPresenter(it) }
+            1 -> VariousDataFragment().also { VariousDataPresenter(it) }
             3 -> Fragment()
             4 -> ProfileFragment().also { ProfilePresenter(it) }
             else -> throw Exception("Position 不可以是 0,1,3,4 以外的数")

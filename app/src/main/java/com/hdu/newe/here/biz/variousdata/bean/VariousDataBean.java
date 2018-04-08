@@ -1,15 +1,18 @@
-package com.hdu.newe.here.bean;
+package com.hdu.newe.here.biz.variousdata.bean;
 
 import com.hdu.newe.here.biz.user.entity.UserBean;
 
 /**
- *
+ * 数据模块的全部数据的Bean
  * @author pope
- * @date 2018/4/5
+ * @date 2018/4/8
  */
 
-public class HistoryDataBean extends UserBean {
+public class VariousDataBean extends UserBean {
 
+    private String subjectName;
+    private Number attendanceRate;
+    private String buffType;
     /**
      * 历史数据表关键字：
      * 请假类型 请假原因 请假状态 警告标题 警告内容 手机更换历史标题 手机更换历史内容
@@ -21,6 +24,30 @@ public class HistoryDataBean extends UserBean {
     private String warningContent;
     private String changeHistoryTitle;
     private String changeHistoryContent;
+
+    public String getSubjectName() {
+        return subjectName;
+    }
+
+    public void setSubjectName(String subjectName) {
+        this.subjectName = subjectName;
+    }
+
+    public Number getAttendanceRate() {
+        return attendanceRate;
+    }
+
+    public void setAttendanceRate(Number attendanceRate) {
+        this.attendanceRate = attendanceRate;
+    }
+
+    public String getBuffType() {
+        return buffType;
+    }
+
+    public void setBuffType(String buffType) {
+        this.buffType = buffType;
+    }
 
     public String getLeaveRequestType() {
         return leaveRequestType;

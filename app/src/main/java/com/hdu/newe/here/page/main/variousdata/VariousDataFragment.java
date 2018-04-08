@@ -12,9 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hdu.newe.here.R;
-import com.hdu.newe.here.bean.AttendanceDataBean;
-import com.hdu.newe.here.bean.BuffDataBean;
-import com.hdu.newe.here.bean.HistoryDataBean;
+import com.hdu.newe.here.biz.variousdata.bean.VariousDataBean;
 import com.hdu.newe.here.page.base.BaseFragment;
 import com.hdu.newe.here.page.main.variousdata.adapter.MyPagerAdapter;
 
@@ -66,21 +64,6 @@ public class VariousDataFragment extends BaseFragment<VariousDataContract.Presen
         return view;
     }
 
-    @Override
-    public void loadAttendanceData(List<AttendanceDataBean> attendanceDataBeanList) {
-
-    }
-
-    @Override
-    public void loadHistoryData(List<HistoryDataBean> historyDataBeanList) {
-
-    }
-
-    @Override
-    public void loadBuffHistoryData(List<BuffDataBean> buffDataBeanList) {
-
-    }
-
     /**
      * 初始化Toolbar
      */
@@ -109,7 +92,7 @@ public class VariousDataFragment extends BaseFragment<VariousDataContract.Presen
         tablayoutVariousData.addTab(tablayoutVariousData.newTab().setText(titleList.get(0)));
         tablayoutVariousData.addTab(tablayoutVariousData.newTab().setText(titleList.get(1)));
         tablayoutVariousData.addTab(tablayoutVariousData.newTab().setText(titleList.get(2)));
-        myPagerAdapter = new MyPagerAdapter(getActivity().getSupportFragmentManager(),fragmentList,titleList);
+        myPagerAdapter = new MyPagerAdapter(getActivity().getSupportFragmentManager(), fragmentList, titleList);
         viewpagerVariousData.setAdapter(myPagerAdapter);
         tablayoutVariousData.setupWithViewPager(viewpagerVariousData);
         viewpagerVariousData.setCurrentItem(1);
@@ -120,5 +103,15 @@ public class VariousDataFragment extends BaseFragment<VariousDataContract.Presen
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    /**
+     * 加载各种数据的V层逻辑
+     *
+     * @param variousDataBean 数据bean
+     */
+    @Override
+    public void loadVariousData(VariousDataBean variousDataBean) {
+
     }
 }
