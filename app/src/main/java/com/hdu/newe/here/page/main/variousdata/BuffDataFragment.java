@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.RadioGroup;
 
 import com.hdu.newe.here.R;
 import com.hdu.newe.here.bean.AttendanceDataBean;
@@ -38,6 +39,18 @@ public class BuffDataFragment extends BaseFragment<VariousDataContract.Presenter
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        RadioGroup group = null;
+        assert group!= null;
+
+        group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+
+            }
+        });
+
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_buff_data, container, false);
     }

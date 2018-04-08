@@ -23,7 +23,7 @@ public class MyApplication extends Application {
 
         INSTANCE = this;
 
-        // Bmob
+        //初始化Bmob
         Bmob.initialize(this, "5ba25b0b532dddb1661a151f38b84349");
 
         //初始化百度地图相关SDK

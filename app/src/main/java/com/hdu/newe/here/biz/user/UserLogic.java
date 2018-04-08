@@ -21,20 +21,20 @@ public class UserLogic extends BaseLogic implements UserInterface {
 
 
     @Override
-    public void login(final String userNumber, final String imei, final boolean isTeacher, final LoginLister lister) {
+    public void login(final String userNumber, final String imei, final boolean isTeacher, final LoginListener listener) {
         BmobQuery<UserBean> bmobQuery = new BmobQuery<>();
         bmobQuery.addWhereEqualTo("userNumber", userNumber);
         bmobQuery.findObjects(new FindListener<UserBean>() {
             @Override
             public void done(List<UserBean> list, BmobException e) {
                 if (e != null) {
-                    lister.onFailure("");
+                    listener.onFailure("");
                     return;
                 }
 
                 if (list == null || list.isEmpty()) {
                     // register
-                    register(userNumber, imei, isTeacher, lister);
+                    register(userNumber, imei, isTeacher, listener);
                     return;
                 }
 
@@ -44,12 +44,12 @@ public class UserLogic extends BaseLogic implements UserInterface {
                 userBean.setIsTeacher(isTeacher);
                 saveLoginInfo(userBean);
 
-                lister.onLoginSuccess();
+                listener.onLoginSuccess();
             }
         });
     }
 
-    private void register(String userNumber, String imei, boolean isTeacher, final LoginLister listener) {
+    private void register(String userNumber, String imei, boolean isTeacher, final LoginListener listener) {
         final UserBean userBean = new UserBean();
         userBean.setUserNumber(userNumber);
         userBean.setImei(imei);
