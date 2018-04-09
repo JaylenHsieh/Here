@@ -15,5 +15,6 @@ interface LoginContract {
 
     interface View : BaseView<Presenter>{
         fun render()
+
     }
 }
