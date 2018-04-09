@@ -1,8 +1,12 @@
 package com.hdu.newe.here.page.main.variousdata;
 
-import com.hdu.newe.here.biz.variousdata.bean.VariousDataBean;
+import com.hdu.newe.here.bean.AttendanceDataBean;
+import com.hdu.newe.here.bean.BuffDataBean;
+import com.hdu.newe.here.bean.HistoryDataBean;
 import com.hdu.newe.here.page.base.BasePresenter;
 import com.hdu.newe.here.page.base.BaseView;
+
+import java.util.List;
 
 /**
  *
@@ -14,13 +18,21 @@ public interface VariousDataContract {
 
     interface Presenter extends BasePresenter{
 
-        void getVariousData(String objectId);
+        void getAttendanceData(String objectId);
+
+        void getHistoryData(String objectId);
+
+        void getBuffData(String objectId);
 
     }
 
     interface View extends BaseView<Presenter> {
 
-        void loadVariousData(VariousDataBean variousDataBean);
+        void loadAttendanceData(List<AttendanceDataBean> attendanceDataBeanList);
+
+        void loadHistoryData(List<HistoryDataBean> historyDataBeanList);
+
+        void loadBuffHistoryData(List<BuffDataBean> buffDataBeanList);
     }
 
 }

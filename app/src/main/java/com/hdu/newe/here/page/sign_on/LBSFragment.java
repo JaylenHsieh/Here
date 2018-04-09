@@ -1,4 +1,4 @@
-package com.hdu.newe.here.page.main.sign_on;
+package com.hdu.newe.here.page.sign_on;
 
 
 import android.hardware.Sensor;
@@ -6,12 +6,14 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.RadioGroup;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -19,6 +21,7 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
+import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
@@ -47,8 +50,8 @@ public class LBSFragment extends Fragment {
     public MyLocationListenner myListener = new MyLocationListenner();
     private MyLocationConfiguration.LocationMode mCurrentMode;
     BitmapDescriptor mCurrentMarker;
-    private static final int ACCURACY_CIRCLE_FILL_COLOR = 0xAAFFFF88;
-    private static final int ACCURACY_CIRCLE_STROKE_COLOR = 0xAA00FF00;
+    private static final int accuracyCircleFillColor = 0xAAFFFF88;
+    private static final int accuracyCircleStrokeColor = 0xAA00FF00;
     private SensorManager mSensorManager;
     private Double lastX = 0.0;
     private int mCurrentDirection = 0;
@@ -63,30 +66,11 @@ public class LBSFragment extends Fragment {
     private MyLocationData locData;
     private float direction;
 
-    
-    private void initLocation(){
-        LocationClientOption option = new LocationClientOption();
-        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy
-        );//可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
-        option.setCoorType("bd09ll");//可选，默认gcj02，设置返回的定位结果坐标系
-        int span=1000;
-        option.setScanSpan(span);//可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
-        option.setIsNeedAddress(true);//可选，设置是否需要地址信息，默认不需要
-        option.setOpenGps(true);//可选，默认false,设置是否使用gps
-        option.setLocationNotify(true);//可选，默认false，设置是否当gps有效时按照1S1次频率输出GPS结果
-        option.setIsNeedLocationDescribe(true);//可选，默认false，设置是否需要位置语义化结果，可以在BDLocation.getLocationDescribe里得到，结果类似于“在北京天安门附近”
-        option.setIsNeedLocationPoiList(true);//可选，默认false，设置是否需要POI结果，可以在BDLocation.getPoiList里得到
-        option.setIgnoreKillProcess(false);//可选，默认true，定位SDK内部是一个SERVICE，并放到了独立进程，设置是否在stop的时候杀死这个进程，默认不杀死
-        option.SetIgnoreCacheException(false);//可选，默认false，设置是否收集CRASH信息，默认收集
-        option.setEnableSimulateGps(false);//可选，默认false，设置是否需要过滤gps仿真结果，默认需要
-        mLocClient.setLocOption(option);
-    }
     @Override
-    public View onCreateView( LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_lbs, container, false);
-        View view1 = inflater.inflate(R.layout.fragment_lbs, container, false);
         //mMapView = view.findViewById(R.id.bmapView);
         //mmMapView = view.findViewById(R.id.mTexturemap);
         //mBaiduMap = mmMapView.getMap();
@@ -132,34 +116,34 @@ public class LBSFragment extends Fragment {
         };
 
         requestLocButton.setOnClickListener(btnClickListener);
-//
-//        RadioGroup group = view.findViewById(R.id.radioGroup);
-//        radioButtonListener = new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton button, boolean checkedId) {
-//                if (button.getId() == R.id.defaulticon) {
-//                    // 传入null则，恢复默认图标
-//                    mCurrentMarker = null;
-//                    mBaiduMap
-//                            .setMyLocationConfiguration(new MyLocationConfiguration(
-//                                    mCurrentMode, true, null));
-//                }
-//                if (button.getId() == R.id.customicon) {
-//                    // 修改为自定义marker
-//                    mCurrentMarker = BitmapDescriptorFactory
-//                            .fromResource(R.drawable.icon_geo);
-//                    mBaiduMap
-//                            .setMyLocationConfiguration(new MyLocationConfiguration(
-//                                    mCurrentMode, true, mCurrentMarker,
-//                                    ACCURACY_CIRCLE_FILL_COLOR, ACCURACY_CIRCLE_STROKE_COLOR));
-//                }
-//            }
-//        };
-//        group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-//            }
-//        });
+
+        RadioGroup group = view.findViewById(R.id.radioGroup);
+        radioButtonListener = new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton button, boolean checkedId) {
+                if (button.getId() == R.id.defaulticon) {
+                    // 传入null则，恢复默认图标
+                    mCurrentMarker = null;
+                    mBaiduMap
+                            .setMyLocationConfiguration(new MyLocationConfiguration(
+                                    mCurrentMode, true, null));
+                }
+                if (button.getId() == R.id.customicon) {
+                    // 修改为自定义marker
+                    mCurrentMarker = BitmapDescriptorFactory
+                            .fromResource(R.drawable.icon_geo);
+                    mBaiduMap
+                            .setMyLocationConfiguration(new MyLocationConfiguration(
+                                    mCurrentMode, true, mCurrentMarker,
+                                    accuracyCircleFillColor, accuracyCircleStrokeColor));
+                }
+            }
+        };
+        group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+            }
+        });
 
 
         // 地图初始化
@@ -170,22 +154,27 @@ public class LBSFragment extends Fragment {
         // 定位初始化
         mLocClient = new LocationClient(getActivity().getApplicationContext());
         mLocClient.registerLocationListener(myListener);
+        LocationClientOption option = new LocationClientOption();
+        option.setOpenGps(true); // 打开gps
+        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);//可选，设置定位模式，默认高精度
+        //LocationMode.Hight_Accuracy：高精度；
+        //LocationMode. Battery_Saving：低功耗；
+        //LocationMode. Device_Sensors：仅使用设备；
+        option.setCoorType("bd09ll"); // 设置坐标类型
+        //gcj02：国测局坐标；
+        //bd09ll：百度经纬度坐标；
+        //bd09：百度墨卡托坐标；
+        //海外地区定位，无需设置坐标类型，统一返回wgs84类型坐标
+        option.setScanSpan(1000);//可选，设置发起定位请求的间隔，int类型，单位ms
+        //如果设置为0，则代表单次定位，即仅定位一次，默认为0
+        //如果设置非0，需设置1000ms以上才有效
 
-        initLocation();//初始化
+        mLocClient.setLocOption(option);
         mLocClient.start();
         mLocClient.requestLocation();
 
-//        ImageView imageView = view.findViewById(R.id.Image_sign_on);
-//        imageView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                Fragment fragment = new SignOnFragment();
-//                fragmentManager.beginTransaction().replace(R.id.fragment_sign_on_dialog,fragment).commit();
-//            }
-//        });
-        //SignOnFragment signOnFragment = new SignOnFragment();
-        //signOnFragment.show(getFragmentManager(),"SignOnFragment");
+        SignOnFragment signOnFragment = new SignOnFragment();
+        signOnFragment.show(getFragmentManager(),"SignOnFragment");
         return view;
 
     }

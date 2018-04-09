@@ -10,33 +10,30 @@
         android:id="@+id/toolbar_data"
         android:layout_width="0dp"
         android:layout_height="80dp"
+        android:paddingTop="24dp"
         android:background="@drawable/bg_toolbar"
         android:elevation="4dp"
-        android:paddingTop="24dp"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tablayout_various_data"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:tabIndicatorColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_data">
-
-    </android.support.design.widget.TabLayout>
-
     <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager_various_data"
+        android:id="@+id/viewpager_variousdata"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tablayout_various_data">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_data">
+
+        <android.support.v4.view.PagerTabStrip
+            android:id="@+id/pagertitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top">
+
+        </android.support.v4.view.PagerTabStrip>
 
     </android.support.v4.view.ViewPager>
 
