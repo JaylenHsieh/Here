@@ -21,7 +21,7 @@ class EditPhoneNumberDialog: DialogFragment(){
         val inflate = activity?.layoutInflater?.inflate(R.layout.fragment_edit_phone_number_dialog, null, false)
         return builder.setView(inflate)
                 .setCancelable(true)
-                .setMessage("请输入新的手机号")
+                .setMessage("申请更换手机")
                 .setPositiveButton("提交") { dialog, which ->
                 }.setNegativeButton("取消") { dialog, which ->
                 }.create()

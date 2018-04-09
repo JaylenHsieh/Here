@@ -5,4 +5,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="ask_for_leave">申请假条</string>
     <string name="edit_phone_number">请输入新的手机号</string>
+    <string name="caution_change_phone">注意：一个学期仅可更换一次手机，请谨慎操作。&#x000A;新手机串号在拨号界面输入*#06#获得，双卡手机为SIM卡1的IMEI。</string>
 </resources>

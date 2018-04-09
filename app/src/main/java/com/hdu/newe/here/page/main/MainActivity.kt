@@ -27,15 +27,15 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
 
-//        if (ModelFactory.getUserInterface().isUserLogin.not()) {
-//            val bundle = Bundle().apply {
-//                putString("test", "lallala")
-//                putInt("int", 1213123)
-//            }
-//
-//            startActivity(Intent(this, LoginActivity::class.java))
-//            finish()
-//        }
+        if (ModelFactory.getUserInterface().isUserLogin.not()) {
+            val bundle = Bundle().apply {
+                putString("test", "lallala")
+                putInt("int", 1213123)
+            }
+
+            startActivity(Intent(this, LoginActivity::class.java))
+            //finish()
+        }
 
         val navItems = Arrays.asList(
                 BottomNavigation.BottomNavItem("attendance", R.drawable.ic_attendance),
