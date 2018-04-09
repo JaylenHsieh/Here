@@ -10,5 +10,12 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        val fragment = LoginFragment()
+        fragment.also { LoginPresenter(it) }
+        supportFragmentManager
+                .beginTransaction()
+                .add(R.id.container,fragment)
+                .commit()
+
     }
 }

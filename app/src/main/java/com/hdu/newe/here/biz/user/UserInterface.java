@@ -1,14 +1,13 @@
 package com.hdu.newe.here.biz.user;
 
 import com.hdu.newe.here.app.AppError;
-import com.hdu.newe.here.biz.user.entity.UserBean;
 
 /**
  * Created by Jaylen Hsieh on 2018/04/05.
  */
 public interface UserInterface {
 
-    interface LoginLister {
+    interface LoginListener {
 
         void onStartLogin();
 
@@ -39,9 +38,9 @@ public interface UserInterface {
 
     /**
      * 登录
-     * @param lister 监听
+     * @param listener 监听
      */
-    void login(String userNumber, String imei, boolean isTeacher, LoginLister lister);
+    void login(String userNumber, String imei, boolean isTeacher, LoginListener listener);
 
 
     /**

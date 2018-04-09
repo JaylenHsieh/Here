@@ -6,7 +6,9 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.hdu.newe.here.R
+import com.hdu.newe.here.biz.ModelFactory
 import com.hdu.newe.here.page.main.leaverequest.LeaveRequestActivity
+import com.hdu.newe.here.page.main.login.LoginActivity
 import com.hdu.newe.here.page.main.profile.ProfileFragment
 import com.hdu.newe.here.page.main.profile.ProfilePresenter
 import com.hdu.newe.here.page.main.sign_on.LBSFragment
@@ -31,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 //                putInt("int", 1213123)
 //            }
 //
-//            // startActivity(Intent(this, LoginActivity::class.java))
+//            startActivity(Intent(this, LoginActivity::class.java))
 //            finish()
 //        }
 
