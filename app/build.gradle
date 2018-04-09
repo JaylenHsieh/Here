@@ -26,7 +26,7 @@ android {
             jni.srcDirs = []//disable automatic ndk-build
         }
     }
-    buildToolsVersion '27.0.3'
+    buildToolsVersion '26.0.2'
 }
 
 dependencies {

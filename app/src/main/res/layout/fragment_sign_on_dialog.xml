@@ -1,28 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/fragment_sign_on_dialog">
+
+    <ImageView
+        android:id="@+id/imgview_check"
+        android:layout_width="76dp"
+        android:layout_height="76dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="32dp"
+        app:srcCompat="@drawable/ic_attendance"/>
 
     <TextView
         android:id="@+id/tv_class_teacher"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="32dp"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:gravity="center_vertical"
-        android:text="Your name:" />
+        android:text="任课教师:乔正远" />
 
+    <TextView
+        android:id="@+id/tv_class_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:gravity="center_vertical"
+        android:text="课程名称：马克思主义原理" />
 
+    <TextView
+        android:id="@+id/tv_class_place"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:gravity="center_vertical"
+        android:text="上课地点：六教北XXX" />
+
+    <TextView
+        android:id="@+id/tv_class_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:gravity="center_vertical"
+        android:text="上课时间：8:00" />
+
+    <TextView
+        android:id="@+id/tv_student_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:gravity="center_vertical"
+        android:text="上课人数：117" />
 
     <Button
         android:id="@+id/btn_check"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@android:style/Widget.Material.Light.Button.Inset"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="24dp"
         android:gravity="center"
-        android:text="签到"
-        android:textSize="16sp"
-        android:textColor="@color/black"/>
+        android:text="发起签到" />
+
 
 </LinearLayout>

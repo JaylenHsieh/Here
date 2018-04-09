@@ -8,24 +8,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hdu.newe.here.R;
-import com.hdu.newe.here.bean.AttendanceDataBean;
-import com.hdu.newe.here.bean.BuffDataBean;
-import com.hdu.newe.here.bean.HistoryDataBean;
-import com.hdu.newe.here.page.base.BaseFragment;
-
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  * @author pope
  */
-public class HistoryDataFragment extends BaseFragment<VariousDataContract.Presenter> implements VariousDataContract.View {
+public class HistoryDataFragment extends Fragment {
 
-
-    public HistoryDataFragment() {
-        // Required empty public constructor
+    public static HistoryDataFragment newInstance(){
+        HistoryDataFragment fragment = new HistoryDataFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,18 +29,4 @@ public class HistoryDataFragment extends BaseFragment<VariousDataContract.Presen
         return inflater.inflate(R.layout.fragment_history_data, container, false);
     }
 
-    @Override
-    public void loadAttendanceData(List<AttendanceDataBean> attendanceDataBeanList) {
-
-    }
-
-    @Override
-    public void loadHistoryData(List<HistoryDataBean> historyDataBeanList) {
-
-    }
-
-    @Override
-    public void loadBuffHistoryData(List<BuffDataBean> buffDataBeanList) {
-
-    }
 }

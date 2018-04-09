@@ -1,5 +1,6 @@
 package com.hdu.newe.here.page.main.login
 
+import com.hdu.newe.here.app.AppError
 import com.hdu.newe.here.biz.ModelFactory
 import com.hdu.newe.here.biz.user.UserInterface
 
@@ -25,7 +26,7 @@ class LoginPresenter(
     }
 
     override fun clickLogin(userNumber: String, imei: String, isTeacher: Boolean) {
-        loginInterface.login(userNumber, imei, isTeacher, object : UserInterface.LoginListener {
+        loginInterface.login(userNumber, imei, isTeacher, object : UserInterface.LoginLister {
             override fun onStartLogin() {
 
             }
