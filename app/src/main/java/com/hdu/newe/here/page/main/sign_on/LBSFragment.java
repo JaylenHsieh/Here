@@ -7,11 +7,13 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -41,6 +43,8 @@ public class LBSFragment extends Fragment {
     public MapView mMapView = null;
     //private TextureMapView mmMapView;
     public BaiduMap mBaiduMap;
+
+    private SignOnFragment signOnFragment;
 
     // 定位相关
     public LocationClient mLocClient;
@@ -175,17 +179,16 @@ public class LBSFragment extends Fragment {
         mLocClient.start();
         mLocClient.requestLocation();
 
-//        ImageView imageView = view.findViewById(R.id.Image_sign_on);
-//        imageView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                Fragment fragment = new SignOnFragment();
-//                fragmentManager.beginTransaction().replace(R.id.fragment_sign_on_dialog,fragment).commit();
-//            }
-//        });
-        //SignOnFragment signOnFragment = new SignOnFragment();
-        //signOnFragment.show(getFragmentManager(),"SignOnFragment");
+        ImageView imageView = view.findViewById(R.id.Image_sign_on);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signOnFragment = new SignOnFragment();
+                signOnFragment.show(getFragmentManager(),"SignOnFragment");
+            }
+        });
+//        SignOnFragment signOnFragment = new SignOnFragment();
+//        signOnFragment.show(getFragmentManager(),"SignOnFragment");
         return view;
 
     }
