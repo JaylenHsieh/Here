@@ -4,15 +4,15 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.hdu.newe.here.page.main.leaverequest.LeaveRequestFragment"
-    android:orientation="vertical"
-    android:paddingTop="24dp">
+    android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
+        android:layout_height="80dp"
         app:navigationIcon="@drawable/ic_back"
         android:background="@drawable/bg_toolbar"
+        android:paddingTop="24dp"
         app:title="申请请假条"
         app:titleTextColor="@color/white"/>
 
