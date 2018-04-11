@@ -4,9 +4,7 @@ package com.hdu.newe.here.page.main.login
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.provider.Telephony
 import android.support.v4.content.ContextCompat
-import android.support.v4.content.ContextCompat.checkSelfPermission
 import android.telephony.TelephonyManager
 import android.view.LayoutInflater
 import android.view.View
@@ -25,8 +23,7 @@ class LoginFragment : BaseFragment<LoginContract.Presenter>(), LoginContract.Vie
 
     private var user: UserBean by Delegates.notNull()
 
-    private val PERMISSION_REQUEST_CALL_PHONE = 1
-
+    private val PERMISSION_REQUEST_READ_PHONE_STATE = 1
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -37,17 +34,16 @@ class LoginFragment : BaseFragment<LoginContract.Presenter>(), LoginContract.Vie
 
     override fun onResume() {
         super.onResume()
-//        if (ContextCompat.checkSelfPermission(context!!, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-//            requestPermissions(
-//                    arrayOf(android.Manifest.permission.CALL_PHONE),
-//                    PERMISSION_REQUEST_CALL_PHONE)
-//        } else {
-//            getImei()
-//        }
+        if (ContextCompat.checkSelfPermission(context!!, android.Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(
+                    arrayOf(android.Manifest.permission.READ_PHONE_STATE),
+                    PERMISSION_REQUEST_READ_PHONE_STATE)
+        } else {
+            tvIMEI.setText(getImei())
+        }
     }
 
     override fun render() {
-
         btnLogin?.setOnClickListener {
             mPresenter.clickLogin(edUserNumber.takeString(), tvIMEI.takeString(), checkStatus.isChecked)
         }
@@ -59,21 +55,26 @@ class LoginFragment : BaseFragment<LoginContract.Presenter>(), LoginContract.Vie
 //        }
     }
 
-//    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-//        if (requestCode == PERMISSION_REQUEST_CALL_PHONE) {
-//            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                getImei()
-//            } else {
-//                Toast.makeText(context, "权限被拒绝", Toast.LENGTH_SHORT).show()
-//            }
-//            return
-//        }
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-//    }
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        if (requestCode == PERMISSION_REQUEST_READ_PHONE_STATE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                tvIMEI.setText(getImei())
+            } else {
+                Toast.makeText(context, "权限被拒绝，我们需要你的电话权限来获取IMEI", Toast.LENGTH_SHORT).show()
+            }
+            return
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
 
-    private fun getImei() {
+    private fun getImei() :String{
         val telManager: TelephonyManager = context?.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-
+        try {
+            return telManager.deviceId
+        }catch (e:SecurityException){
+            e.printStackTrace()
+        }
+        return ""
     }
 
 }
