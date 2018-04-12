@@ -21,7 +21,7 @@ class FeedbackDialog : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
         val builder = AlertDialog.Builder(activity)
-        val inflate = activity?.layoutInflater?.inflate(R.layout.fragment_change_phone_dialog, null, false)
+        val inflate = activity?.layoutInflater?.inflate(R.layout.fragment_feedback_dialog, null, false)
         return builder.setView(inflate)
                 .setCancelable(true)
                 .setMessage("请输入您的宝贵建议")

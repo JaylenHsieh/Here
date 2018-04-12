@@ -52,7 +52,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="老母鸡"
+                    android:text="谢君亮"
                     app:layout_constraintStart_toEndOf="@+id/textView"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -112,7 +112,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:text="野鸡养殖专业"
+                    android:text="通信工程专业"
                     app:layout_constraintStart_toEndOf="@+id/textView4"
                     app:layout_constraintTop_toBottomOf="@+id/tv_stu_faculty" />
 

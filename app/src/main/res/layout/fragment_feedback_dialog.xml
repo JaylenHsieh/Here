@@ -9,14 +9,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:counterEnabled="true"
+        android:layout_marginTop="16dp"
         app:counterMaxLength="300">
 
-        <EditText
-            android:id="@+id/editFeedbackText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:imeOptions="actionDone"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_edittext"
+        android:gravity="top"
+        android:hint="请在这里输入你要反馈的问题"
+        android:maxLines="10"
+        android:minHeight="38dp"
+        android:minLines="8"
+        android:paddingBottom="6dp"
+        android:paddingEnd="0dp"
+        android:paddingStart="16dp"
+        android:paddingTop="6dp"
+        android:textColorHint="#50000000"
+        android:textSize="15sp" />
     </android.support.design.widget.TextInputLayout>
 
 
