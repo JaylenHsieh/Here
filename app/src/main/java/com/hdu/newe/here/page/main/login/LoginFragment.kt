@@ -39,7 +39,17 @@ class LoginFragment : BaseFragment<LoginContract.Presenter>(), LoginContract.Vie
                     arrayOf(android.Manifest.permission.READ_PHONE_STATE),
                     PERMISSION_REQUEST_READ_PHONE_STATE)
         } else {
-            tvIMEI.setText(getImei())
+            tvIMEI.text = "IMEI: " + getImei()
+        }
+
+        checkStatus.setOnCheckedChangeListener{ buttonView,isChecked ->
+            if (isChecked == true){
+                edUserNumber.hint = "工号"
+                tvPrompt.text = "若没有您的工号将自动创建账号"
+            }else{
+                edUserNumber.hint = "学号"
+                tvPrompt.text = "若没有您的学号将自动创建账号"
+            }
         }
     }
 
@@ -74,7 +84,7 @@ class LoginFragment : BaseFragment<LoginContract.Presenter>(), LoginContract.Vie
         }catch (e:SecurityException){
             e.printStackTrace()
         }
-        return ""
+        return "未获取到您的IMEI，请确保你的手机状态正常"
     }
 
 }

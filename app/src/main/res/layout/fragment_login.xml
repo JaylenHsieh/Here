@@ -40,6 +40,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/tvPrompt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -49,25 +50,20 @@
             app:layout_constraintStart_toEndOf="@+id/textView7"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/textInputLayout2"
+
+        <EditText
+            android:id="@+id/edUserNumber"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="32dp"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
+            android:hint="学号"
+            android:inputType="number"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView7">
-
-            <EditText
-                android:id="@+id/edUserNumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="学号"
-                android:inputType="number"
-                android:textSize="12sp" />
-        </android.support.design.widget.TextInputLayout>
+            app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
         <TextView
             android:id="@+id/tvIMEI"
@@ -75,7 +71,7 @@
             android:layout_height="24dp"
             android:layout_marginEnd="34dp"
             android:layout_marginStart="34dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/bg_edittext"
             android:gravity="center_vertical"
             android:paddingStart="4dp"
@@ -83,7 +79,7 @@
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
+            app:layout_constraintTop_toBottomOf="@+id/edUserNumber" />
 
         <CheckBox
             android:id="@+id/checkStatus"
