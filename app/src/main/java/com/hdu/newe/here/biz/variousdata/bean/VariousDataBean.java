@@ -22,6 +22,7 @@ public class VariousDataBean extends UserBean {
     private List<String> leaveRequestType;
     private List<String> leaveRequestReason;
     private List<String> leaveRequestState;
+    private List<String> leaveRequestTime;
     private List<String> warningTitle;
     private List<String> warningContent;
     private List<String> changeHistoryTitle;
@@ -105,5 +106,13 @@ public class VariousDataBean extends UserBean {
 
     public void setChangeHistoryContent(List<String> changeHistoryContent) {
         this.changeHistoryContent = changeHistoryContent;
+    }
+
+    public List<String> getLeaveRequestTime() {
+        return leaveRequestTime;
+    }
+
+    public void setLeaveRequestTime(List<String> leaveRequestTime) {
+        this.leaveRequestTime = leaveRequestTime;
     }
 }
