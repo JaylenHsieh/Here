@@ -21,6 +21,11 @@ public class VariousDataPresenter extends BasePresenterImpl implements VariousDa
         view.bindPresenter(this);
     }
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        getVariousData("eebc694aa0");
+    }
 
     @Override
     public void getVariousData(String objectId) {

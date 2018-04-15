@@ -6,4 +6,22 @@
     <string name="ask_for_leave">申请假条</string>
     <string name="edit_phone_number">请输入新的手机号</string>
     <string name="caution_change_phone">注意：一个学期仅可更换一次手机，请谨慎操作。&#x000A;新手机串号在拨号界面输入*#06#获得，双卡手机为SIM卡1的IMEI。</string>
+
+    <string name="history_of_leave">请假历史</string>
+    <string name="history_of_warning">警示历史</string>
+    <string name="history_of_change">手机更换历史</string>
+
+    <string name="buff_type_study_hard">学习积极分子</string>
+    <string name="buff_type_irresolution">摇摆边缘流派</string>
+    <string name="buff_type_skip_class">翘课高发人群</string>
+
+    <string name="buff_identifier_small_explain">头衔基于本学期总体出勤率划分等级</string>
+    <string name="buff_identifier_explain_title">头衔详细介绍</string>
+    <string name="buff_identifier_explain_content">\ \ \ \ \ \ \ \ \ 头衔评分由用户的总体出勤率折算而来，头衔等级由不同档次的评分来划定。
+        \n\n\ \ \ \ \ \ \ \ \ 学习积极分子：这类人上课认不认真，学习积不积极我不知道，但至少这人点名的时候都来上课了！
+        \n\ \ \ \ \ \ \ \ \ 当评分大于等于95分时，可获得此头衔。此头衔可减少80%被抽点概率，增加请假批准概率。
+        \n\n\ \ \ \ \ \ \ \ \ 摇摆边缘流派：这类人错综复杂，拿捏不定。一言不合就出现在课堂上认真听讲，一不留神就在寝室呼呼大睡！
+        \n\ \ \ \ \ \ \ \ \ 当评分大于等于75分，小于95分时，可获得此头衔。此头衔将增加30%被抽点概率。
+        \n\n\ \ \ \ \ \ \ \ \ 翘课高发人群：这类人翘课成瘾，尤其上午第一节课更是作案高发，需设为特别关注！
+        \n\ \ \ \ \ \ \ \ \ 当评分小于75分时，可获得此头衔。此头衔将会获得任课教师和辅导员的特殊照顾，具体你懂的~</string>
 </resources>

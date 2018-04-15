@@ -21,6 +21,8 @@ public interface VariousDataContract {
     interface View extends BaseView<Presenter> {
 
         void loadVariousData(VariousDataBean variousDataBean);
+
+        void loadHistoryData(String objectId);
     }
 
 }

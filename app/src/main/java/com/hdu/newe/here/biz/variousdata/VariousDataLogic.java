@@ -2,8 +2,10 @@ package com.hdu.newe.here.biz.variousdata;
 
 import com.hdu.newe.here.biz.BaseLogic;
 import com.hdu.newe.here.biz.variousdata.bean.VariousDataBean;
-import com.hdu.newe.here.page.base.BmobQueryListener;
-import com.hdu.newe.here.utils.BmobUtil;
+
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.QueryListener;
 
 /**
  * Moael层业务逻辑 继承Model层接口并实现其中的方法
@@ -25,15 +27,15 @@ public class VariousDataLogic extends BaseLogic implements VariousDataInterface 
     @Override
     public void getAttendanceData(String objectId, final OnVariousDataCallback onVariousDataCallback) {
         onVariousDataCallback.onStartGetData();
-        BmobUtil.queryById(objectId, new BmobQueryListener<VariousDataBean>() {
+        BmobQuery<VariousDataBean> query = new BmobQuery<>();
+        query.getObject(objectId, new QueryListener<VariousDataBean>() {
             @Override
-            public void onSuccess(VariousDataBean data) {
-                onVariousDataCallback.onGetSuccess();
-            }
-
-            @Override
-            public void onFailed(String e) {
-                onVariousDataCallback.onGetFailed(e);
+            public void done(VariousDataBean variousDataBean, BmobException e) {
+                if (e == null) {
+                    onVariousDataCallback.onGetSuccess(variousDataBean);
+                } else {
+                    onVariousDataCallback.onGetFailed(e.getMessage());
+                }
             }
         });
     }
