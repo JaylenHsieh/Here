@@ -24,7 +24,7 @@ public class VariousDataPresenter extends BasePresenterImpl implements VariousDa
     @Override
     public void onCreate() {
         super.onCreate();
-        getVariousData("aefc052bd2");
+        getVariousData("eebc694aa0");
     }
 
     @Override
