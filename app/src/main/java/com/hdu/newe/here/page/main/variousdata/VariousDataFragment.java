@@ -96,6 +96,7 @@ public class VariousDataFragment extends BaseFragment<VariousDataContract.Presen
 
         fragmentList = new ArrayList<>();
         titleList = new ArrayList<>();
+        LayoutInflater layoutInflater = getLayoutInflater();
         fragmentList.add(historyDataFragment);
         fragmentList.add(attendanceRateFragment);
         fragmentList.add(buffDataFragment);
