@@ -39,16 +39,14 @@ class LoginFragment : BaseFragment<LoginContract.Presenter>(), LoginContract.Vie
                     arrayOf(android.Manifest.permission.READ_PHONE_STATE),
                     PERMISSION_REQUEST_READ_PHONE_STATE)
         } else {
-            tvIMEI.text = "IMEI: " + getImei()
+            tvIMEI.text = getImei()
         }
 
         checkStatus.setOnCheckedChangeListener{ buttonView,isChecked ->
             if (isChecked == true){
                 edUserNumber.hint = "工号"
-                tvPrompt.text = "若没有您的工号将自动创建账号"
             }else{
                 edUserNumber.hint = "学号"
-                tvPrompt.text = "若没有您的学号将自动创建账号"
             }
         }
     }
