@@ -19,7 +19,10 @@
         android:id="@+id/view_account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/ripple_click_leave_request"
+        android:background="@drawable/bg_list"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="4dp"
         android:clickable="true"
         android:elevation="2dp"
         android:padding="16dp">
@@ -119,10 +122,18 @@
         android:layout_margin="16dp"
         android:textStyle="bold"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/list_class"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/bg_list">
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/lessonRecList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </FrameLayout>
 
 </LinearLayout>

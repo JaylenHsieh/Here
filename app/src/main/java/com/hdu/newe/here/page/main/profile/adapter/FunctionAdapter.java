@@ -1,6 +1,7 @@
 package com.hdu.newe.here.page.main.profile.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,7 @@ import com.hdu.newe.here.biz.profile.Bean.FunctionBean;
 import com.hdu.newe.here.page.main.MainActivity;
 import com.hdu.newe.here.page.main.profile.EditPhoneNumberDialog;
 import com.hdu.newe.here.page.main.profile.FeedbackDialog;
+import com.hdu.newe.here.page.main.profile.PersonalInfoActivity;
 
 import java.util.List;
 
@@ -46,7 +48,7 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.ViewHo
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_profile, parent, false);
         final ViewHolder holder = new ViewHolder(view);
         holder.functionView.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +59,7 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.ViewHo
                 switch (position) {
                     case 0:
                         Toast.makeText(view.getContext(), "个人信息", Toast.LENGTH_SHORT).show();
+                        mContext.startActivity(new Intent(mContext, PersonalInfoActivity.class));
                         break;
                     case 1:
                         EditPhoneNumberDialog editDialog = new EditPhoneNumberDialog();
