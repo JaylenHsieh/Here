@@ -44,11 +44,16 @@ class LoginFragment : BaseFragment<LoginContract.Presenter>(), LoginContract.Vie
 
         checkStatus.setOnCheckedChangeListener{ buttonView,isChecked ->
             if (isChecked == true){
-                edUserNumber.hint = "工号"
+                tvUserNumber.text = "工号:"
             }else{
-                edUserNumber.hint = "学号"
+                tvUserNumber.text = "学号:"
             }
         }
+
+        //TODO 用户须知的checkbox设为不可点击
+        //TODO 用户须知点击监听 跳转至LoginNoticeFragemnt
+        //TODO 创建一个public的方法用来传递用户是否完成《用户须知》的阅读 传递参数 boolean isRead
+
     }
 
     override fun render() {

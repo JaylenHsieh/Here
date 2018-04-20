@@ -14,6 +14,7 @@
         android:scaleType="centerCrop" />
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/bg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
@@ -35,41 +36,52 @@
             android:textColor="@color/black_1"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="@id/bg"
+            app:layout_constraintTop_toTopOf="@id/bg" />
 
         <TextView
             android:id="@+id/tvPrompt"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
             android:layout_marginStart="8dp"
             android:text="首次使用将自动注册"
             app:layout_constraintBottom_toBottomOf="@+id/textView7"
+            app:layout_constraintEnd_toEndOf="@id/bg"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/textView7"
             app:layout_constraintTop_toTopOf="@+id/textView7"
             app:layout_constraintVertical_bias="1.0" />
 
+        <TextView
+            android:id="@+id/tvUserNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="学号:"
+            app:layout_constraintStart_toStartOf="@+id/textView7"
+            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
 
         <EditText
             android:id="@+id/edUserNumber"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="32dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="12dp"
-            android:hint=" 学号"
+            android:layout_marginStart="8dp"
             android:inputType="number"
             android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+            app:layout_constraintBottom_toBottomOf="@+id/tvUserNumber"
+            app:layout_constraintEnd_toEndOf="@+id/tvPrompt"
+            app:layout_constraintStart_toEndOf="@+id/tvUserNumber"
+            app:layout_constraintTop_toTopOf="@+id/tvUserNumber" />
+
         <TextView
             android:id="@+id/textView8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text=" IMEI:"
-            app:layout_constraintStart_toStartOf="@+id/edUserNumber"
+            android:text="IMEI:"
+            app:layout_constraintStart_toStartOf="@+id/tvUserNumber"
             app:layout_constraintTop_toBottomOf="@+id/edUserNumber" />
 
         <TextView
@@ -82,7 +94,7 @@
             android:paddingBottom="4dp"
             android:paddingStart="8dp"
             android:paddingTop="4dp"
-            android:text="2342345234"
+            android:text="000000000000000000"
             app:layout_constraintBottom_toBottomOf="@+id/textView8"
             app:layout_constraintEnd_toEndOf="@+id/edUserNumber"
             app:layout_constraintStart_toEndOf="@+id/textView8"
@@ -92,44 +104,39 @@
             android:id="@+id/checkStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="16dp"
             android:button="@drawable/check_img"
             android:text=" 我是教师"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textView8"
             app:layout_constraintTop_toBottomOf="@+id/tvIMEI" />
 
+        <CheckBox
+            android:id="@+id/checkIsRead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:button="@drawable/check_img"
+            android:text=" 用户须知"
+            app:layout_constraintBottom_toBottomOf="@+id/checkStatus"
+            app:layout_constraintStart_toEndOf="@+id/checkStatus"
+            app:layout_constraintTop_toTopOf="@+id/checkStatus" />
 
 
-
-        <!--<RadioButton-->
-        <!--android:id="@+id/radioButton"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginTop="8dp"-->
-        <!--android:checked="true"-->
-        <!--android:text="我是教师"-->
-        <!--android:textColor="@color/black_2"-->
-        <!--android:textSize="12sp"-->
-        <!--app:layout_constraintStart_toStartOf="@+id/textView8"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/tvIMEI" />-->
         <TextView
             android:id="@+id/btnLogin"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="24dp"
+            android:layout_marginTop="24dp"
             android:background="@drawable/bg_textview_login"
             android:gravity="center"
             android:padding="4dp"
             android:text="登录"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/bg"
+            app:layout_constraintEnd_toEndOf="@+id/tvIMEI"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textView8"
             app:layout_constraintTop_toBottomOf="@+id/checkStatus" />
 
     </android.support.constraint.ConstraintLayout>

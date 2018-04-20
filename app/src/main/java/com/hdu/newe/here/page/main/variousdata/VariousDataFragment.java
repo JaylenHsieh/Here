@@ -111,6 +111,7 @@ public class VariousDataFragment extends BaseFragment<VariousDataContract.Presen
         viewpagerVariousData.setAdapter(myPagerAdapter);
         tablayoutVariousData.setupWithViewPager(viewpagerVariousData);
         viewpagerVariousData.setCurrentItem(1);
+        viewpagerVariousData.setOffscreenPageLimit(2);
 
     }
 
