@@ -44,9 +44,9 @@ class LoginFragment : BaseFragment<LoginContract.Presenter>(), LoginContract.Vie
 
         checkStatus.setOnCheckedChangeListener{ buttonView,isChecked ->
             if (isChecked == true){
-                edUserNumber.hint = "工号"
+                tvUserNumber.text = "工号:"
             }else{
-                edUserNumber.hint = "学号"
+                tvUserNumber.text = "学号:"
             }
         }
     }
