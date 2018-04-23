@@ -7,11 +7,9 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 
@@ -62,7 +60,8 @@ public class LBSFragment extends Fragment {
 
     // UI相关
     CompoundButton.OnCheckedChangeListener radioButtonListener;
-    Button requestLocButton;
+
+    private ImageView imageViewNavigation;
     boolean isFirstLoc = true; // 是否首次定位
     private MyLocationData locData;
     private float direction;
@@ -95,15 +94,16 @@ public class LBSFragment extends Fragment {
         //mmMapView = view.findViewById(R.id.mTexturemap);
         //mBaiduMap = mmMapView.getMap();
 
-        requestLocButton = view.findViewById(R.id.button1);
+        imageViewNavigation = view.findViewById(R.id.imageView_location);
         mSensorManager = (SensorManager) getActivity().getSystemService(SENSOR_SERVICE);//获取传感器管理服务
         mCurrentMode = MyLocationConfiguration.LocationMode.NORMAL;
-        requestLocButton.setText("普通");
-        View.OnClickListener btnClickListener = new View.OnClickListener() {
-            public void onClick(View v) {
+
+        imageViewNavigation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 switch (mCurrentMode) {
                     case NORMAL:
-                        requestLocButton.setText("跟随");
+                        imageViewNavigation.setImageResource(R.drawable.ic_navigation1);
                         mCurrentMode = MyLocationConfiguration.LocationMode.FOLLOWING;
                         mBaiduMap
                                 .setMyLocationConfiguration(new MyLocationConfiguration(
@@ -113,7 +113,7 @@ public class LBSFragment extends Fragment {
                         mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
                         break;
                     case COMPASS:
-                        requestLocButton.setText("普通");
+                        imageViewNavigation.setImageResource(R.drawable.ic_location);
                         mCurrentMode = MyLocationConfiguration.LocationMode.NORMAL;
                         mBaiduMap
                                 .setMyLocationConfiguration(new MyLocationConfiguration(
@@ -123,7 +123,7 @@ public class LBSFragment extends Fragment {
                         mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder1.build()));
                         break;
                     case FOLLOWING:
-                        requestLocButton.setText("罗盘");
+                        imageViewNavigation.setImageResource(R.drawable.ic_navigation2);
                         mCurrentMode = MyLocationConfiguration.LocationMode.COMPASS;
                         mBaiduMap
                                 .setMyLocationConfiguration(new MyLocationConfiguration(
@@ -133,9 +133,14 @@ public class LBSFragment extends Fragment {
                         break;
                 }
             }
+        });
+        View.OnClickListener btnClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
         };
 
-        requestLocButton.setOnClickListener(btnClickListener);
 //
 //        RadioGroup group = view.findViewById(R.id.radioGroup);
 //        radioButtonListener = new CompoundButton.OnCheckedChangeListener() {
