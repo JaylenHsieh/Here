@@ -34,6 +34,7 @@ class LoginFragment : BaseFragment<LoginContract.Presenter>(), LoginContract.Vie
 
     override fun onResume() {
         super.onResume()
+        render()
         if (ContextCompat.checkSelfPermission(context!!, android.Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(
                     arrayOf(android.Manifest.permission.READ_PHONE_STATE),
@@ -57,7 +58,8 @@ class LoginFragment : BaseFragment<LoginContract.Presenter>(), LoginContract.Vie
     }
 
     override fun render() {
-        btnLogin?.setOnClickListener {
+
+        btnLogin.setOnClickListener {
             mPresenter.clickLogin(edUserNumber.takeString(), tvIMEI.takeString(), checkStatus.isChecked)
         }
 
@@ -88,6 +90,10 @@ class LoginFragment : BaseFragment<LoginContract.Presenter>(), LoginContract.Vie
             e.printStackTrace()
         }
         return "未获取到您的IMEI，请确保你的手机状态正常"
+    }
+
+    override fun loginSucceed(){
+        activity?.finish()
     }
 
 }

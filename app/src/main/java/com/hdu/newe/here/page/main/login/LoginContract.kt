@@ -16,5 +16,6 @@ interface LoginContract {
     interface View : BaseView<Presenter>{
         fun render()
 
+        fun loginSucceed()
     }
 }

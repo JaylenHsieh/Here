@@ -29,17 +29,20 @@ class LoginPresenter(
     }
 
     override fun clickLogin(userNumber: String, imei: String, isTeacher: Boolean) {
+
+        //TODO 判合法性
+
         loginInterface.login(userNumber, imei, isTeacher, object : UserInterface.LoginListener {
             override fun onStartLogin() {
 
             }
 
             override fun onLoginSuccess() {
-
+                view.loginSucceed()
             }
 
             override fun onFailure(error: String) {
-
+                view.showMessage(error)
             }
         })
     }

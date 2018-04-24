@@ -19,7 +19,6 @@ import cn.bmob.v3.listener.SaveListener;
 public class UserLogic extends BaseLogic implements UserInterface {
 
 
-
     @Override
     public void login(final String userNumber, final String imei, final boolean isTeacher, final LoginListener listener) {
         BmobQuery<UserBean> bmobQuery = new BmobQuery<>();
@@ -28,23 +27,43 @@ public class UserLogic extends BaseLogic implements UserInterface {
             @Override
             public void done(List<UserBean> list, BmobException e) {
                 if (e != null) {
-                    listener.onFailure("");
+                    listener.onFailure(e.getMessage());
                     return;
                 }
 
+                // 校验学号是否被注册过
                 if (list == null || list.isEmpty()) {
-                    // register
-                    register(userNumber, imei, isTeacher, listener);
-                    return;
+
+                    BmobQuery<UserBean> query = new BmobQuery<>();
+                    query.addWhereEqualTo("imei", imei);
+                    query.findObjects(new FindListener<UserBean>() {
+                        @Override
+                        public void done(List<UserBean> list, BmobException e) {
+                            if (e != null) {
+                                listener.onFailure(e.getMessage());
+                                return;
+                            }
+                            // 校验IMEI是否被注册过
+                            if (list == null || list.isEmpty()) {
+                                // register
+                                register(userNumber, imei, isTeacher, listener);
+                                return;
+                            } else {
+                                listener.onFailure("该IMEI已绑定其他学号");
+                            }
+                        }
+                    });
+
+
+                } else {
+                    UserBean userBean = list.get(0);
+                    if (imei.equals(userBean.getImei())) {
+                        saveLoginInfo(userBean,userBean.getObjectId());
+                        listener.onLoginSuccess();
+                    } else {
+                        listener.onFailure("学号与IMEI不匹配");
+                    }
                 }
-
-                final UserBean userBean = new UserBean();
-                userBean.setUserNumber(userNumber);
-                userBean.setImei(imei);
-                userBean.setIsTeacher(isTeacher);
-                saveLoginInfo(userBean);
-
-                listener.onLoginSuccess();
             }
         });
     }
@@ -59,23 +78,23 @@ public class UserLogic extends BaseLogic implements UserInterface {
             @Override
             public void done(String objId, BmobException e) {
                 if (e != null) {
-                    listener.onFailure("");
+                    listener.onFailure(e.getMessage());
                     return;
                 }
 
-                saveLoginInfo(userBean);
+                saveLoginInfo(userBean, objId);
                 listener.onLoginSuccess();
             }
         });
     }
 
-    private void saveLoginInfo(UserBean user) {
+    private void saveLoginInfo(UserBean user, String objId) {
         SharedPreferences.Editor editor = getContext().getSharedPreferences("user", Context.MODE_PRIVATE).edit();
+        editor.putString("objId", objId);
         editor.putString("userNumber", user.getUserNumber());
         editor.putString("IMEI", user.getImei());
         editor.putBoolean("isTeacher", user.isTeacher());
         editor.apply();
-
     }
 
     @Override
