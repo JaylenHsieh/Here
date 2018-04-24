@@ -17,45 +17,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!--<com.baidu.mapapi.map.TextureMapView-->
-    <!--android:id="@+id/mTexturemap"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent" >-->
-    <!--</com.baidu.mapapi.map.TextureMapView>-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_alignParentRight="true"-->
-    <!--android:layout_marginTop="80dip"-->
-    <!--android:background="#D000"-->
-    <!--android:minWidth="100dip"-->
-    <!--android:padding="2dp"-->
-    <!--android:visibility="invisible">-->
-
-    <!--<RadioGroup-->
-    <!--android:id="@+id/radioGroup"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:contentDescription="定位icon" >-->
-
-    <!--<RadioButton-->
-    <!--android:id="@+id/defaulticon"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:checked="true"-->
-    <!--android:text="默认图标" >-->
-    <!--</RadioButton>-->
-
-    <!--<RadioButton-->
-    <!--android:id="@+id/customicon"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="自定义图标" >-->
-    <!--</RadioButton>-->
-    <!--</RadioGroup>-->
-    <!--</LinearLayout>-->
-
     <android.support.constraint.ConstraintLayout
         android:id="@+id/layout_group1"
         android:layout_width="102dp"
@@ -86,10 +47,10 @@
         android:id="@+id/imageView_location"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:padding="8dp"
         android:layout_marginBottom="40dp"
         android:layout_marginStart="4dp"
         android:background="@drawable/bg_location"
+        android:padding="8dp"
         android:src="@drawable/ic_location"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -103,6 +64,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="64dp"
         android:background="@drawable/bg_check_information"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -229,6 +191,5 @@
             app:layout_constraintStart_toStartOf="@+id/btn_check2"
             app:layout_constraintTop_toBottomOf="@+id/btn_check2" />
     </android.support.constraint.ConstraintLayout>
-
 
 </android.support.constraint.ConstraintLayout>

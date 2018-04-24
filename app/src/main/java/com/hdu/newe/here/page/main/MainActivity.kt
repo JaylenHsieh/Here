@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             startActivity(Intent(this, LoginActivity::class.java))
-            //finish()
+            finish()
         }
 
         val navItems = Arrays.asList(
