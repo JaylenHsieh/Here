@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.view.KeyEvent
 import android.widget.Toast
 import com.hdu.newe.here.R
 import com.hdu.newe.here.biz.ModelFactory
@@ -20,6 +21,8 @@ import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
+
+    private var currentPos=0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
@@ -68,11 +71,24 @@ class MainActivity : AppCompatActivity() {
 
         if (newFragment.isAdded) {
             transaction.show(newFragment)
+            currentPos = pos
         } else {
             transaction.add(R.id.container, newFragment, "fragment$pos")
         }
 
         transaction.commit()
+        currentPos = pos
+    }
+
+    override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
+        if (currentPos == 0){
+            val fragment = findOrGenerateFragment(0) as LBSFragment
+            if (fragment.isDispaly){
+                fragment.changeVisibility()
+                return false
+            }
+        }
+        return super.onKeyUp(keyCode, event)
     }
 
     private fun findOrGenerateFragment(pos: Int): Fragment {

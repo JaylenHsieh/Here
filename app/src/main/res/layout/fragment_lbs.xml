@@ -57,14 +57,15 @@
     <!--</LinearLayout>-->
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/layout_group1"
         android:layout_width="102dp"
         android:layout_height="102dp"
         android:layout_marginBottom="32dp"
+        android:background="@drawable/bg_circle"
+        android:elevation="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:background="@drawable/bg_circle"
-        android:elevation="2dp">
+        app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
             android:id="@+id/Image_sign_on"
@@ -92,6 +93,142 @@
         android:src="@drawable/ic_location"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/layout_group2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="64dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="64dp"
+        android:background="@drawable/bg_check_information"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imgview_check2"
+            android:layout_width="76dp"
+            android:layout_height="76dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_attendance" />
+
+        <TextView
+            android:id="@+id/tv_class_teacher2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
+            android:gravity="center_vertical"
+            android:minWidth="332dp"
+            android:text="任课教师：乔正远"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imgview_check2" />
+
+        <TextView
+            android:id="@+id/tv_class_name2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:minWidth="332dp"
+            android:text="课程名称：马克思主义原理"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/tv_class_teacher2"
+            app:layout_constraintStart_toStartOf="@+id/tv_class_teacher2"
+            app:layout_constraintTop_toBottomOf="@+id/tv_class_teacher2" />
+
+        <TextView
+            android:id="@+id/tv_class_place2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:minWidth="332dp"
+            android:text="上课地点：六号教学楼北楼"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/tv_class_name2"
+            app:layout_constraintStart_toStartOf="@+id/tv_class_name2"
+            app:layout_constraintTop_toBottomOf="@+id/tv_class_name2" />
+
+        <TextView
+            android:id="@+id/tv_class_time2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:minWidth="332dp"
+            android:text="上课时间：8:00"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/tv_class_place2"
+            app:layout_constraintStart_toStartOf="@+id/tv_class_place2"
+            app:layout_constraintTop_toBottomOf="@+id/tv_class_place2" />
+
+        <TextView
+            android:id="@+id/tv_student_number2"
+            android:layout_width="0dp"
+            android:layout_height="17dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:minWidth="332dp"
+            android:text="上课人数：117"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/tv_class_time2"
+            app:layout_constraintStart_toStartOf="@+id/tv_class_time2"
+            app:layout_constraintTop_toBottomOf="@+id/tv_class_time2" />
+
+        <TextView
+            android:id="@+id/btn_check2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/bg_textview_login"
+            android:minWidth="332dp"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:text="变更上课地点"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/tv_student_number2"
+            app:layout_constraintStart_toStartOf="@+id/tv_student_number2"
+            app:layout_constraintTop_toBottomOf="@+id/tv_student_number2" />
+
+        <TextView
+            android:id="@+id/btn_check3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_textview_login"
+            android:gravity="center"
+            android:minWidth="332dp"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:text="发起签到"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/btn_check2"
+            app:layout_constraintStart_toStartOf="@+id/btn_check2"
+            app:layout_constraintTop_toBottomOf="@+id/btn_check2" />
+    </android.support.constraint.ConstraintLayout>
 
 
 </android.support.constraint.ConstraintLayout>
