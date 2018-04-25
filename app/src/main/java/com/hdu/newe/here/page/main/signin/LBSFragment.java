@@ -1,4 +1,4 @@
-package com.hdu.newe.here.page.main.sign_on;
+package com.hdu.newe.here.page.main.signin;
 
 
 import android.hardware.Sensor;

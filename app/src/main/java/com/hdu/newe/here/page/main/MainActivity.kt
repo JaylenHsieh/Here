@@ -12,7 +12,7 @@ import com.hdu.newe.here.page.main.leaverequest.LeaveRequestActivity
 import com.hdu.newe.here.page.main.login.LoginActivity
 import com.hdu.newe.here.page.main.profile.ProfileFragment
 import com.hdu.newe.here.page.main.profile.ProfilePresenter
-import com.hdu.newe.here.page.main.sign_on.LBSFragment
+import com.hdu.newe.here.page.main.signin.LBSFragment
 import com.hdu.newe.here.page.main.variousdata.VariousDataFragment
 import com.hdu.newe.here.page.main.variousdata.VariousDataPresenter
 import com.jonnyhsia.uilib.widget.BottomNavigation
