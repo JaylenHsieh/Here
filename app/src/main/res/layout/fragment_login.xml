@@ -21,7 +21,7 @@
         android:layout_marginStart="32dp"
         android:background="@drawable/bg_list"
         android:elevation="2dp"
-        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -125,8 +125,10 @@
         <TextView
             android:id="@+id/btnLogin"
             android:layout_width="0dp"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="24dp"
             android:background="@drawable/bg_textview_login"
             android:gravity="center"
@@ -134,9 +136,9 @@
             android:text="登录"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@id/bg"
-            app:layout_constraintEnd_toEndOf="@+id/tvIMEI"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/textView8"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/checkStatus" />
 
     </android.support.constraint.ConstraintLayout>

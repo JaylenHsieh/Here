@@ -1,6 +1,7 @@
 package com.hdu.newe.here.biz.user.entity;
 
 import java.net.URL;
+import java.util.List;
 
 import cn.bmob.v3.BmobObject;
 
@@ -15,7 +16,7 @@ public class UserBean extends BmobObject {
 
     /**
      * 用户数据表关键字
-     * 姓名 学/工号 班级 班级号 专业 学院 手机序列号 辅导员 是否为教师 头像
+     * 姓名 学/工号 班级 班级号 专业 学院 手机序列号 辅导员 是否为教师 头像 课程列表
      */
     private String userName;
     private String userNumber;
@@ -27,6 +28,7 @@ public class UserBean extends BmobObject {
     private String imei;
     private boolean isTeacher;
     private URL userAvatar;
+    private List<String> subjectList;
 
     public String getUserName() {
         return userName;
@@ -106,5 +108,13 @@ public class UserBean extends BmobObject {
 
     public void setIsTeacher(boolean teacher) {
         isTeacher = teacher;
+    }
+
+    public List<String> getSubjectList() {
+        return subjectList;
+    }
+
+    public void setSubjectList(List<String> subjectList) {
+        this.subjectList = subjectList;
     }
 }

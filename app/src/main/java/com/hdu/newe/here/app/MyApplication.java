@@ -28,7 +28,6 @@ public class MyApplication extends Application {
 
         //初始化百度地图相关SDK
         SDKInitializer.initialize(this);
-        //TODO 各个页面的Model层在此初始化
 
         ModelFactory.init(this);
     }
