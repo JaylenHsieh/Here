@@ -18,14 +18,14 @@
         android:layout_margin="16dp"
         android:background="@drawable/bg_edittext"
         android:gravity="top"
-        android:hint="请在这里输入你要反馈的问题"
         android:maxLines="10"
         android:minHeight="38dp"
         android:minLines="8"
+        android:layout_marginTop="8dp"
         android:paddingBottom="6dp"
         android:paddingEnd="0dp"
         android:paddingStart="16dp"
-        android:paddingTop="6dp"
+        android:paddingTop="8dp"
         android:textColorHint="#50000000"
         android:textSize="15sp" />
     </android.support.design.widget.TextInputLayout>

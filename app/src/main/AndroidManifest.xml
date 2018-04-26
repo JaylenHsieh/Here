@@ -59,14 +59,15 @@
         <activity
             android:name=".page.main.leaverequest.LeaveRequestActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".page.main.login.LoginActivity"></activity>
+        <activity android:name=".page.main.login.LoginActivity" />
 
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote"></service>
+            android:process=":remote" />
 
-        <activity android:name=".page.main.profile.PersonalInfoActivity"></activity>
+        <activity android:name=".page.main.profile.PersonalInfoActivity" />
+        <activity android:name=".page.main.profile.QuestionActivity"></activity>
     </application>
 
 </manifest>

@@ -24,7 +24,7 @@ class FeedbackDialog : DialogFragment() {
         val inflate = activity?.layoutInflater?.inflate(R.layout.fragment_feedback_dialog, null, false)
         return builder.setView(inflate)
                 .setCancelable(true)
-                .setMessage("请输入您的宝贵建议")
+                .setMessage("请写下您的宝贵建议")
                 .setPositiveButton("提交") { dialog, which ->
                 }.setNegativeButton("取消") { dialog, which ->
                 }.create()

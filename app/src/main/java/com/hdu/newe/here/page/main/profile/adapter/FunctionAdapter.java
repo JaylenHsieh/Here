@@ -2,6 +2,7 @@ package com.hdu.newe.here.page.main.profile.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +19,7 @@ import com.hdu.newe.here.page.main.MainActivity;
 import com.hdu.newe.here.page.main.profile.EditPhoneNumberDialog;
 import com.hdu.newe.here.page.main.profile.FeedbackDialog;
 import com.hdu.newe.here.page.main.profile.PersonalInfoActivity;
+import com.hdu.newe.here.page.main.profile.QuestionActivity;
 
 import java.util.List;
 
@@ -75,10 +77,18 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.ViewHo
                         Toast.makeText(view.getContext(), "意见反馈", Toast.LENGTH_SHORT).show();
                         break;
                     case 4:
-                        Toast.makeText(view.getContext(), "通信工程新维工作室", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(view.getContext(), "通信工程学院新维工作室", Toast.LENGTH_SHORT).show();
                         break;
                     case 5:
-                        Snackbar.make(view,"若要退出请前往设置清除数据",Snackbar.LENGTH_LONG).show();
+                        Intent intentQuestion = new Intent(mContext, QuestionActivity.class);
+                        mContext.startActivity(intentQuestion);
+                        break;
+                    case 6:
+                        Toast.makeText(mContext, "在储存中选择清除应用数据", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent();
+                        intent.setAction(("android.settings.APPLICATION_DETAILS_SETTINGS"));
+                        intent.setData(Uri.fromParts("package",mContext.getPackageName(),null));
+                        mContext.startActivity(intent);
                     default:
                 }
 
