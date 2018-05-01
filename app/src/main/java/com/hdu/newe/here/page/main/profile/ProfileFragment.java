@@ -14,7 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.hdu.newe.here.R;
-import com.hdu.newe.here.biz.profile.Bean.FunctionBean;
+import com.hdu.newe.here.biz.profile.bean.FunctionBean;
 import com.hdu.newe.here.page.base.BaseFragment;
 import com.hdu.newe.here.page.main.profile.adapter.FunctionAdapter;
 import com.hdu.newe.here.utils.MultiItemDivider;

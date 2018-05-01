@@ -1,4 +1,4 @@
-package com.hdu.newe.here.biz.profile.Bean;
+package com.hdu.newe.here.biz.profile.bean;
 
 /**
  * Created by Jaylen Hsieh on 2018/03/09.

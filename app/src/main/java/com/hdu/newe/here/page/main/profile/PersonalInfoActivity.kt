@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.hdu.newe.here.R
-import com.hdu.newe.here.biz.profile.Bean.LessonBean
+import com.hdu.newe.here.biz.profile.bean.LessonBean
 import com.hdu.newe.here.page.main.profile.adapter.LessonAdapter
 import kotlinx.android.synthetic.main.activity_personal_info.*
 
@@ -16,7 +16,7 @@ class PersonalInfoActivity : AppCompatActivity() {
         setContentView(R.layout.activity_personal_info)
         initLessonList()
         lessonRecList.layoutManager = LinearLayoutManager(this)
-        lessonRecList.adapter = LessonAdapter(lessonList, this)
+        //lessonRecList.adapter = LessonAdapter(lessonList, this)
     }
 
     private fun initLessonList() {

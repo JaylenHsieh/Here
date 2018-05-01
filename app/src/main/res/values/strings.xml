@@ -34,4 +34,7 @@
     <string name="login_notice_content3">\ \ \ \ \ \ \ \ \ \ 若用户在使用过程中出现更换手机或手机遗失的情况，
         可申请更换手机。如果是换了新手机的用户，可在旧手机上直接申请更换。如果是手机遗失的用户则需要向辅导员提交书面申请更换手机，辅导员确认无误后完成受理。\n</string>
 
+    <string name="question">Q&amp;A</string>
+    <string name="write_question">我也要提交Q&amp;A</string>
+    <string name="read_question">我还要看看Q&amp;A</string>
 </resources>

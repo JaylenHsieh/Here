@@ -3,8 +3,6 @@ package com.hdu.newe.here.page.main.profile.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hdu.newe.here.R;
-import com.hdu.newe.here.biz.profile.Bean.FunctionBean;
+import com.hdu.newe.here.biz.profile.bean.FunctionBean;
 import com.hdu.newe.here.page.main.MainActivity;
 import com.hdu.newe.here.page.main.profile.EditPhoneNumberDialog;
 import com.hdu.newe.here.page.main.profile.FeedbackDialog;

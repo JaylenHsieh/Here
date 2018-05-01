@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hdu.newe.here.R;
-import com.hdu.newe.here.biz.profile.Bean.QuestionBean;
+import com.hdu.newe.here.biz.profile.bean.QuestionBean;
 
 import java.util.List;
 

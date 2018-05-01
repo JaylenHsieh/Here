@@ -1,4 +1,4 @@
-package com.hdu.newe.here.biz.profile.Bean;
+package com.hdu.newe.here.biz.profile.bean;
 
 import java.util.List;
 

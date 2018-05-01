@@ -10,7 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hdu.newe.here.R;
-import com.hdu.newe.here.biz.profile.Bean.LessonBean;
+import com.hdu.newe.here.biz.profile.bean.LessonBean;
 
 import java.util.List;
 
