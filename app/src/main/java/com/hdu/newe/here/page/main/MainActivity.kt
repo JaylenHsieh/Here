@@ -15,6 +15,7 @@ import com.hdu.newe.here.page.main.profile.ProfilePresenter
 import com.hdu.newe.here.page.main.signin.LBSFragment
 import com.hdu.newe.here.page.main.variousdata.VariousDataFragment
 import com.hdu.newe.here.page.main.variousdata.VariousDataPresenter
+import com.hdu.newe.here.utils.UIUtils
 import com.jonnyhsia.uilib.widget.BottomNavigation
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
+        UIUtils.transparentStatusBar(this)
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)

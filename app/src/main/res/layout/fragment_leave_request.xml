@@ -48,7 +48,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/tv_stu_name"
+                    android:id="@+id/tv_user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -67,14 +67,14 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView" />
 
                 <TextView
-                    android:id="@+id/tv_stu_number"
+                    android:id="@+id/tv_user_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:text="15088888"
                     app:layout_constraintStart_toEndOf="@+id/textView2"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_stu_name" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_user_name" />
 
                 <TextView
                     android:id="@+id/textView3"
@@ -94,7 +94,7 @@
                     android:layout_marginTop="8dp"
                     android:text="通信工程学院"
                     app:layout_constraintStart_toEndOf="@+id/textView3"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_stu_number" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_user_number" />
 
                 <TextView
                     android:id="@+id/textView4"
