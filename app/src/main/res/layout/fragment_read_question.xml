@@ -8,9 +8,10 @@
     tools:context=".page.main.profile.ReadQuestionFragment">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/questionRecList"
+        android:id="@+id/recycleQA"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="8dp"/>
+        android:paddingTop="8dp"
+        tools:listitem="@layout/item_q_and_a"/>
 
 </android.support.v4.widget.SwipeRefreshLayout>

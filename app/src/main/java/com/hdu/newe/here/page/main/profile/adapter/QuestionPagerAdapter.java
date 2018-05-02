@@ -24,7 +24,7 @@ public class QuestionPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         if (position == 0) {
             if (mReadQuestionFragment == null) {
-                mReadQuestionFragment = ReadQuestionFragment.newInstance();
+                mReadQuestionFragment = ReadQuestionFragment.Companion.newInstance();
             }
             return mReadQuestionFragment;
         } else if (position == 1) {

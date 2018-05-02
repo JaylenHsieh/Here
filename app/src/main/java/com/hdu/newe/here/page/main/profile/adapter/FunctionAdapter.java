@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.hdu.newe.here.R;
 import com.hdu.newe.here.biz.profile.bean.FunctionBean;
 import com.hdu.newe.here.page.main.MainActivity;
+import com.hdu.newe.here.page.main.leaverequest.LeaveRequestActivity;
 import com.hdu.newe.here.page.main.profile.EditPhoneNumberDialog;
 import com.hdu.newe.here.page.main.profile.FeedbackDialog;
 import com.hdu.newe.here.page.main.profile.PersonalInfoActivity;
