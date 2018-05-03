@@ -1,0 +1,287 @@
+package com.hdu.newe.here.page.main.variousdata.student;
+
+
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.hdu.newe.here.R;
+import com.hdu.newe.here.biz.variousdata.student.bean.VariousDataBean;
+import com.hdu.newe.here.page.base.BaseFragment;
+import com.hdu.newe.here.page.main.variousdata.student.adapter.MyPagerAdapter;
+import com.hdu.newe.here.page.main.variousdata.student.bean.ExpandDataBean;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
+
+/**
+ * A simple {@link Fragment} subclass.
+ *
+ * @author pope
+ */
+public class VariousDataFragment extends BaseFragment<VariousDataContract.Presenter> implements VariousDataContract.View {
+
+
+    Unbinder unbinder;
+    @BindView(R.id.toolbar_data)
+    Toolbar toolbar;
+    @BindView(R.id.tablayout_various_data)
+    TabLayout tablayoutVariousData;
+    @BindView(R.id.viewpager_various_data)
+    ViewPager viewpagerVariousData;
+
+    private List<Fragment> fragmentList;
+    private List<String> titleList;
+    private MyPagerAdapter myPagerAdapter;
+
+    private AttendanceRateFragment attendanceRateFragment;
+    private HistoryDataFragment historyDataFragment;
+    private BuffDataFragment buffDataFragment;
+
+    private VariousDataContract.Presenter presenter;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_varioud_data, container, false);
+        unbinder = ButterKnife.bind(this, view);
+        initTab();
+        initToolbar();
+//        creatHistoryData();
+        return view;
+    }
+
+    /**
+     * 提供VariousDataFragment的实例
+     *
+     * @return VariousDataFragment实例
+     */
+    public static VariousDataFragment newInstance() {
+        VariousDataFragment fragment = new VariousDataFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    /**
+     * 初始化Toolbar
+     */
+    public void initToolbar() {
+
+        toolbar.setTitle("数据");
+        toolbar.setTitleTextColor(Color.parseColor("#ffffff"));
+    }
+
+    /**
+     * 初始化Tab
+     */
+    public void initTab() {
+
+        attendanceRateFragment = new AttendanceRateFragment();
+        historyDataFragment = new HistoryDataFragment();
+        buffDataFragment = new BuffDataFragment();
+
+        fragmentList = new ArrayList<>();
+        titleList = new ArrayList<>();
+        fragmentList.add(historyDataFragment);
+        fragmentList.add(attendanceRateFragment);
+        fragmentList.add(buffDataFragment);
+        titleList.add("历史数据");
+        titleList.add("出勤数据");
+        titleList.add("标识数据");
+        tablayoutVariousData.setTabMode(TabLayout.MODE_FIXED);
+        tablayoutVariousData.addTab(tablayoutVariousData.newTab().setText(titleList.get(0)));
+        tablayoutVariousData.addTab(tablayoutVariousData.newTab().setText(titleList.get(1)));
+        tablayoutVariousData.addTab(tablayoutVariousData.newTab().setText(titleList.get(2)));
+        myPagerAdapter = new MyPagerAdapter(getActivity().getSupportFragmentManager(), fragmentList, titleList);
+        viewpagerVariousData.setAdapter(myPagerAdapter);
+        tablayoutVariousData.setupWithViewPager(viewpagerVariousData);
+        viewpagerVariousData.setCurrentItem(1);
+        viewpagerVariousData.setOffscreenPageLimit(2);
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    /**
+     * 加载各种数据的V层逻辑
+     *
+     * @param variousDataBean 数据bean
+     */
+    @Override
+    public void loadVariousData(VariousDataBean variousDataBean) {
+
+        if (attendanceRateFragment == null) {
+            attendanceRateFragment = AttendanceRateFragment.newInstance();
+        }
+        if (historyDataFragment == null) {
+            historyDataFragment = HistoryDataFragment.newInstance();
+        }
+        if (buffDataFragment == null) {
+            buffDataFragment = BuffDataFragment.newInstance();
+        }
+        attendanceRateFragment.loadAttendanceRate(variousDataBean.getSubjectName(), variousDataBean.getAttendanceRate());
+        historyDataFragment.loadHistoryData(getExpandData(variousDataBean));
+        buffDataFragment.loadBuffData(variousDataBean.getBuffType(), variousDataBean.getAllAttendanceRate());
+    }
+
+    @Override
+    public void loadHistoryData(String objectId) {
+        presenter.getVariousData("eebc694aa0");
+    }
+
+    /**
+     * 将获取到的用户的各种数据拓展为ExpandDataBean
+     *
+     * @param variousDataBean 用户的VariousDataBean
+     * @return 返回被拓展后用于在收缩列表中显示的用户数据ExpandDataBean
+     */
+    public List<ExpandDataBean> getExpandData(VariousDataBean variousDataBean) {
+
+        List<ExpandDataBean> expandDataBeans = new ArrayList<>();
+
+        ExpandDataBean expandDataLeaveRequest = new ExpandDataBean();
+        ExpandDataBean expandDataWarning = new ExpandDataBean();
+        ExpandDataBean expandDataChange = new ExpandDataBean();
+
+        expandDataLeaveRequest.setExpand(false);
+        expandDataWarning.setExpand(false);
+        expandDataChange.setExpand(false);
+
+        expandDataLeaveRequest.setParentTitle("请假历史");
+        expandDataWarning.setParentTitle("警示历史");
+        expandDataChange.setParentTitle("手机更换历史");
+
+        expandDataLeaveRequest.setShowType(0);
+        expandDataWarning.setShowType(0);
+        expandDataChange.setShowType(0);
+
+        expandDataLeaveRequest.setID("0");
+        expandDataWarning.setID("1");
+        expandDataChange.setID("2");
+
+        expandDataLeaveRequest.setChildNum(variousDataBean.getLeaveRequestReason().size());
+        expandDataWarning.setChildNum(variousDataBean.getWarningContent().size());
+        expandDataChange.setChildNum(variousDataBean.getChangeHistoryContent().size());
+
+        expandDataLeaveRequest.setChildBean(variousDataBean);
+        expandDataWarning.setChildBean(variousDataBean);
+        expandDataChange.setChildBean(variousDataBean);
+
+        expandDataBeans.add(expandDataLeaveRequest);
+        expandDataBeans.add(expandDataWarning);
+        expandDataBeans.add(expandDataChange);
+
+
+        return expandDataBeans;
+    }
+
+    /**
+     * 创建测试数据
+     */
+    private void creatHistoryData() {
+
+        //出勤率的科目列表
+        List<String> subjectList = new ArrayList<>();
+        subjectList.add("高等数学");
+        subjectList.add("线性代数");
+        subjectList.add("大学物理");
+        subjectList.add("通信原理");
+        subjectList.add("数字信号处理");
+        subjectList.add("电路分析");
+
+        //出勤率列表
+        List<Number> rateList = new ArrayList<>();
+        rateList.add(80.26);
+        rateList.add(95.41);
+        rateList.add(100.00);
+        rateList.add(70.56);
+        rateList.add(69.95);
+        rateList.add(85.42);
+
+        //请假历史 内容
+        List<String> requestContent = new ArrayList<>();
+        requestContent.add("由于身体不适，想要去检查身体，特此请假，望批准。");
+        requestContent.add("家中突发急事，需要回家一趟，由于路途遥远，可能需要一个星期。希望得到老师批准！");
+        requestContent.add("发烧导致肺炎住院，需要请假直到病愈出院，希望老师能够批准");
+
+        //请假历史 类型
+        List<String> requestType = new ArrayList<>();
+        requestType.add("请病假");
+        requestType.add("请事假");
+        requestType.add("请病假");
+
+        //请假历史 状态
+        List<String> requestState = new ArrayList<>();
+        requestState.add("已驳回");
+        requestState.add("审核中");
+        requestState.add("已同意");
+
+        //请假历史 时间
+        List<String> requestTime = new ArrayList<>();
+        requestTime.add("2018年03月27日");
+        requestTime.add("2018年03月28日");
+        requestTime.add("2018年03月29日");
+
+        //手机更换历史 标题
+        List<String> changeTitle = new ArrayList<>();
+        changeTitle.add("更换手机至OPPO R20");
+        changeTitle.add("更换手机至HUAWEI NOVA2");
+
+        //手机更换历史内容
+        List<String> changeContent = new ArrayList<String>();
+        changeContent.add("谢君亮同学您好！你与2018年4月2日申请更换手机并审核通过，您学号15083111所绑定的IMEI序列号已由原本的OPPO R20：155430260119530264716644851203 已更换为HUAWEI NOVA2：862859033370590493175611485526 ,请悉知。");
+        changeContent.add("谢君亮同学您好！你与2018年1月16日申请更换手机并审核通过，您学号15083111所绑定的IMEI序列号已由原本的HONOR 7i:748955436211748556944321554141 已更换为OPPO R20：155430260119530264716644851203 ,请悉知。");
+
+        //警示历史 标题
+        List<String> warningTitle = new ArrayList<>();
+        warningTitle.add("警示：您最近有一节课未出勤");
+        warningTitle.add("警示：您最近有一节课未出勤");
+
+        //警示历史 内容
+        List<String> warningContent = new ArrayList<>();
+        warningContent.add("谢君亮同学您好！您最近一次的高等数学课点名未出勤。本次为系统第二次自动警示，累计三次后将经由辅导员发出警示。");
+        warningContent.add("谢君亮同学您好！您最近一次的线性代数课点名未出勤。本次为系统第一次自动警示，累计三次后将经由辅导员发出警示。");
+
+        VariousDataBean variousDataBean = new VariousDataBean();
+        variousDataBean.setSubjectName(subjectList);
+        variousDataBean.setAttendanceRate(rateList);
+        variousDataBean.setLeaveRequestReason(requestContent);
+        variousDataBean.setLeaveRequestState(requestState);
+        variousDataBean.setLeaveRequestType(requestType);
+        variousDataBean.setLeaveRequestTime(requestTime);
+        variousDataBean.setWarningTitle(warningTitle);
+        variousDataBean.setBuffType(VariousDataBean.BUFF_TYPE_IRRESOLUTION);
+        variousDataBean.setAllAttendanceRate(90.45);
+        variousDataBean.setWarningContent(warningContent);
+        variousDataBean.setChangeHistoryTitle(changeTitle);
+        variousDataBean.setChangeHistoryContent(changeContent);
+        variousDataBean.save(new SaveListener<String>() {
+            @Override
+            public void done(String s, BmobException e) {
+                if (e == null) {
+                    showMessage("数据创建成功！");
+                } else {
+                    showMessage("创建失败 错误原因：" + e.getMessage());
+                }
+            }
+        });
+    }
+}

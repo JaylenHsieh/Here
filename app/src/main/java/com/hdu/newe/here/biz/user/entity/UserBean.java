@@ -16,7 +16,7 @@ public class UserBean extends BmobObject {
 
     /**
      * 用户数据表关键字
-     * 姓名 学/工号 班级 班级号 专业 学院 手机序列号 辅导员 是否为教师 头像 课程列表
+     * 姓名 学/工号 班级 班级号 专业 学院 辅导员 手机序列号 是否为教师 是否为辅导员 头像 所带班级列表 任课列表
      */
     private String userName;
     private String userNumber;
@@ -27,8 +27,26 @@ public class UserBean extends BmobObject {
     private String userInstructor;
     private String imei;
     private boolean isTeacher;
+    private boolean isInstructor;
     private URL userAvatar;
+    private List<String> classList;
     private List<String> subjectList;
+
+    public List<String> getClassList() {
+        return classList;
+    }
+
+    public void setClassList(List<String> classList) {
+        this.classList = classList;
+    }
+
+    public boolean isInstructor() {
+        return isInstructor;
+    }
+
+    public void setInstructor(boolean instructor) {
+        isInstructor = instructor;
+    }
 
     public String getUserName() {
         return userName;

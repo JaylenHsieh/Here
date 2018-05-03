@@ -14,6 +14,9 @@ import cn.bmob.v3.datatype.BmobGeoPoint;
 
 public class SignInDataBean extends BmobObject {
 
+    public final static int LIST_TYPE_LEAVEREQUEST = 6;
+    public final static int LIST_TYPE_ABSENT = 9;
+
     /**
      * 该课在课程数据表中的objectId
      */
@@ -35,6 +38,16 @@ public class SignInDataBean extends BmobObject {
     private boolean isChecking;
 
     /**
+     * 请假学生列表
+     */
+    private List<String> leaveRequestStudentList;
+
+    /**
+     * 旷课学生列表
+     */
+    private List<String> absentStudentList;
+
+    /**
      * 该课发起点名的时间
      */
     private BmobDate checkTime;
@@ -43,6 +56,35 @@ public class SignInDataBean extends BmobObject {
      * 该课发起点名的位置
      */
     private BmobGeoPoint checkLocation;
+
+    /**
+     * 第几次考勤
+     */
+    private Number checkCount;
+
+    public Number getCheckCount() {
+        return checkCount;
+    }
+
+    public void setCheckCount(Number checkCount) {
+        this.checkCount = checkCount;
+    }
+
+    public List<String> getLeaveRequestStudentList() {
+        return leaveRequestStudentList;
+    }
+
+    public void setLeaveRequestStudentList(List<String> leaveRequestStudentList) {
+        this.leaveRequestStudentList = leaveRequestStudentList;
+    }
+
+    public List<String> getAbsentStudentList() {
+        return absentStudentList;
+    }
+
+    public void setAbsentStudentList(List<String> absentStudentList) {
+        this.absentStudentList = absentStudentList;
+    }
 
     public String getSubjectId() {
         return subjectId;
