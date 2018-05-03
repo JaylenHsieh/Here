@@ -14,15 +14,13 @@ import cn.bmob.v3.datatype.BmobGeoPoint;
 
 public class SignInDataBean extends BmobObject {
 
-    /**
-     * 该课在课程数据表中的objectId
-     */
-    private String subjectId;
+    public final static int LIST_TYPE_LEAVEREQUEST = 6;
+    public final static int LIST_TYPE_ABSENT = 9;
 
     /**
-     * 该课发起签到的老师的UserBean的objectId
+     * 课程编码
      */
-    private String initiator;
+    private String subjectCode;
 
     /**
      * 该课拥有的学生名单 其中保存的是学生在UserBean中objectId
@@ -35,6 +33,16 @@ public class SignInDataBean extends BmobObject {
     private boolean isChecking;
 
     /**
+     * 请假学生列表
+     */
+    private List<String> leaveRequestStudentList;
+
+    /**
+     * 旷课学生列表
+     */
+    private List<String> absentStudentList;
+
+    /**
      * 该课发起点名的时间
      */
     private BmobDate checkTime;
@@ -44,20 +52,41 @@ public class SignInDataBean extends BmobObject {
      */
     private BmobGeoPoint checkLocation;
 
-    public String getSubjectId() {
-        return subjectId;
+    /**
+     * 第几次考勤
+     */
+    private Number checkCount;
+
+    public Number getCheckCount() {
+        return checkCount;
     }
 
-    public void setSubjectId(String subjectId) {
-        this.subjectId = subjectId;
+    public void setCheckCount(Number checkCount) {
+        this.checkCount = checkCount;
     }
 
-    public String getInitiator() {
-        return initiator;
+    public List<String> getLeaveRequestStudentList() {
+        return leaveRequestStudentList;
     }
 
-    public void setInitiator(String initiator) {
-        this.initiator = initiator;
+    public void setLeaveRequestStudentList(List<String> leaveRequestStudentList) {
+        this.leaveRequestStudentList = leaveRequestStudentList;
+    }
+
+    public List<String> getAbsentStudentList() {
+        return absentStudentList;
+    }
+
+    public void setAbsentStudentList(List<String> absentStudentList) {
+        this.absentStudentList = absentStudentList;
+    }
+
+    public String getSubjectCode() {
+        return subjectCode;
+    }
+
+    public void setSubjectCode(String subjectCode) {
+        this.subjectCode = subjectCode;
     }
 
     public List<String> getStudentList() {

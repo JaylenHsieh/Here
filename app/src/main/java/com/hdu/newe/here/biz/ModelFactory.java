@@ -4,10 +4,10 @@ import android.content.Context;
 
 import com.hdu.newe.here.biz.user.UserInterface;
 import com.hdu.newe.here.biz.user.UserLogic;
-import com.hdu.newe.here.biz.variousdata.VariousDataInterface;
-import com.hdu.newe.here.biz.variousdata.VariousDataLogic;
-
-import java.lang.ref.WeakReference;
+import com.hdu.newe.here.biz.variousdata.student.VariousDataInterface;
+import com.hdu.newe.here.biz.variousdata.student.VariousDataLogic;
+import com.hdu.newe.here.biz.variousdata.teacher.VariousDataInterfaceT;
+import com.hdu.newe.here.biz.variousdata.teacher.VariousDataLogicT;
 
 /**
  *
@@ -26,8 +26,13 @@ public class ModelFactory {
         return VariousDataLogic.getInstance();
     }
 
+    public static VariousDataInterfaceT getVariousDataInterfaceT(){
+        return VariousDataLogicT.getINSTANCE();
+    }
+
     public static UserInterface getUserInterface() {
         return UserLogic.getInstance();
     }
+
 
 }

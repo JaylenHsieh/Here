@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.hdu.newe.here.page.main.variousdata.BuffDataFragment">
+    tools:context="com.hdu.newe.here.page.main.variousdata.student.BuffDataFragment">
 
     <ImageView
         android:id="@+id/imageview_bg_buff"

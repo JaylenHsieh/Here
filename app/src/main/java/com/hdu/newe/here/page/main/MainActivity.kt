@@ -13,8 +13,8 @@ import com.hdu.newe.here.page.main.login.LoginActivity
 import com.hdu.newe.here.page.main.profile.ProfileFragment
 import com.hdu.newe.here.page.main.profile.ProfilePresenter
 import com.hdu.newe.here.page.main.signin.LBSFragment
-import com.hdu.newe.here.page.main.variousdata.VariousDataFragment
-import com.hdu.newe.here.page.main.variousdata.VariousDataPresenter
+import com.hdu.newe.here.page.main.variousdata.teacher.VariousDataFragmentT
+import com.hdu.newe.here.page.main.variousdata.teacher.VariousDataPresenterT
 import com.hdu.newe.here.utils.UIUtils
 import com.jonnyhsia.uilib.widget.BottomNavigation
 import kotlinx.android.synthetic.main.activity_main.*
@@ -23,7 +23,7 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
-    private var currentPos=0
+    private var currentPos = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
@@ -83,9 +83,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
-        if (currentPos == 0){
+        if (currentPos == 0) {
             val fragment = findOrGenerateFragment(0) as LBSFragment
-            if (fragment.isDispaly){
+            if (fragment.isDispaly) {
                 fragment.changeVisibility()
                 return false
             }
@@ -109,7 +109,8 @@ class MainActivity : AppCompatActivity() {
          */
         return when (pos) {
             0 -> LBSFragment()
-            1 -> VariousDataFragment().also { VariousDataPresenter(it) }
+            1 -> VariousDataFragmentT().also { VariousDataPresenterT(it) }
+//            1 -> VariousDataFragment().also { VariousDataPresenter(it) }
             3 -> Fragment()
             4 -> ProfileFragment().also { ProfilePresenter(it) }
             else -> throw Exception("Position 不可以是 0,1,3,4 以外的数")
