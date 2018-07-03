@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="16dp"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:id="@+id/personal_info"
+        style="@style/FunctionLayout">
+
+        <ImageView
+            android:id="@+id/ic_personal_info_new"
+            style="@style/FunctionNew" />
+
+        <ImageView
+            android:id="@+id/ic_personal_info"
+            style="@style/FunctionImage"
+            android:src="@mipmap/ic_personal_info" />
+
+        <TextView
+            android:id="@+id/tv_personal_info"
+            style="@style/FunctionName"
+            android:text="@string/personal_info" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/change_phone"
+        style="@style/FunctionLayout">
+
+        <ImageView
+            android:id="@+id/ic_change_phone_new"
+            style="@style/FunctionNew" />
+
+        <ImageView
+            android:id="@+id/ic_change_phone"
+            style="@style/FunctionImage"
+            android:src="@mipmap/ic_change_phone" />
+
+        <TextView
+            android:id="@+id/tv_change_phone"
+            style="@style/FunctionName"
+            android:text="@string/change_phone" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/common_question"
+        style="@style/FunctionLayout">
+
+        <ImageView
+            android:id="@+id/ic_common_question_new"
+            style="@style/FunctionNew" />
+
+        <ImageView
+            android:id="@+id/ic_common_question"
+            style="@style/FunctionImage"
+            android:src="@mipmap/ic_question" />
+
+        <TextView
+            android:id="@+id/tv_common_question"
+            style="@style/FunctionName"
+            android:text="@string/common_question" />
+
+    </LinearLayout>
+
+</LinearLayout>

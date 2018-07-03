@@ -44,7 +44,7 @@ class LoginFragment : BaseFragment<LoginContract.Presenter>(), LoginContract.Vie
         }
 
         checkStatus.setOnCheckedChangeListener{ buttonView,isChecked ->
-            if (isChecked == true){
+            if (isChecked){
                 tvUserNumber.text = "工号:"
             }else{
                 tvUserNumber.text = "学号:"

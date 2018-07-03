@@ -37,4 +37,12 @@
     <string name="question">Q&amp;A</string>
     <string name="write_question">我也要提交Q&amp;A</string>
     <string name="read_question">我还要看看Q&amp;A</string>
+
+    <string name="personal_info">个人信息</string>
+    <string name="change_phone">更换手机</string>
+    <string name="common_question">常见问题</string>
+    <string name="logout">退出账号</string>
+    <string name="check_update">检查更新</string>
+    <string name="about_us">关于我们</string>
+    <string name="feedback">意见反馈</string>
 </resources>

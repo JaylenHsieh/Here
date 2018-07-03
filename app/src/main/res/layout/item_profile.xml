@@ -1,25 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:paddingStart="20dp"
-    android:paddingEnd="0dp"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp"
-    android:layout_marginBottom="12dp">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
 
     <ImageView
         android:id="@+id/ic_function"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:src="@mipmap/ic_eip"/>
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="12dp"
+        tool:src="@drawable/ic_logout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ic_new_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        app:layout_constraintStart_toStartOf="@+id/ic_function"
+        app:layout_constraintTop_toTopOf="parent"
+        tool:src="@drawable/ic_new" />
 
     <TextView
         android:id="@+id/name_function"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="个人资料"/>
+        style="@style/FunctionName"
+        android:text="个人资料"
+        app:layout_constraintEnd_toEndOf="@+id/ic_function"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/ic_function"
+        app:layout_constraintTop_toBottomOf="@+id/ic_function" />
 
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

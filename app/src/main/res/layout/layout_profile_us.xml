@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="16dp"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:id="@+id/feedback"
+        style="@style/FunctionLayout">
+
+        <ImageView
+            android:id="@+id/ic_feedback_new"
+            style="@style/FunctionNew" />
+
+        <ImageView
+            android:id="@+id/ic_feedback"
+            style="@style/FunctionImage"
+            android:src="@mipmap/ic_feedback" />
+
+        <TextView
+            android:id="@+id/tv_feedback"
+            style="@style/FunctionName"
+            android:text="@string/feedback" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/check_update"
+        style="@style/FunctionLayout">
+
+        <ImageView
+            android:id="@+id/ic_check_update_new"
+            style="@style/FunctionNew" />
+
+        <ImageView
+            android:id="@+id/ic_check_update"
+            style="@style/FunctionImage"
+            android:src="@mipmap/ic_check_update" />
+
+        <TextView
+            android:id="@+id/tv_check_update"
+            style="@style/FunctionName"
+            android:text="@string/check_update" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/about_us"
+        style="@style/FunctionLayout">
+
+        <ImageView
+            android:id="@+id/ic_about_us_new"
+            style="@style/FunctionNew"
+            android:visibility="visible"/>
+
+        <ImageView
+            android:id="@+id/ic_about_us"
+            style="@style/FunctionImage"
+            android:src="@mipmap/ic_about_us" />
+
+        <TextView
+            android:id="@+id/tv_about_us"
+            style="@style/FunctionName"
+            android:text="@string/about_us" />
+
+    </LinearLayout>
+
+</LinearLayout>
