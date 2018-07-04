@@ -67,7 +67,8 @@
             android:process=":remote" />
 
         <activity android:name=".page.main.profile.PersonalInfoActivity" />
-        <activity android:name=".page.main.profile.QuestionActivity"/>
+        <activity android:name=".page.main.profile.QuestionActivity" />
+        <activity android:name=".page.main.profile.AboutUsActivity"></activity>
     </application>
 
 </manifest>

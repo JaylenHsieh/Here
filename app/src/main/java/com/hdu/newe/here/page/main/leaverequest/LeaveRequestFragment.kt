@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.support.v7.widget.Toolbar
 
 import com.hdu.newe.here.R
 import com.hdu.newe.here.utils.AdvancedTimePicker
@@ -20,7 +21,15 @@ class LeaveRequestFragment : Fragment(), View.OnClickListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_leave_request, container, false)
+        val view = inflater.inflate(R.layout.fragment_leave_request, container, false)
+        val mToolbar = view.findViewById<Toolbar>(R.id.toolbar)
+        mToolbar.setNavigationOnClickListener(){
+//            val fragmentTransaction = fragmentManager!!.beginTransaction()
+//            fragmentTransaction.remove(this)
+//            fragmentTransaction.commit()
+            activity?.finish()
+        }
+        return view
     }
 
     override fun onResume() {

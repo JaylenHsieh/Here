@@ -51,7 +51,8 @@
 
         <ImageView
             android:id="@+id/ic_common_question_new"
-            style="@style/FunctionNew" />
+            style="@style/FunctionNew"
+            android:visibility="visible"/>
 
         <ImageView
             android:id="@+id/ic_common_question"

@@ -14,7 +14,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-    
+
     <style name="AppTheme.NoTitle.SplashScreen">
         <item name="android:windowBackground">@drawable/img_splash</item>
         <item name="android:windowFullscreen">true</item>
@@ -47,7 +47,28 @@
         <item name="android:textSize">13sp</item>
         <item name="sectionType">header</item>
     </style>
-    
+
+    <style name="Text">
+        <item name="android:textColor">@color/textPrimary</item>
+    </style>
+
+    <style name="Text.Button">
+        <item name="android:textColor">@drawable/selector_button_text</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:clickable">true</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:focusable">true</item>
+        <item name="android:minWidth">44dp</item>
+        <item name="android:minHeight">44dp</item>
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:letterSpacing">0.02</item>
+    </style>
+    <style name="Text.Button.Highlight">
+        <item name="android:textColor">@drawable/selector_button_text_highlight</item>
+    </style>
+
     <style name="FunctionImage">
         <item name="android:layout_width">56dp</item>
         <item name="android:layout_height">56dp</item>
@@ -68,6 +89,7 @@
         <item name="android:src">@drawable/ic_new</item>
         <item name="android:visibility">invisible</item>
     </style>
+
 
     <style name="FunctionLayout">
         <item name="android:layout_height">wrap_content</item>
