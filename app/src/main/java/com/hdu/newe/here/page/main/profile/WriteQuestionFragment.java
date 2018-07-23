@@ -10,8 +10,10 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hdu.newe.here.R;
+import com.hdu.newe.here.biz.profile.bean.QandA;
 import com.hdu.newe.here.utils.GifSizeFilter;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
@@ -22,6 +24,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
 
 /**
  * @author Jaylen Hsieh
@@ -31,14 +35,14 @@ public class WriteQuestionFragment extends Fragment {
 
     private static final int REQUEST_CODE_CHOOSE = 23;
 
-    @BindView(R.id.btnSaveStory)
-    TextView mBtnSaveStory;
-    @BindView(R.id.btnPublishStory)
-    TextView mBtnPublishStory;
-    @BindView(R.id.inputStoryTitle)
-    EditText mInputStoryTitle;
-    @BindView(R.id.inputStoryContent)
-    EditText mInputStoryContent;
+    @BindView(R.id.btnSaveQA)
+    TextView mBtnSaveQA;
+    @BindView(R.id.btnPublishQA)
+    TextView mBtnPublishQA;
+    @BindView(R.id.inputQATitle)
+    EditText mInputQATitle;
+    @BindView(R.id.inputQAContent)
+    EditText mInputQAContent;
     @BindView(R.id.layout_add_image)
     LinearLayout mLayoutAddImage;
     Unbinder unbinder;
@@ -65,17 +69,37 @@ public class WriteQuestionFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
 
-    @OnClick({R.id.btnSaveStory, R.id.btnPublishStory, R.id.layout_add_image})
+    @OnClick({R.id.btnSaveQA, R.id.btnPublishQA, R.id.layout_add_image})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.btnSaveStory:
+            case R.id.btnSaveQA:
+                mInputQATitle.setText("");
+                mInputQAContent.setText("");
                 break;
-            case R.id.btnPublishStory:
+            case R.id.btnPublishQA:
+                QandA qa = new QandA(mInputQATitle.getText().toString(),
+                        mInputQAContent.getText().toString());
+                qa.save(new SaveListener<String>() {
+                    @Override
+                    public void done(String objectId,BmobException e) {
+                        if(e==null){
+                            Toast.makeText(getActivity(), "提交成功,去问题列表下拉刷新", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(getActivity(), "提交失败", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
                 break;
             case R.id.layout_add_image:
                 Matisse

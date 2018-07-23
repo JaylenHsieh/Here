@@ -17,6 +17,7 @@ import com.hdu.newe.here.biz.profile.bean.QandA
 import com.hdu.newe.here.page.main.profile.adapter.QandAViewBinder
 import com.hdu.newe.here.utils.notifyItemChanged
 import com.hdu.newe.here.utils.query
+import kotlinx.android.synthetic.main.fragment_read_question.*
 import me.drakeet.multitype.MultiTypeAdapter
 import me.drakeet.multitype.register
 import java.util.*
@@ -49,6 +50,7 @@ class ReadQuestionFragment : Fragment() {
             adapter = qaAdapter
         }
         fetchQAList()
+        layout_refresh?.setOnRefreshListener { fetchQAList() }
         return view
     }
 

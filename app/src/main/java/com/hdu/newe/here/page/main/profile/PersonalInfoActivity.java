@@ -100,9 +100,9 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 mTvUserName.setFocusable(true);
                 mTvUserName.setFocusableInTouchMode(true);
                 mTvUserName.requestFocus();
-                mTvUserNumber.setFocusable(true);
-                mTvUserNumber.setFocusableInTouchMode(true);
-                mTvUserNumber.requestFocus();
+//                mTvUserNumber.setFocusable(true);
+//                mTvUserNumber.setFocusableInTouchMode(true);
+//                mTvUserNumber.requestFocus();
                 mTvStuFaculty.setFocusable(true);
                 mTvStuFaculty.setFocusableInTouchMode(true);
                 mTvStuFaculty.requestFocus();
@@ -125,7 +125,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 UserBean user = new UserBean();
 
                 user.setUserName(mTvUserName.getText().toString());
-                user.setUserNumber(mTvUserNumber.getText().toString());
+                //user.setUserNumber(mTvUserNumber.getText().toString());
                 user.setUserMajor(mTvStuSpeciality.getText().toString());
                 user.setUserCollege(mTvStuFaculty.getText().toString());
                 user.setUserClass(mTvStuClass.getText().toString());
