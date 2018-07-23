@@ -61,4 +61,6 @@
         并且每学期你有且仅有一次机会更改手机绑定，所以请不要好心地帮同学签到导致自己不能签到了.</string>
 
     <string name="error_gif">x or y bound size should be at least %1$dpx and file size should be no more than %2$sM</string>
+
+    <string name="have_not_submit">暂未提交</string>
 </resources>
