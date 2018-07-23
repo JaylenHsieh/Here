@@ -15,6 +15,8 @@
     <!-- 获取设备的网络状态，鉴权所需网络代理,用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- 允许sd卡写权限，需写入地图数据，禁用后无法显示地图,用于写入离线定位数据 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <!-- 允许sd卡读权限，用于用户反馈时读取多媒体数据-->
     <uses-permission
         android:name="android.permission.WRITE_SETTINGS"
         tools:ignore="ProtectedPermissions" />

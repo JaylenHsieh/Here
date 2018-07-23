@@ -16,10 +16,16 @@ import com.hdu.newe.here.biz.user.entity.UserBean
 import com.hdu.newe.here.page.base.BaseFragment
 import com.hdu.newe.here.utils.takeString
 import kotlinx.android.synthetic.main.fragment_login.*
+import pub.devrel.easypermissions.EasyPermissions
 import kotlin.properties.Delegates
+import android.Manifest.permission.*
+import pub.devrel.easypermissions.AfterPermissionGranted
+import pub.devrel.easypermissions.AppSettingsDialog
 
 
-class LoginFragment : BaseFragment<LoginContract.Presenter>(), LoginContract.View {
+class LoginFragment : BaseFragment<LoginContract.Presenter>(),
+        LoginContract.View,
+        EasyPermissions.PermissionCallbacks {
 
     private var user: UserBean by Delegates.notNull()
 
@@ -29,6 +35,7 @@ class LoginFragment : BaseFragment<LoginContract.Presenter>(), LoginContract.Vie
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_login, container, false)
+        requestPermission()
         return view
     }
 
@@ -43,18 +50,31 @@ class LoginFragment : BaseFragment<LoginContract.Presenter>(), LoginContract.Vie
             tvIMEI.text = getImei()
         }
 
-        checkStatus.setOnCheckedChangeListener{ buttonView,isChecked ->
-            if (isChecked){
+
+
+        checkStatus.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
                 tvUserNumber.text = "工号:"
-            }else{
+            } else {
                 tvUserNumber.text = "学号:"
             }
         }
 
+        checkIsRead.setOnCheckedChangeListener { _, isChecked ->
+                btnLogin.isEnabled = isChecked
+        }
+
+
         //TODO 用户须知的checkbox设为不可点击
         //TODO 用户须知点击监听 跳转至LoginNoticeFragemnt
         //TODO 创建一个public的方法用来传递用户是否完成《用户须知》的阅读 传递参数 boolean isRead
-
+        checkIsRead.setOnClickListener {
+//            activity?.supportFragmentManager
+//                    ?.beginTransaction()
+//                    ?.add(R.id.container, LoginNoticeFragment())
+//                    ?.commit()
+            LoginNoticeBottomSheetFragment().show(activity!!.supportFragmentManager, "dialog")
+        }
     }
 
     override fun render() {
@@ -70,30 +90,64 @@ class LoginFragment : BaseFragment<LoginContract.Presenter>(), LoginContract.Vie
 //        }
     }
 
+    @AfterPermissionGranted(PERMISSION_REQUEST)
+    fun requestPermission() {
+        val perms = arrayOf(
+                // 需要申请的权限，虽然有点多，但是都是必要权限，我们不是流氓软件
+                android.Manifest.permission.READ_PHONE_STATE,
+                android.Manifest.permission.ACCESS_FINE_LOCATION,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                android.Manifest.permission.CAMERA)
+        if (EasyPermissions.hasPermissions(context!!, *perms)) {
+            tvIMEI?.text = getImei()
+        } else {
+            Toast.makeText(context, "权限被拒绝，我们需要你的电话权限来获取IMEI", Toast.LENGTH_SHORT).show()
+            AppSettingsDialog.Builder(this).build().show()
+        }
+    }
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         if (requestCode == PERMISSION_REQUEST_READ_PHONE_STATE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                tvIMEI.setText(getImei())
+                tvIMEI.text = getImei()
             } else {
                 Toast.makeText(context, "权限被拒绝，我们需要你的电话权限来获取IMEI", Toast.LENGTH_SHORT).show()
+                AppSettingsDialog.Builder(this).build().show()
             }
             return
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
-    private fun getImei() :String{
+
+    /**
+     * 获取手机 IMEI
+     */
+    private fun getImei(): String {
         val telManager: TelephonyManager = context?.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
         try {
             return telManager.deviceId
-        }catch (e:SecurityException){
+        } catch (e: SecurityException) {
             e.printStackTrace()
         }
         return "未获取到您的IMEI，请确保你的手机状态正常"
     }
 
-    override fun loginSucceed(){
+    override fun loginSucceed() {
         activity?.finish()
     }
 
+    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
+        Toast.makeText(context, "权限被拒绝，我们需要你的电话权限来获取IMEI", Toast.LENGTH_SHORT).show()
+        AppSettingsDialog.Builder(this).build().show()
+    }
+
+    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
+        tvIMEI.text = getImei()
+    }
+
+    companion object {
+        private const val PERMISSION_REQUEST = 111
+    }
 }
