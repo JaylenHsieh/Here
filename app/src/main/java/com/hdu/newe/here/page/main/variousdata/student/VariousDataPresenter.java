@@ -2,6 +2,7 @@ package com.hdu.newe.here.page.main.variousdata.student;
 
 import com.hdu.newe.here.biz.ModelFactory;
 import com.hdu.newe.here.biz.variousdata.student.VariousDataInterface;
+import com.hdu.newe.here.biz.variousdata.student.bean.LeaveRequestBean;
 import com.hdu.newe.here.biz.variousdata.student.bean.VariousDataBean;
 import com.hdu.newe.here.page.base.BasePresenterImpl;
 
@@ -24,17 +25,17 @@ public class VariousDataPresenter extends BasePresenterImpl implements VariousDa
     @Override
     public void onCreate() {
         super.onCreate();
-        getVariousData("eebc694aa0");
+        getVariousData();
     }
 
     @Override
-    public void getVariousData(String objectId) {
+    public void getVariousData() {
 
-        variousDataInterface.getAttendanceData(objectId, new VariousDataInterface.OnVariousDataCallback() {
+        variousDataInterface.getAttendanceData(new VariousDataInterface.OnVariousDataCallback() {
 
             @Override
-            public void onGetSuccess(VariousDataBean variousDataBean) {
-                view.loadVariousData(variousDataBean);
+            public void onGetSuccess(VariousDataBean variousDataBean, LeaveRequestBean leaveRequestBean) {
+                view.loadVariousData(variousDataBean, leaveRequestBean);
             }
 
             @Override

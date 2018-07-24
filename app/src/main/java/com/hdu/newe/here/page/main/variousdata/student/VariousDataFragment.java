@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hdu.newe.here.R;
+import com.hdu.newe.here.biz.variousdata.student.bean.LeaveRequestBean;
 import com.hdu.newe.here.biz.variousdata.student.bean.VariousDataBean;
 import com.hdu.newe.here.page.base.BaseFragment;
 import com.hdu.newe.here.page.main.variousdata.student.adapter.MyPagerAdapter;
@@ -51,6 +52,10 @@ public class VariousDataFragment extends BaseFragment<VariousDataContract.Presen
     private BuffDataFragment buffDataFragment;
 
     private VariousDataContract.Presenter presenter;
+
+    private int loadingFlag = 0;
+    private VariousDataBean variousDataBean = null;
+    private LeaveRequestBean leaveRequestBean = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -126,25 +131,39 @@ public class VariousDataFragment extends BaseFragment<VariousDataContract.Presen
      * @param variousDataBean 数据bean
      */
     @Override
-    public void loadVariousData(VariousDataBean variousDataBean) {
+    public void loadVariousData(VariousDataBean variousDataBean, LeaveRequestBean leaveRequestBean) {
 
-        if (attendanceRateFragment == null) {
-            attendanceRateFragment = AttendanceRateFragment.newInstance();
+        if (variousDataBean != null) {
+            if (attendanceRateFragment == null) {
+                attendanceRateFragment = AttendanceRateFragment.newInstance();
+            }
+            if (buffDataFragment == null) {
+                buffDataFragment = BuffDataFragment.newInstance();
+            }
+            attendanceRateFragment.loadAttendanceRate(variousDataBean.getSubjectName(), variousDataBean.getAttendanceRate());
+            buffDataFragment.loadBuffData(variousDataBean.getBuffType(), variousDataBean.getAllAttendanceRate());
+            this.variousDataBean = variousDataBean;
+            loadingFlag++;
         }
-        if (historyDataFragment == null) {
-            historyDataFragment = HistoryDataFragment.newInstance();
+        if (leaveRequestBean != null) {
+            this.leaveRequestBean = leaveRequestBean;
+            loadingFlag++;
         }
-        if (buffDataFragment == null) {
-            buffDataFragment = BuffDataFragment.newInstance();
+        if (loadingFlag == 2){
+            if (historyDataFragment == null) {
+                historyDataFragment = HistoryDataFragment.newInstance();
+            }
+            historyDataFragment.loadHistoryData(getExpandData(this.variousDataBean, this.leaveRequestBean));
+            this.loadingFlag = 0;
+            this.variousDataBean = null;
+            this.leaveRequestBean = null;
         }
-        attendanceRateFragment.loadAttendanceRate(variousDataBean.getSubjectName(), variousDataBean.getAttendanceRate());
-        historyDataFragment.loadHistoryData(getExpandData(variousDataBean));
-        buffDataFragment.loadBuffData(variousDataBean.getBuffType(), variousDataBean.getAllAttendanceRate());
+
     }
 
     @Override
     public void loadHistoryData(String objectId) {
-        presenter.getVariousData("eebc694aa0");
+        presenter.getVariousData();
     }
 
     /**
@@ -153,7 +172,7 @@ public class VariousDataFragment extends BaseFragment<VariousDataContract.Presen
      * @param variousDataBean 用户的VariousDataBean
      * @return 返回被拓展后用于在收缩列表中显示的用户数据ExpandDataBean
      */
-    public List<ExpandDataBean> getExpandData(VariousDataBean variousDataBean) {
+    public List<ExpandDataBean> getExpandData(VariousDataBean variousDataBean, LeaveRequestBean leaveRequestBean) {
 
         List<ExpandDataBean> expandDataBeans = new ArrayList<>();
 
@@ -177,11 +196,15 @@ public class VariousDataFragment extends BaseFragment<VariousDataContract.Presen
         expandDataWarning.setID("1");
         expandDataChange.setID("2");
 
-        expandDataLeaveRequest.setChildNum(variousDataBean.getLeaveRequestReason().size());
+        expandDataLeaveRequest.setChildNum(leaveRequestBean.getLeaveRequestReason().size());
         expandDataWarning.setChildNum(variousDataBean.getWarningContent().size());
-        expandDataChange.setChildNum(variousDataBean.getChangeHistoryContent().size());
+        expandDataChange.setChildNum(variousDataBean.getNewPhone().size());
 
-        expandDataLeaveRequest.setChildBean(variousDataBean);
+        expandDataLeaveRequest.setLeaveRequestReason(leaveRequestBean.getLeaveRequestReason());
+        expandDataLeaveRequest.setLeaveRequestState(leaveRequestBean.getLeaveRequestState());
+        expandDataLeaveRequest.setLeaveRequestTime(leaveRequestBean.getLeaveRequestTime());
+        expandDataLeaveRequest.setLeaveRequestType(leaveRequestBean.getLeaveRequestType());
+
         expandDataWarning.setChildBean(variousDataBean);
         expandDataChange.setChildBean(variousDataBean);
 
@@ -216,39 +239,22 @@ public class VariousDataFragment extends BaseFragment<VariousDataContract.Presen
         rateList.add(69.95);
         rateList.add(85.42);
 
-        //请假历史 内容
-        List<String> requestContent = new ArrayList<>();
-        requestContent.add("由于身体不适，想要去检查身体，特此请假，望批准。");
-        requestContent.add("家中突发急事，需要回家一趟，由于路途遥远，可能需要一个星期。希望得到老师批准！");
-        requestContent.add("发烧导致肺炎住院，需要请假直到病愈出院，希望老师能够批准");
-
-        //请假历史 类型
-        List<String> requestType = new ArrayList<>();
-        requestType.add("请病假");
-        requestType.add("请事假");
-        requestType.add("请病假");
-
-        //请假历史 状态
-        List<String> requestState = new ArrayList<>();
-        requestState.add("已驳回");
-        requestState.add("审核中");
-        requestState.add("已同意");
-
-        //请假历史 时间
-        List<String> requestTime = new ArrayList<>();
-        requestTime.add("2018年03月27日");
-        requestTime.add("2018年03月28日");
-        requestTime.add("2018年03月29日");
-
-        //手机更换历史 标题
-        List<String> changeTitle = new ArrayList<>();
-        changeTitle.add("更换手机至OPPO R20");
-        changeTitle.add("更换手机至HUAWEI NOVA2");
-
-        //手机更换历史内容
-        List<String> changeContent = new ArrayList<String>();
-        changeContent.add("谢君亮同学您好！你与2018年4月2日申请更换手机并审核通过，您学号15083111所绑定的IMEI序列号已由原本的OPPO R20：155430260119530264716644851203 已更换为HUAWEI NOVA2：862859033370590493175611485526 ,请悉知。");
-        changeContent.add("谢君亮同学您好！你与2018年1月16日申请更换手机并审核通过，您学号15083111所绑定的IMEI序列号已由原本的HONOR 7i:748955436211748556944321554141 已更换为OPPO R20：155430260119530264716644851203 ,请悉知。");
+        //手机更换历史
+        List<String> changeOldIMEI = new ArrayList<>();
+        List<String> changeNewIMEI = new ArrayList<>();
+        List<String> changeOldPhone = new ArrayList<>();
+        List<String> changeNewPhone = new ArrayList<>();
+        List<String> changeTime = new ArrayList<>();
+        changeNewIMEI.add("12345678");
+        changeNewIMEI.add("98765432");
+        changeOldIMEI.add("87654321");
+        changeOldIMEI.add("23456789");
+        changeOldPhone.add("HONOR8 Lite");
+        changeOldPhone.add("HUAWEI NOVA2");
+        changeNewPhone.add("HUAWEI NOVA2");
+        changeNewPhone.add("VIVO Find X");
+        changeTime.add("2017年10月25日");
+        changeTime.add("2018年4月8日");
 
         //警示历史 标题
         List<String> warningTitle = new ArrayList<>();
@@ -263,25 +269,68 @@ public class VariousDataFragment extends BaseFragment<VariousDataContract.Presen
         VariousDataBean variousDataBean = new VariousDataBean();
         variousDataBean.setSubjectName(subjectList);
         variousDataBean.setAttendanceRate(rateList);
-        variousDataBean.setLeaveRequestReason(requestContent);
-        variousDataBean.setLeaveRequestState(requestState);
-        variousDataBean.setLeaveRequestType(requestType);
-        variousDataBean.setLeaveRequestTime(requestTime);
         variousDataBean.setWarningTitle(warningTitle);
         variousDataBean.setBuffType(VariousDataBean.BUFF_TYPE_IRRESOLUTION);
         variousDataBean.setAllAttendanceRate(90.45);
         variousDataBean.setWarningContent(warningContent);
-        variousDataBean.setChangeHistoryTitle(changeTitle);
-        variousDataBean.setChangeHistoryContent(changeContent);
+        variousDataBean.setOldIMEI(changeOldIMEI);
+        variousDataBean.setOldPhone(changeOldPhone);
+        variousDataBean.setNewPhone(changeNewPhone);
+        variousDataBean.setOldIMEI(changeOldIMEI);
+        variousDataBean.setNewIMEI(changeNewIMEI);
+        variousDataBean.setChangeTime(changeTime);
+        variousDataBean.setUserObjectId("da2d833c2d");
         variousDataBean.save(new SaveListener<String>() {
             @Override
             public void done(String s, BmobException e) {
                 if (e == null) {
-                    showMessage("数据创建成功！");
+
+                    //请假历史 内容
+                    List<String> requestReason = new ArrayList<>();
+                    requestReason.add("由于身体不适，想要去检查身体，特此请假，望批准。");
+                    requestReason.add("家中突发急事，需要回家一趟，由于路途遥远，可能需要一个星期。希望得到老师批准！");
+                    requestReason.add("发烧导致肺炎住院，需要请假直到病愈出院，希望老师能够批准");
+
+                    //请假历史 类型
+                    List<String> requestType = new ArrayList<>();
+                    requestType.add("请病假");
+                    requestType.add("请事假");
+                    requestType.add("请病假");
+
+                    //请假历史 状态
+                    List<String> requestState = new ArrayList<>();
+                    requestState.add("已驳回");
+                    requestState.add("审核中");
+                    requestState.add("已同意");
+
+                    //请假历史 时间
+                    List<String> requestTime = new ArrayList<>();
+                    requestTime.add("2018年03月27日");
+                    requestTime.add("2018年03月28日");
+                    requestTime.add("2018年03月29日");
+
+                    LeaveRequestBean leaveRequestBean = new LeaveRequestBean();
+                    leaveRequestBean.setLeaveRequestReason(requestReason);
+                    leaveRequestBean.setLeaveRequestType(requestType);
+                    leaveRequestBean.setLeaveRequestState(requestState);
+                    leaveRequestBean.setLeaveRequestTime(requestTime);
+                    leaveRequestBean.setUserObjectId("da2d833c2d");
+
+                    leaveRequestBean.save(new SaveListener<String>() {
+                        @Override
+                        public void done(String s, BmobException e) {
+                            if (e != null) {
+                                showMessage("数据创建成功！");
+                            } else {
+                                showMessage("创建失败 错误原因：" + e.getMessage());
+                            }
+                        }
+                    });
                 } else {
                     showMessage("创建失败 错误原因：" + e.getMessage());
                 }
             }
         });
+
     }
 }

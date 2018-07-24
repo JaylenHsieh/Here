@@ -6,14 +6,14 @@ import cn.bmob.v3.BmobObject;
 
 /**
  * 班级数据表
+ * 面向学生端和教师端
+ * 该表保存所有的教学班和行政班的班级数据，学生用户或教师用户可通过classNum或者subjectCode在该表中查询获取需要的数据
+ *
  * @author pope
  * @date 2018/5/3
  */
 
 public class ClassDataBean extends BmobObject {
-
-    public final static int CLASS_TYPE_NATURAL = 2;
-    public final static int CLASS_TYPE_SUBJECT = 4;
 
     /**
      * 课程编号
@@ -26,9 +26,9 @@ public class ClassDataBean extends BmobObject {
     private String classNum;
 
     /**
-     * 该班辅导员 存放辅导员在UserBean中的objectId
+     * 该班辅导员
      */
-    private String instrructor;
+    private String instructor;
 
     /**
      * 该班教师
@@ -36,7 +36,7 @@ public class ClassDataBean extends BmobObject {
     private String teacherId;
 
     /**
-     * 该班学生列表 存放每一位学生在UserBean的objectId
+     * 该班成员列表 存放每一位学生在UserBean的objectId
      */
     private List<String> classMember;
 
@@ -77,12 +77,12 @@ public class ClassDataBean extends BmobObject {
         this.classNum = classNum;
     }
 
-    public String getInstrructor() {
-        return instrructor;
+    public String getInstructor() {
+        return instructor;
     }
 
-    public void setInstrructor(String instrructor) {
-        this.instrructor = instrructor;
+    public void setInstructor(String instructor) {
+        this.instructor = instructor;
     }
 
     public List<String> getClassMember() {

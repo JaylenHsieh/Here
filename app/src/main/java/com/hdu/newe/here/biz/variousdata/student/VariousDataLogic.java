@@ -1,11 +1,14 @@
 package com.hdu.newe.here.biz.variousdata.student;
 
 import com.hdu.newe.here.biz.BaseLogic;
+import com.hdu.newe.here.biz.variousdata.student.bean.LeaveRequestBean;
 import com.hdu.newe.here.biz.variousdata.student.bean.VariousDataBean;
+
+import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.QueryListener;
+import cn.bmob.v3.listener.FindListener;
 
 /**
  * Moael层业务逻辑 继承Model层接口并实现其中的方法
@@ -17,22 +20,36 @@ import cn.bmob.v3.listener.QueryListener;
 public class VariousDataLogic extends BaseLogic implements VariousDataInterface {
 
     private static VariousDataLogic INSTANCE;
+    private String objectId = "da2d833c2d";
 
     /**
      * 获取数据的Model层数据逻辑
      *
-     * @param objectId              需要查询的用户的objectId
      * @param onVariousDataCallback 相应的数据回调对象
      */
     @Override
-    public void getAttendanceData(String objectId, final OnVariousDataCallback onVariousDataCallback) {
+    public void getAttendanceData(final OnVariousDataCallback onVariousDataCallback) {
         onVariousDataCallback.onStartGetData();
         BmobQuery<VariousDataBean> query = new BmobQuery<>();
-        query.getObject(objectId, new QueryListener<VariousDataBean>() {
+        query.addWhereEqualTo("userObjectId", objectId);
+        query.findObjects(new FindListener<VariousDataBean>() {
             @Override
-            public void done(VariousDataBean variousDataBean, BmobException e) {
+            public void done(List<VariousDataBean> list, BmobException e) {
                 if (e == null) {
-                    onVariousDataCallback.onGetSuccess(variousDataBean);
+                    onVariousDataCallback.onGetSuccess(list.get(0), null);
+                } else {
+                    onVariousDataCallback.onGetFailed(e.getMessage());
+                }
+            }
+        });
+
+        BmobQuery<LeaveRequestBean> query1 = new BmobQuery<>();
+        query1.addWhereEqualTo("userObjectId", objectId);
+        query1.findObjects(new FindListener<LeaveRequestBean>() {
+            @Override
+            public void done(List<LeaveRequestBean> list, BmobException e) {
+                if (e == null) {
+                    onVariousDataCallback.onGetSuccess(null, list.get(0));
                 } else {
                     onVariousDataCallback.onGetFailed(e.getMessage());
                 }

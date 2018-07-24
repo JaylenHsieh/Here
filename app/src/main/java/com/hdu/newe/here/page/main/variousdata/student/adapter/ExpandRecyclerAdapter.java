@@ -36,7 +36,12 @@ public class ExpandRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> 
         this.inflater = LayoutInflater.from(context);
     }
 
+    /**
+     * 父类标题的点击监听
+     */
     private ParentItemClickListener parentItemClickListener = new ParentItemClickListener() {
+
+        //展开子列表
         @Override
         public void onExpandChildren(ExpandDataBean expandDataBean) {
             //确定当前点击的item位置
@@ -59,6 +64,7 @@ public class ExpandRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> 
 //            }
         }
 
+        //合上子列表
         @Override
         public void onHideChildren(ExpandDataBean expandDataBean) {
             //确定当前点击的item位置
@@ -94,7 +100,7 @@ public class ExpandRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> 
 
         switch (expandDataBean.getParentTitle()) {
             case "请假历史":
-                count = expandDataBean.getChildBean().getLeaveRequestReason().size();
+                count = expandDataBean.getLeaveRequestReason().size();
                 showType = ExpandDataBean.ITEM_CHILD_LEAVE_REQUEST;
                 break;
             case "警示历史":
@@ -102,7 +108,7 @@ public class ExpandRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> 
                 showType = ExpandDataBean.ITEM_CHILD_WARNING;
                 break;
             case "手机更换历史":
-                count = expandDataBean.getChildBean().getChangeHistoryContent().size();
+                count = expandDataBean.getChildBean().getNewIMEI().size();
                 showType = ExpandDataBean.ITEM_CHILD_CHANGE;
                 break;
             default:
@@ -124,15 +130,15 @@ public class ExpandRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> 
                     List<String> leaveRequestStateList = new ArrayList<>();
                     List<String> leaveRequestTimeList = new ArrayList<>();
 
-                    leaveRequestTypeList.add(expandDataBean.getChildBean().getLeaveRequestType().get(i));
-                    leaveRequestContentList.add(expandDataBean.getChildBean().getLeaveRequestReason().get(i));
-                    leaveRequestStateList.add(expandDataBean.getChildBean().getLeaveRequestState().get(i));
-                    leaveRequestTimeList.add(expandDataBean.getChildBean().getLeaveRequestTime().get(i));
+                    leaveRequestTypeList.add(expandDataBean.getLeaveRequestType().get(i));
+                    leaveRequestContentList.add(expandDataBean.getLeaveRequestReason().get(i));
+                    leaveRequestStateList.add(expandDataBean.getLeaveRequestState().get(i));
+                    leaveRequestTimeList.add(expandDataBean.getLeaveRequestTime().get(i));
 
-                    expandDataBeans.get(i).getChildBean().setLeaveRequestType(leaveRequestTypeList);
-                    expandDataBeans.get(i).getChildBean().setLeaveRequestReason(leaveRequestContentList);
-                    expandDataBeans.get(i).getChildBean().setLeaveRequestState(leaveRequestStateList);
-                    expandDataBeans.get(i).getChildBean().setLeaveRequestTime(leaveRequestTimeList);
+                    expandDataBeans.get(i).setLeaveRequestType(leaveRequestTypeList);
+                    expandDataBeans.get(i).setLeaveRequestReason(leaveRequestContentList);
+                    expandDataBeans.get(i).setLeaveRequestState(leaveRequestStateList);
+                    expandDataBeans.get(i).setLeaveRequestTime(leaveRequestTimeList);
 
                     break;
                 case "警示历史":
@@ -153,14 +159,23 @@ public class ExpandRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> 
 
                     expandDataBeans.get(i).setChildBean(new VariousDataBean());
 
-                    List<String> changeHistoryTitleList = new ArrayList<>();
-                    List<String> changeHistoryContentList = new ArrayList<>();
+                    List<String> changeHistoryOldIMEIList = new ArrayList<>();
+                    List<String> changeHistoryNewIMEIList = new ArrayList<>();
+                    List<String> changeHistoryOldPhoneList = new ArrayList<>();
+                    List<String> changeHistoryNewPhoneList = new ArrayList<>();
+                    List<String> changeHistoryTimeList = new ArrayList<>();
 
-                    changeHistoryTitleList.add(expandDataBean.getChildBean().getChangeHistoryTitle().get(i));
-                    changeHistoryContentList.add(expandDataBean.getChildBean().getChangeHistoryContent().get(i));
+                    changeHistoryOldIMEIList.add(expandDataBean.getChildBean().getOldIMEI().get(i));
+                    changeHistoryNewIMEIList.add(expandDataBean.getChildBean().getNewIMEI().get(i));
+                    changeHistoryOldPhoneList.add(expandDataBean.getChildBean().getOldPhone().get(i));
+                    changeHistoryNewPhoneList.add(expandDataBean.getChildBean().getNewPhone().get(i));
+                    changeHistoryTimeList.add(expandDataBean.getChildBean().getChangeTime().get(i));
 
-                    expandDataBeans.get(i).getChildBean().setChangeHistoryTitle(changeHistoryTitleList);
-                    expandDataBeans.get(i).getChildBean().setChangeHistoryContent(changeHistoryContentList);
+                    expandDataBeans.get(i).getChildBean().setOldIMEI(changeHistoryOldIMEIList);
+                    expandDataBeans.get(i).getChildBean().setNewIMEI(changeHistoryNewIMEIList);
+                    expandDataBeans.get(i).getChildBean().setOldPhone(changeHistoryOldPhoneList);
+                    expandDataBeans.get(i).getChildBean().setNewPhone(changeHistoryNewPhoneList);
+                    expandDataBeans.get(i).getChildBean().setChangeTime(changeHistoryTimeList);
 
                     break;
                 default:

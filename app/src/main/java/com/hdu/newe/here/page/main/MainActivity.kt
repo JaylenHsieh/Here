@@ -13,8 +13,8 @@ import com.hdu.newe.here.page.main.login.LoginActivity
 import com.hdu.newe.here.page.main.profile.ProfileFragment
 import com.hdu.newe.here.page.main.profile.ProfilePresenter
 import com.hdu.newe.here.page.main.signin.LBSFragment
-import com.hdu.newe.here.page.main.variousdata.teacher.VariousDataFragmentT
-import com.hdu.newe.here.page.main.variousdata.teacher.VariousDataPresenterT
+import com.hdu.newe.here.page.main.variousdata.student.VariousDataFragment
+import com.hdu.newe.here.page.main.variousdata.student.VariousDataPresenter
 import com.hdu.newe.here.utils.UIUtils
 import com.jonnyhsia.uilib.widget.BottomNavigation
 import kotlinx.android.synthetic.main.activity_main.*
@@ -109,8 +109,8 @@ class MainActivity : AppCompatActivity() {
          */
         return when (pos) {
             0 -> LBSFragment()
-            1 -> VariousDataFragmentT().also { VariousDataPresenterT(it) }
-//            1 -> VariousDataFragment().also { VariousDataPresenter(it) }
+//            1 -> VariousDataFragmentT().also { VariousDataPresenterT(it) }
+            1 -> VariousDataFragment().also { VariousDataPresenter(it) }
             3 -> Fragment()
             4 -> ProfileFragment().also { ProfilePresenter(it) }
             else -> throw Exception("Position 不可以是 0,1,3,4 以外的数")
