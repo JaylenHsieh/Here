@@ -1,5 +1,6 @@
 package com.hdu.newe.here.biz.variousdata.student;
 
+import com.hdu.newe.here.biz.variousdata.student.bean.LeaveRequestBean;
 import com.hdu.newe.here.biz.variousdata.student.bean.VariousDataBean;
 import com.hdu.newe.here.page.base.BaseDataCallback;
 
@@ -17,10 +18,14 @@ public interface VariousDataInterface {
          * 出勤数据获取成功回调出勤数据的Bean
          * @param variousDataBean 传入VariousDataBean
          */
-        void onGetSuccess(VariousDataBean variousDataBean);
+        void onGetSuccess(VariousDataBean variousDataBean, LeaveRequestBean leaveRequestBean);
 
     }
 
-    void getAttendanceData(String objectId,OnVariousDataCallback onVariousDataCallback);
+    /**
+     * 获取出勤率
+     * @param onVariousDataCallback 将获取的数据进行回调的实例
+     */
+    void getAttendanceData(OnVariousDataCallback onVariousDataCallback);
 
 }

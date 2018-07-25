@@ -1,5 +1,6 @@
 package com.hdu.newe.here.page.main.variousdata.student;
 
+import com.hdu.newe.here.biz.variousdata.student.bean.LeaveRequestBean;
 import com.hdu.newe.here.biz.variousdata.student.bean.VariousDataBean;
 import com.hdu.newe.here.page.base.BasePresenter;
 import com.hdu.newe.here.page.base.BaseView;
@@ -14,13 +15,21 @@ public interface VariousDataContract {
 
     interface Presenter extends BasePresenter{
 
-        void getVariousData(String objectId);
+        /**
+         * 获取多种数据
+         */
+        void getVariousData();
 
     }
 
     interface View extends BaseView<Presenter> {
 
-        void loadVariousData(VariousDataBean variousDataBean);
+        /**
+         * 加载多种数据
+         * @param variousDataBean 被加载的数据
+         * @param leaveRequestBean 被加载的数据
+         */
+        void loadVariousData(VariousDataBean variousDataBean, LeaveRequestBean leaveRequestBean);
 
         void loadHistoryData(String objectId);
     }

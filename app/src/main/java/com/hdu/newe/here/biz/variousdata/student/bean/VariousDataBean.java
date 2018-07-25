@@ -5,7 +5,13 @@ import java.util.List;
 import cn.bmob.v3.BmobObject;
 
 /**
- * 数据模块的全部数据的Bean
+ * 多种数据表
+ * 面向学生端用户
+ * 内含：1、学生所修读的科目列表及相关出勤率数据
+ *      2、学生当前标识类型（学习积极分子、摇摆边缘流派和翘课高发人群）
+ *      3、学生所受到的警示历史相关数据
+ *      4、学生账户所绑定的手机的变更历史记录
+ *      5、学生的缺勤情况相关数据
  *
  * @author pope
  * @date 2018/4/8
@@ -20,30 +26,84 @@ public class VariousDataBean extends BmobObject {
     public static final int BUFF_TYPE_IRRESOLUTION = 222;
     public static final int BUFF_TYPE_SKIP_CLASS = 333;
 
+    /**
+     * 用户在UserBean中的objectId
+     */
     private String userObjectId;
 
-    private List<String> subjectName;
-    private List<Number> attendanceRate;
-    private int buffType;
-    private Number allAttendanceRate;
     /**
-     * 历史数据表关键字：
-     * 请假类型 请假原因 请假状态 警告标题 警告内容 手机更换历史标题 手机更换历史内容
+     * 用户所修读的科目列表
      */
-    private List<String> leaveRequestType;
-    private List<String> leaveRequestReason;
-    private List<String> leaveRequestState;
-    private List<String> leaveRequestTime;
-    private List<String> warningTitle;
-    private List<String> warningContent;
-    private List<String> changeHistoryTitle;
-    private List<String> changeHistoryContent;
+    private List<String> subjectName;
 
     /**
-     * 旷课课程Id列表 旷课次数
+     * 用户的出勤率 与科目列表中的科目一一对应
+     */
+    private List<Number> attendanceRate;
+
+    /**
+     * 用户的标识类型
+     */
+    private int buffType;
+
+    /**
+     * 用户总出勤率
+     */
+    private Number allAttendanceRate;
+
+    /**
+     * 历史数据表关键字：
+     * 警告标题 警告内容 旧手机IMEI 新手机IMEI 旧手机名 新手机名 更换时间
+     */
+    private List<String> warningTitle;
+    private List<String> warningContent;
+    private List<String> OldIMEI;
+    private List<String> NewIMEI;
+    private List<String> OldPhone;
+    private List<String> NewPhone;
+    private List<String> ChangeTime;
+
+    /**
+     * 旷课课程Id列表
      */
     private List<String> absentSubjectIdList;
+
+    /**
+     * 旷课发生时的考勤次数 与旷课课程列表一一对应
+     */
     private List<Number> absentTimeList;
+
+    public List<String> getOldIMEI() {
+        return OldIMEI;
+    }
+
+    public void setOldIMEI(List<String> oldIMEI) {
+        this.OldIMEI = oldIMEI;
+    }
+
+    public List<String> getNewIMEI() {
+        return NewIMEI;
+    }
+
+    public void setNewIMEI(List<String> newIMEI) {
+        this.NewIMEI = newIMEI;
+    }
+
+    public List<String> getOldPhone() {
+        return OldPhone;
+    }
+
+    public void setOldPhone(List<String> oldPhone) {
+        this.OldPhone = oldPhone;
+    }
+
+    public List<String> getNewPhone() {
+        return NewPhone;
+    }
+
+    public void setNewPhone(List<String> newPhone) {
+        this.NewPhone = newPhone;
+    }
 
     public List<Number> getAbsentTimeList() {
         return absentTimeList;
@@ -101,30 +161,6 @@ public class VariousDataBean extends BmobObject {
         this.allAttendanceRate = allAttendanceRate;
     }
 
-    public List<String> getLeaveRequestType() {
-        return leaveRequestType;
-    }
-
-    public void setLeaveRequestType(List<String> leaveRequestType) {
-        this.leaveRequestType = leaveRequestType;
-    }
-
-    public List<String> getLeaveRequestReason() {
-        return leaveRequestReason;
-    }
-
-    public void setLeaveRequestReason(List<String> leaveRequestReason) {
-        this.leaveRequestReason = leaveRequestReason;
-    }
-
-    public List<String> getLeaveRequestState() {
-        return leaveRequestState;
-    }
-
-    public void setLeaveRequestState(List<String> leaveRequestState) {
-        this.leaveRequestState = leaveRequestState;
-    }
-
     public List<String> getWarningTitle() {
         return warningTitle;
     }
@@ -141,27 +177,11 @@ public class VariousDataBean extends BmobObject {
         this.warningContent = warningContent;
     }
 
-    public List<String> getChangeHistoryTitle() {
-        return changeHistoryTitle;
+    public List<String> getChangeTime() {
+        return ChangeTime;
     }
 
-    public void setChangeHistoryTitle(List<String> changeHistoryTitle) {
-        this.changeHistoryTitle = changeHistoryTitle;
-    }
-
-    public List<String> getChangeHistoryContent() {
-        return changeHistoryContent;
-    }
-
-    public void setChangeHistoryContent(List<String> changeHistoryContent) {
-        this.changeHistoryContent = changeHistoryContent;
-    }
-
-    public List<String> getLeaveRequestTime() {
-        return leaveRequestTime;
-    }
-
-    public void setLeaveRequestTime(List<String> leaveRequestTime) {
-        this.leaveRequestTime = leaveRequestTime;
+    public void setChangeTime(List<String> changeTime) {
+        this.ChangeTime = changeTime;
     }
 }

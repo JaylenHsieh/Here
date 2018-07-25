@@ -57,28 +57,12 @@ public class SignInDataBean extends BmobObject {
      */
     private Number checkCount;
 
-    public Number getCheckCount() {
-        return checkCount;
+    public static int getListTypeLeaverequest() {
+        return LIST_TYPE_LEAVEREQUEST;
     }
 
-    public void setCheckCount(Number checkCount) {
-        this.checkCount = checkCount;
-    }
-
-    public List<String> getLeaveRequestStudentList() {
-        return leaveRequestStudentList;
-    }
-
-    public void setLeaveRequestStudentList(List<String> leaveRequestStudentList) {
-        this.leaveRequestStudentList = leaveRequestStudentList;
-    }
-
-    public List<String> getAbsentStudentList() {
-        return absentStudentList;
-    }
-
-    public void setAbsentStudentList(List<String> absentStudentList) {
-        this.absentStudentList = absentStudentList;
+    public static int getListTypeAbsent() {
+        return LIST_TYPE_ABSENT;
     }
 
     public String getSubjectCode() {
@@ -105,6 +89,22 @@ public class SignInDataBean extends BmobObject {
         isChecking = checking;
     }
 
+    public List<String> getLeaveRequestStudentList() {
+        return leaveRequestStudentList;
+    }
+
+    public void setLeaveRequestStudentList(List<String> leaveRequestStudentList) {
+        this.leaveRequestStudentList = leaveRequestStudentList;
+    }
+
+    public List<String> getAbsentStudentList() {
+        return absentStudentList;
+    }
+
+    public void setAbsentStudentList(List<String> absentStudentList) {
+        this.absentStudentList = absentStudentList;
+    }
+
     public BmobDate getCheckTime() {
         return checkTime;
     }
@@ -119,5 +119,13 @@ public class SignInDataBean extends BmobObject {
 
     public void setCheckLocation(BmobGeoPoint checkLocation) {
         this.checkLocation = checkLocation;
+    }
+
+    public Number getCheckCount() {
+        return checkCount;
+    }
+
+    public void setCheckCount(Number checkCount) {
+        this.checkCount = checkCount;
     }
 }

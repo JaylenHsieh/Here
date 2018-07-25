@@ -2,6 +2,8 @@ package com.hdu.newe.here.page.main.variousdata.student.bean;
 
 import com.hdu.newe.here.biz.variousdata.student.bean.VariousDataBean;
 
+import java.util.List;
+
 /**
  *
  * @author pope
@@ -19,23 +21,65 @@ public class ExpandDataBean extends VariousDataBean {
      * 显示类型 ALL
      */
     private int showType;
+
     /**
      * 是否展开 PARENT
      */
     private boolean  isExpand;
+
     /**
      * 子布局所加载的数据Bean
      */
     private VariousDataBean childBean;
+
     /**
-     * 分类的标题 PARENT
+     * 父类的标题 PARENT
      */
     private String parentTitle;
+
     /**
      * 父布局的ID PARENT
      */
     private String ID;
+
+    private List<String> leaveRequestType;
+    private List<String> leaveRequestReason;
+    private List<String> leaveRequestState;
+    private List<String> leaveRequestTime;
+
     private int childNum;
+
+    public List<String> getLeaveRequestType() {
+        return leaveRequestType;
+    }
+
+    public void setLeaveRequestType(List<String> leaveRequestType) {
+        this.leaveRequestType = leaveRequestType;
+    }
+
+    public List<String> getLeaveRequestReason() {
+        return leaveRequestReason;
+    }
+
+    public void setLeaveRequestReason(List<String> leaveRequestReason) {
+        this.leaveRequestReason = leaveRequestReason;
+    }
+
+    public List<String> getLeaveRequestState() {
+        return leaveRequestState;
+    }
+
+    public void setLeaveRequestState(List<String> leaveRequestState) {
+        this.leaveRequestState = leaveRequestState;
+    }
+
+    public List<String> getLeaveRequestTime() {
+        return leaveRequestTime;
+    }
+
+    public void setLeaveRequestTime(List<String> leaveRequestTime) {
+        this.leaveRequestTime = leaveRequestTime;
+    }
 
     public int getShowType() {
         return showType;

@@ -35,8 +35,27 @@ public class OthersChildViewHolder extends BaseViewHolder {
                 tvContent.setText(expandDataBean.getChildBean().getWarningContent().get(0));
                 break;
             case ExpandDataBean.ITEM_CHILD_CHANGE:
-                tvTitle.setText(expandDataBean.getChildBean().getChangeHistoryTitle().get(0));
-                tvContent.setText(expandDataBean.getChildBean().getChangeHistoryContent().get(0));
+
+                String title = context.getString(R.string.change_history_title)
+                        + expandDataBean.getChildBean().getNewPhone().get(0);
+                String content = "姓名"
+                        + context.getString(R.string.change_history_content1)
+                        + expandDataBean.getChildBean().getChangeTime().get(0)
+                        + context.getString(R.string.change_history_content2)
+                        + "学号"
+                        + context.getString(R.string.change_history_content3)
+                        + expandDataBean.getChildBean().getOldPhone()
+                        + ":"
+                        + expandDataBean.getChildBean().getOldIMEI()
+                        + context.getString(R.string.change_history_content4)
+                        + expandDataBean.getChildBean().getNewPhone()
+                        + ":"
+                        + expandDataBean.getChildBean().getNewIMEI()
+                        + context.getString(R.string.change_history_content5);
+
+                tvTitle.setText(title);
+                tvContent.setText(content);
+
                 break;
             default:
                 break;

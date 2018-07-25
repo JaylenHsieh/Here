@@ -11,6 +11,15 @@
     <string name="history_of_warning">警示历史</string>
     <string name="history_of_change">手机更换历史</string>
 
+    <string name="change_history_title">更换绑定手机至</string>
+    <string name="change_history_content1">同学你好！你于</string>
+    <string name="change_history_content2">申请更换绑定手机并审核通过，你学号</string>
+    <string name="change_history_content3">所绑定的IMEI序列号已由原本的</string>
+    <string name="change_history_content4">更换为</string>
+    <string name="change_history_content5">，请悉知</string>
+    <string name="change_history_disagree1">同学你好！你于</string>
+    <string name="change_history_disagree2">申请更换绑定手审核未通过。</string>
+
     <string name="buff_type_study_hard">学习积极分子</string>
     <string name="buff_type_irresolution">摇摆边缘流派</string>
     <string name="buff_type_skip_class">翘课高发人群</string>
