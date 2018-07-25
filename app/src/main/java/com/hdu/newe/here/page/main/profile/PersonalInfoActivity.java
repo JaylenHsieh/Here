@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hdu.newe.here.R;
+import com.hdu.newe.here.biz.leaverequest.bean.LeaveRequestBean;
 import com.hdu.newe.here.biz.user.entity.UserBean;
 
 import butterknife.BindView;
@@ -19,6 +21,7 @@ import butterknife.OnClick;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.QueryListener;
+import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 /**
@@ -47,6 +50,9 @@ public class PersonalInfoActivity extends AppCompatActivity {
     EditText mTvInstructor;
 
     String objectId;
+    String leaveRequestObjId;
+
+    public static final String LEAVE_REQUEST_OBJ_ID = "LeaveRequestObjId";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,7 +60,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_personal_info);
         ButterKnife.bind(this);
         SharedPreferences pref = getSharedPreferences("user", MODE_PRIVATE);
-        objectId = pref.getString("objId", "80fd2b83d3");
+        objectId = pref.getString("objId", "");
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -82,9 +88,31 @@ public class PersonalInfoActivity extends AppCompatActivity {
                         mTvStuClass.setText(user.getUserClass());
                         mTvStuClassNum.setText(user.getUserClassNum());
                         mTvInstructor.setText(user.getUserInstructor());
+
                         Toast.makeText(PersonalInfoActivity.this, "从后台获取数据成功", Toast.LENGTH_SHORT).show();
+
+                        if (user.getLeaveRequestObjId().equals("")){
+                            LeaveRequestBean leaveRequestBean = new LeaveRequestBean();
+                            leaveRequestBean.save(new SaveListener<String>() {
+                                @Override
+                                public void done(String objectId,BmobException e) {
+                                    if(e==null){
+                                        leaveRequestObjId = objectId;
+                                        SharedPreferences.Editor editor = getSharedPreferences("user",MODE_PRIVATE).edit();
+                                        editor.putString(LEAVE_REQUEST_OBJ_ID,leaveRequestObjId);
+                                        editor.apply();
+                                        Toast.makeText(PersonalInfoActivity.this, "请假表创建成功", Toast.LENGTH_SHORT).show();
+                                    }else{
+                                        Toast.makeText(PersonalInfoActivity.this, "创建失败", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                        } else {
+                            leaveRequestObjId = user.getLeaveRequestObjId();
+                        }
                     }else{
                         Toast.makeText(PersonalInfoActivity.this, "查询失败"+ e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Log.d("error",e.getMessage());
                     }
                 }
             });
@@ -131,6 +159,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 user.setUserClass(mTvStuClass.getText().toString());
                 user.setUserClassNum(mTvStuClassNum.getText().toString());
                 user.setUserInstructor(mTvInstructor.getText().toString());
+                user.setLeaveRequestObjId(leaveRequestObjId);
                 user.update(objectId, new UpdateListener() {
                     @Override
                     public void done(BmobException e) {

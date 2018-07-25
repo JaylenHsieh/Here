@@ -16,7 +16,7 @@ public class UserBean extends BmobObject {
 
     /**
      * 用户数据表关键字
-     * 姓名 学/工号 班级 班级号 专业 学院 辅导员 手机序列号 是否为教师 是否为辅导员 头像 所带班级列表 任课列表
+     * 姓名 学/工号 班级 班级号 专业 学院 辅导员 手机序列号 是否为教师 是否为辅导员 头像 所带班级列表 任课列表 请假的objId
      */
     private String userName;
     private String userNumber;
@@ -26,6 +26,8 @@ public class UserBean extends BmobObject {
     private String userCollege;
     private String userInstructor;
     private String imei;
+    private String leaveRequestObjId;
+
     private boolean isTeacher;
     private boolean isInstructor;
     private URL userAvatar;
@@ -134,5 +136,13 @@ public class UserBean extends BmobObject {
 
     public void setSubjectList(List<String> subjectList) {
         this.subjectList = subjectList;
+    }
+
+    public String getLeaveRequestObjId() {
+        return leaveRequestObjId;
+    }
+
+    public void setLeaveRequestObjId(String leaveRequestObjId) {
+        this.leaveRequestObjId = leaveRequestObjId;
     }
 }

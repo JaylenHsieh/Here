@@ -62,6 +62,35 @@ public class LeaveRequestBean extends BmobObject {
      */
     private List<String> leaveRequestTime;
 
+
+    private String UserName;
+    private String userNumber;
+    private String userInstructor;
+    private String userMajor;
+    private String userCollege;
+
+    public void setUserName(String userName) {
+        UserName = userName;
+    }
+
+    public void setUserNumber(String userNumber) {
+        this.userNumber = userNumber;
+    }
+
+    public void setUserInstructor(String userInstructor) {
+        this.userInstructor = userInstructor;
+    }
+
+    public void setUserMajor(String userMajor) {
+        this.userMajor = userMajor;
+    }
+
+    public void setUserCollege(String userCollege) {
+        this.userCollege = userCollege;
+    }
+
+
+
     public List<String> getLeaveStudents() {
         return leaveStudents;
     }

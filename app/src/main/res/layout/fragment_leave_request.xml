@@ -48,11 +48,11 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/tv_user_name"
+                    android:id="@+id/mTvUserName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="谢君亮"
+                    android:hint="获取中"
                     app:layout_constraintStart_toEndOf="@+id/textView"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -67,14 +67,14 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView" />
 
                 <TextView
-                    android:id="@+id/tv_user_number"
+                    android:id="@+id/mTvUserNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:text="15088888"
+                    android:hint="获取中"
                     app:layout_constraintStart_toEndOf="@+id/textView2"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_user_name" />
+                    app:layout_constraintTop_toBottomOf="@+id/mTvUserName" />
 
                 <TextView
                     android:id="@+id/textView3"
@@ -87,14 +87,14 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
                 <TextView
-                    android:id="@+id/tv_stu_faculty"
+                    android:id="@+id/mTvStuFaculty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:text="通信工程学院"
+                    android:hint="获取中"
                     app:layout_constraintStart_toEndOf="@+id/textView3"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_user_number" />
+                    app:layout_constraintTop_toBottomOf="@+id/mTvUserNumber" />
 
                 <TextView
                     android:id="@+id/textView4"
@@ -107,21 +107,43 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
                 <TextView
-                    android:id="@+id/tv_stu_speciality"
+                    android:id="@+id/mTvStuSpeciality"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:text="通信工程专业"
+                    android:hint="获取中"
                     app:layout_constraintStart_toEndOf="@+id/textView4"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_stu_faculty" />
+                    app:layout_constraintTop_toBottomOf="@+id/mTvStuFaculty" />
+
+                <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="导员："
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+                <TextView
+                    android:id="@+id/mTvStuInstructor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:hint="获取中"
+                    app:layout_constraintStart_toEndOf="@+id/textView14"
+                    app:layout_constraintTop_toBottomOf="@+id/mTvStuSpeciality" />
 
                 <ImageView
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
                     android:layout_marginTop="8dp"
                     android:src="@drawable/img_avatar_default"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </android.support.constraint.ConstraintLayout>
@@ -137,6 +159,7 @@
                 android:padding="16dp">
 
                 <EditText
+                    android:id="@+id/edRequestContent"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/bg_edittext"
@@ -184,22 +207,22 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
                 <TextView
-                    android:id="@+id/startTime"
+                    android:id="@+id/tvStartTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    android:layout_marginTop="8dp"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
+                    android:background="@drawable/bg_edittext"
                     android:clickable="true"
                     android:focusable="true"
+                    android:paddingEnd="8dp"
+                    android:paddingStart="8dp"
                     android:text="2018年2月29日"
-                    android:background="@drawable/bg_edittext"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView5" />
+                    app:layout_constraintTop_toTopOf="@+id/textView6" />
 
                 <TextView
+                    android:id="@+id/textView11"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -209,20 +232,18 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
                 <TextView
-                    android:id="@+id/finishTime"
+                    android:id="@+id/tvFinishTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="2018年2月30日"
-                    android:paddingStart="8dp"
+                    android:background="@drawable/bg_edittext"
                     android:clickable="true"
                     android:focusable="true"
                     android:paddingEnd="8dp"
-                    android:background="@drawable/bg_edittext"
+                    android:paddingStart="8dp"
+                    android:text="2018年2月30日"
                     android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/startTime" />
+                    app:layout_constraintEnd_toEndOf="@+id/tvStartTime"
+                    app:layout_constraintTop_toTopOf="@+id/textView11" />
 
 
             </android.support.constraint.ConstraintLayout>

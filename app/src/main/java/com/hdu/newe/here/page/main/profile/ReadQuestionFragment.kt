@@ -50,7 +50,6 @@ class ReadQuestionFragment : Fragment() {
             adapter = qaAdapter
         }
         fetchQAList()
-        layout_refresh?.setOnRefreshListener { fetchQAList() }
         return view
     }
 
