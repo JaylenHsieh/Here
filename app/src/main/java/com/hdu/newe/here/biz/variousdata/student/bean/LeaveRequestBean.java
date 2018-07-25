@@ -31,6 +31,52 @@ public class LeaveRequestBean extends BmobObject {
     public final static int STATE_USEFUL = 123;
     public final static int STATE_USELESS = 321;
 
+    private String userName;
+    private String userNumber;
+    private String userInstructor;
+    private String userMajor;
+    private String userCollege;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserNumber() {
+        return userNumber;
+    }
+
+    public void setUserNumber(String userNumber) {
+        this.userNumber = userNumber;
+    }
+
+    public String getUserInstructor() {
+        return userInstructor;
+    }
+
+    public void setUserInstructor(String userInstructor) {
+        this.userInstructor = userInstructor;
+    }
+
+    public String getUserMajor() {
+        return userMajor;
+    }
+
+    public void setUserMajor(String userMajor) {
+        this.userMajor = userMajor;
+    }
+
+    public String getUserCollege() {
+        return userCollege;
+    }
+
+    public void setUserCollege(String userCollege) {
+        this.userCollege = userCollege;
+    }
+
     /**
      * 用户在UserBean中的objectId
      */
