@@ -88,28 +88,9 @@ public class PersonalInfoActivity extends AppCompatActivity {
                         mTvStuClass.setText(user.getUserClass());
                         mTvStuClassNum.setText(user.getUserClassNum());
                         mTvInstructor.setText(user.getUserInstructor());
-
                         Toast.makeText(PersonalInfoActivity.this, "从后台获取数据成功", Toast.LENGTH_SHORT).show();
 
-                        if (user.getLeaveRequestObjId().equals("")){
-                            LeaveRequestBean leaveRequestBean = new LeaveRequestBean();
-                            leaveRequestBean.save(new SaveListener<String>() {
-                                @Override
-                                public void done(String objectId,BmobException e) {
-                                    if(e==null){
-                                        leaveRequestObjId = objectId;
-                                        SharedPreferences.Editor editor = getSharedPreferences("user",MODE_PRIVATE).edit();
-                                        editor.putString(LEAVE_REQUEST_OBJ_ID,leaveRequestObjId);
-                                        editor.apply();
-                                        Toast.makeText(PersonalInfoActivity.this, "请假表创建成功", Toast.LENGTH_SHORT).show();
-                                    }else{
-                                        Toast.makeText(PersonalInfoActivity.this, "创建失败", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
-                        } else {
-                            leaveRequestObjId = user.getLeaveRequestObjId();
-                        }
+                        createLeaveRequestData(user);
                     }else{
                         Toast.makeText(PersonalInfoActivity.this, "查询失败"+ e.getMessage(), Toast.LENGTH_SHORT).show();
                         Log.d("error",e.getMessage());
@@ -173,6 +154,33 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 break;
             default:
                 break;
+        }
+    }
+
+    /**
+     * 获取到用户的 @param leaveRequestObjId，如果为空，则再LeaveRequestBean创建一行新的数据
+     * 如果不为空，则获取到leaveRequestObjId，
+     * @param user
+     */
+    private void createLeaveRequestData(UserBean user){
+        if ("".equals(user.getLeaveRequestObjId())){
+            LeaveRequestBean leaveRequestBean = new LeaveRequestBean();
+            leaveRequestBean.save(new SaveListener<String>() {
+                @Override
+                public void done(String objectId,BmobException e) {
+                    if(e==null){
+                        leaveRequestObjId = objectId;
+                        SharedPreferences.Editor editor = getSharedPreferences("user",MODE_PRIVATE).edit();
+                        editor.putString(LEAVE_REQUEST_OBJ_ID,leaveRequestObjId);
+                        editor.apply();
+                        Toast.makeText(PersonalInfoActivity.this, "请假表创建成功", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(PersonalInfoActivity.this, "创建失败", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        } else {
+            leaveRequestObjId = user.getLeaveRequestObjId();
         }
     }
 }
