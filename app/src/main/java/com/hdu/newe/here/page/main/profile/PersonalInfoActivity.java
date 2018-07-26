@@ -15,6 +15,9 @@ import com.hdu.newe.here.R;
 import com.hdu.newe.here.biz.variousdata.student.bean.LeaveRequestBean;
 import com.hdu.newe.here.biz.user.entity.UserBean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -205,6 +208,9 @@ public class PersonalInfoActivity extends AppCompatActivity {
         });
 
         LeaveRequestBean leaveRequest = new LeaveRequestBean();
+        leaveRequest.setLeaveRequestReason(new ArrayList<String>());
+        leaveRequest.setLeaveRequestState(new ArrayList<String>());
+        leaveRequest.setLeaveRequestTime(new ArrayList<String>());
         leaveRequest.setUserObjectId(objectId);
         leaveRequest.update(leaveRequestObjId, new UpdateListener() {
             @Override

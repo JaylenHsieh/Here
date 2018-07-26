@@ -27,8 +27,8 @@ import java.util.*
  */
 class LeaveRequestFragment : Fragment(), View.OnClickListener {
 
-    var leaveRequestReason: MutableList<String> = mutableListOf()
-    var leaveRequestTime: MutableList<String> = mutableListOf()
+    var leaveRequestReasonList: MutableList<String> = mutableListOf()
+    var leaveRequestTimeList: MutableList<String> = mutableListOf()
     var leaveRequestState: MutableList<String> = mutableListOf()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -65,26 +65,8 @@ class LeaveRequestFragment : Fragment(), View.OnClickListener {
         bmobQuery.getObject(leaveRequestObjId, object : QueryListener<LeaveRequestBean>() {
             override fun done(leaveRequest: LeaveRequestBean, e: BmobException?) {
                 if (e == null) {
-//                    leaveRequest.setUserName(mTvUserName.text.toString())
-//                    leaveRequest.setUserNumber(mTvUserNumber.text.toString())
-//                    leaveRequest.setUserMajor(mTvStuSpeciality.text.toString())
-//                    leaveRequest.setUserCollege(mTvStuFaculty.text.toString())
-//                    leaveRequest.setUserInstructor(mTvStuInstructor.text.toString())
-                    leaveRequestReason = leaveRequest.leaveRequestReason
-                    leaveRequestReason.add(edRequestContent.text.toString())
-                    leaveRequestTime = leaveRequest.leaveRequestTime
-                    leaveRequestTime.add(tvStartTime.text.toString())
-                    leaveRequestTime.add(tvFinishTime.text.toString())
-
-//                    leaveRequest.save(object : SaveListener<String>() {
-//                        override fun done(objectId: String, e: BmobException?) {
-//                            if (e == null) {
-//                                Toast.makeText(activity, "提交成功,请等待辅导员和教师批准", Toast.LENGTH_SHORT).show()
-//                            } else {
-//                                Toast.makeText(activity, "提交失败", Toast.LENGTH_SHORT).show()
-//                            }
-//                        }
-//                    })
+                    leaveRequestReasonList = leaveRequest.leaveRequestReason
+                    leaveRequestTimeList = leaveRequest.leaveRequestTime
                 } else {
                     Toast.makeText(context, "获取信息失败" + e.message, Toast.LENGTH_SHORT).show()
                 }
@@ -136,8 +118,11 @@ class LeaveRequestFragment : Fragment(), View.OnClickListener {
                 leaveRequest.setUserMajor(mTvStuSpeciality.text.toString())
                 leaveRequest.setUserCollege(mTvStuFaculty.text.toString())
                 leaveRequest.setUserInstructor(mTvStuInstructor.text.toString())
-                leaveRequest.leaveRequestReason = leaveRequestReason
-                leaveRequest.leaveRequestTime = leaveRequestTime
+                leaveRequestReasonList.add(edRequestContent.text.toString())
+                leaveRequest.leaveRequestReason = leaveRequestReasonList
+                leaveRequestTimeList.add(tvStartTime.text.toString())
+                leaveRequestTimeList.add(tvFinishTime.text.toString())
+                leaveRequest.leaveRequestTime = leaveRequestTimeList
                 val leaveRequestObjId = activity?.getSharedPreferences("user", Context.MODE_PRIVATE)?.getString(PersonalInfoActivity.LEAVE_REQUEST_OBJ_ID, "")
                 leaveRequest.update(leaveRequestObjId, object : UpdateListener() {
                     override fun done(e: BmobException?) {

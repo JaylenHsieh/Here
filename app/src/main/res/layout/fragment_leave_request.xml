@@ -154,7 +154,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="0dp"
                 android:background="@drawable/ripple_click_leave_request"
-                android:clickable="true"
                 android:elevation="2dp"
                 android:padding="16dp">
 
