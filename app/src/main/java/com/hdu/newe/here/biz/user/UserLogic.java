@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 import com.hdu.newe.here.biz.user.entity.UserBean;
 import com.hdu.newe.here.biz.BaseLogic;
+import com.hdu.newe.here.page.main.profile.PersonalInfoActivity;
 
 import java.util.List;
 
@@ -94,6 +95,9 @@ public class UserLogic extends BaseLogic implements UserInterface {
         editor.putString("userNumber", user.getUserNumber());
         editor.putString("IMEI", user.getImei());
         editor.putBoolean("isTeacher", user.isTeacher());
+
+        // 把leaveRequestOIbjId 放到本地
+        editor.putString(PersonalInfoActivity.LEAVE_REQUEST_OBJ_ID,user.getLeaveRequestObjId());
         editor.apply();
     }
 
