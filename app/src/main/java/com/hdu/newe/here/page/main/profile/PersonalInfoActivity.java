@@ -76,6 +76,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 //        if (!mTvUserNumber.getText().toString().equals("暂未提交")){
+
         BmobQuery<UserBean> bmobQuery = new BmobQuery<>();
         bmobQuery.getObject(objectId, new QueryListener<UserBean>() {
             @Override
@@ -174,6 +175,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
                         SharedPreferences.Editor editor = getSharedPreferences("user", MODE_PRIVATE).edit();
                         editor.putString(LEAVE_REQUEST_OBJ_ID, leaveRequestObjId);
                         editor.apply();
+                        uploadleaveObjIdinfo();
                         Toast.makeText(PersonalInfoActivity.this, "请假表创建成功", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(PersonalInfoActivity.this, "创建失败", Toast.LENGTH_SHORT).show();
@@ -183,5 +185,37 @@ public class PersonalInfoActivity extends AppCompatActivity {
         } else {
             leaveRequestObjId = user.getLeaveRequestObjId();
         }
+    }
+
+    /**
+     * 如果为空，就直接先上传一下，避免出现多次建表的情况
+     */
+    private void uploadleaveObjIdinfo(){
+        UserBean user = new UserBean();
+        user.setLeaveRequestObjId(leaveRequestObjId);
+        user.update(objectId, new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+                if (e == null){
+                    Log.d("TAG","success");
+                } else {
+                    Log.d("TAG","error"+e.getMessage());
+                }
+            }
+        });
+
+        LeaveRequestBean leaveRequest = new LeaveRequestBean();
+        leaveRequest.setUserObjectId(objectId);
+        leaveRequest.update(leaveRequestObjId, new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+                if (e == null){
+
+                }else{
+                    Log.d("TAG",e.getMessage());
+                }
+            }
+        });
+
     }
 }
