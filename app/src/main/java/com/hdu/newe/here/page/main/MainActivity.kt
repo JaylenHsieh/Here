@@ -1,5 +1,6 @@
 package com.hdu.newe.here.page.main
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -10,6 +11,7 @@ import com.hdu.newe.here.R
 import com.hdu.newe.here.biz.ModelFactory
 import com.hdu.newe.here.page.main.leaverequest.LeaveRequestActivity
 import com.hdu.newe.here.page.main.login.LoginActivity
+import com.hdu.newe.here.page.main.profile.PersonalInfoActivity
 import com.hdu.newe.here.page.main.profile.ProfileFragment
 import com.hdu.newe.here.page.main.profile.ProfilePresenter
 import com.hdu.newe.here.page.main.signin.LBSFragment
@@ -52,8 +54,14 @@ class MainActivity : AppCompatActivity() {
                     showFragmentByPosition(oldPos, pos)
                 }
                 .addPrimarySelectListener {
-                    val intent = Intent(this@MainActivity, LeaveRequestActivity::class.java)
-                    startActivity(intent)
+                    val leaveRequestObjId = getSharedPreferences("user", Context.MODE_PRIVATE)?.getString(PersonalInfoActivity.LEAVE_REQUEST_OBJ_ID, "")
+                    if ("".equals(leaveRequestObjId)) {
+                        Toast.makeText(this@MainActivity,"请前往个人信息页面编辑个人信息后才可以请假",Toast.LENGTH_LONG).show()
+                    } else{
+                        val intent = Intent(this@MainActivity, LeaveRequestActivity::class.java)
+                        startActivity(intent)
+                    }
+
                 }
                 .addItemReselectListener { pos, _ ->
                     Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show()
