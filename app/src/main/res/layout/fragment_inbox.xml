@@ -5,31 +5,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".page.main.inbox.InboxFragment"
-    android:fitsSystemWindows="true"
-    android:paddingTop="24dp">
+    android:fitsSystemWindows="true">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@drawable/bg_toolbar"
+        android:paddingTop="24dp"
+        app:title="消息盒子"
+        app:titleTextColor="@color/white"/>
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/img_newe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="88dp"
         android:src="@mipmap/newe_ads"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toolbar" />
 
     <TextView
-        android:id="@+id/textView23"
+        android:id="@+id/tv_newe_introduction"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:text="本应用由通信工程学院新维工作室倾力打造，竭尽所能为您提供最优质的学习生活."
         android:textColor="@color/black"
         android:textStyle="bold"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_newe" />
 
     <View
         android:id="@+id/view"
@@ -37,9 +49,9 @@
         android:layout_height="1dp"
         android:layout_marginTop="8dp"
         android:background="@color/black_54"
-        app:layout_constraintEnd_toEndOf="@+id/textView23"
-        app:layout_constraintStart_toStartOf="@+id/textView23"
-        app:layout_constraintTop_toBottomOf="@+id/textView23" />
+        app:layout_constraintEnd_toEndOf="@+id/tv_newe_introduction"
+        app:layout_constraintStart_toStartOf="@+id/tv_newe_introduction"
+        app:layout_constraintTop_toBottomOf="@+id/tv_newe_introduction" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -48,5 +60,14 @@
         android:text="欢迎使用 Here，暂无新的通知."
         app:layout_constraintStart_toStartOf="@+id/view"
         app:layout_constraintTop_toBottomOf="@+id/view" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:src="@mipmap/ic_refresh"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

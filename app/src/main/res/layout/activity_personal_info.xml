@@ -67,6 +67,7 @@
             android:background="@null"
             android:focusable="false"
             android:textSize="14sp"
+
             android:hint="@string/have_not_submit"
             app:layout_constraintStart_toEndOf="@+id/textView2"
             app:layout_constraintTop_toBottomOf="@+id/tv_user_name" />

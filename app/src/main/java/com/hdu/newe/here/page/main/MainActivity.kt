@@ -11,6 +11,7 @@ import com.hdu.newe.here.R
 import com.hdu.newe.here.biz.ModelFactory
 import com.hdu.newe.here.page.main.inbox.InboxFragment
 import com.hdu.newe.here.page.main.leaverequest.LeaveRequestActivity
+import com.hdu.newe.here.page.main.leaverequest.teacher.LeaveRequestActivityTeacher
 import com.hdu.newe.here.page.main.login.LoginActivity
 import com.hdu.newe.here.page.main.profile.PersonalInfoActivity
 import com.hdu.newe.here.page.main.profile.ProfileFragment
@@ -56,9 +57,13 @@ class MainActivity : AppCompatActivity() {
                 }
                 .addPrimarySelectListener {
                     val leaveRequestObjId = getSharedPreferences("user", Context.MODE_PRIVATE)?.getString(PersonalInfoActivity.LEAVE_REQUEST_OBJ_ID, "")
+                    val isTeacher = getSharedPreferences("user",Context.MODE_PRIVATE).getBoolean("isTeacher",false)
                     if ("".equals(leaveRequestObjId)) {
                         Toast.makeText(this@MainActivity,"请前往个人信息页面编辑个人信息后才可以请假",Toast.LENGTH_LONG).show()
-                    } else{
+                    } else if (isTeacher){
+                        val intent = Intent(this@MainActivity,LeaveRequestActivityTeacher::class.java)
+                        startActivity(intent)
+                    } else {
                         val intent = Intent(this@MainActivity, LeaveRequestActivity::class.java)
                         startActivity(intent)
                     }
