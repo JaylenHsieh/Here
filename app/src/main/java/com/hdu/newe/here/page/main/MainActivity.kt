@@ -9,6 +9,7 @@ import android.view.KeyEvent
 import android.widget.Toast
 import com.hdu.newe.here.R
 import com.hdu.newe.here.biz.ModelFactory
+import com.hdu.newe.here.page.main.inbox.InboxFragment
 import com.hdu.newe.here.page.main.leaverequest.LeaveRequestActivity
 import com.hdu.newe.here.page.main.login.LoginActivity
 import com.hdu.newe.here.page.main.profile.PersonalInfoActivity
@@ -119,7 +120,7 @@ class MainActivity : AppCompatActivity() {
             0 -> LBSFragment()
 //            1 -> VariousDataFragmentT().also { VariousDataPresenterT(it) }
             1 -> VariousDataFragment().also { VariousDataPresenter(it) }
-            3 -> Fragment()
+            3 -> InboxFragment()
             4 -> ProfileFragment().also { ProfilePresenter(it) }
             else -> throw Exception("Position 不可以是 0,1,3,4 以外的数")
         }
