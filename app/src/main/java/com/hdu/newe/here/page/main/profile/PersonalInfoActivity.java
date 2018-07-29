@@ -17,6 +17,7 @@ import com.hdu.newe.here.biz.user.entity.UserBean;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,6 +59,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
     Boolean mIsInstructor;
 
     public static final String LEAVE_REQUEST_OBJ_ID = "LeaveRequestObjId";
+
+    private List<String> mList = new ArrayList<>();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -217,9 +220,11 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
         LeaveRequestBean leaveRequest = new LeaveRequestBean();
         // 新建的一行数据的列表赋值一个空的 List
-        leaveRequest.setLeaveRequestReason(Collections.<String>emptyList());
-        leaveRequest.setLeaveRequestState(Collections.<String>emptyList());
-        leaveRequest.setLeaveRequestTime(Collections.<String>emptyList());
+        mList.add("");
+        leaveRequest.setLeaveRequestReason(mList);
+        leaveRequest.setLeaveRequestState(mList);
+        mList.add("");
+        leaveRequest.setLeaveRequestTime(mList);
         leaveRequest.setUserObjectId(objectId);
         leaveRequest.setIsTeacher(mIsTeacher);
         leaveRequest.update(leaveRequestObjId, new UpdateListener() {
