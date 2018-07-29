@@ -221,6 +221,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
         leaveRequest.setLeaveRequestState(Collections.<String>emptyList());
         leaveRequest.setLeaveRequestTime(Collections.<String>emptyList());
         leaveRequest.setUserObjectId(objectId);
+        leaveRequest.setIsTeacher(mIsTeacher);
         leaveRequest.update(leaveRequestObjId, new UpdateListener() {
             @Override
             public void done(BmobException e) {

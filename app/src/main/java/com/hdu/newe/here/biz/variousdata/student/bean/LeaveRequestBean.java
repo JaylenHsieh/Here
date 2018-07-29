@@ -36,6 +36,15 @@ public class LeaveRequestBean extends BmobObject {
     private String userInstructor;
     private String userMajor;
     private String userCollege;
+    private Boolean isTeacher;
+
+    public Boolean getIsTeacher() {
+        return isTeacher;
+    }
+
+    public void setIsTeacher(Boolean teacher) {
+        isTeacher = teacher;
+    }
 
     public String getUserName() {
         return userName;
