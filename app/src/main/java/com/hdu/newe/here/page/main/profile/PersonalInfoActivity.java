@@ -16,7 +16,7 @@ import com.hdu.newe.here.biz.variousdata.student.bean.LeaveRequestBean;
 import com.hdu.newe.here.biz.user.entity.UserBean;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,6 +54,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     String objectId;
     String leaveRequestObjId;
+    Boolean mIsTeacher;
+    Boolean mIsInstructor;
 
     public static final String LEAVE_REQUEST_OBJ_ID = "LeaveRequestObjId";
 
@@ -92,6 +94,10 @@ public class PersonalInfoActivity extends AppCompatActivity {
                     mTvStuClass.setText(user.getUserClass());
                     mTvStuClassNum.setText(user.getUserClassNum());
                     mTvInstructor.setText(user.getUserInstructor());
+
+                    // TODO 虽然没有改动，但是后台会把这两个值变成 false
+                    mIsTeacher = user.isTeacher();
+                    mIsInstructor = user.isInstructor();
                     Toast.makeText(PersonalInfoActivity.this, "从后台获取数据成功", Toast.LENGTH_SHORT).show();
 
                     createLeaveRequestData(user);
@@ -136,14 +142,16 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 break;
             case R.id.tvSubmit:
                 UserBean user = new UserBean();
-
+                //会出现莫有上传的值变成 false，所以改成传一下所有数据
                 user.setUserName(mTvUserName.getText().toString());
-                //user.setUserNumber(mTvUserNumber.getText().toString());
                 user.setUserMajor(mTvStuSpeciality.getText().toString());
                 user.setUserCollege(mTvStuFaculty.getText().toString());
                 user.setUserClass(mTvStuClass.getText().toString());
                 user.setUserClassNum(mTvStuClassNum.getText().toString());
                 user.setUserInstructor(mTvInstructor.getText().toString());
+                // TODO 虽然没有改动，但是后台会把这两个值变成 false
+                user.setIsInstructor(mIsInstructor);
+                user.setIsTeacher(mIsTeacher);
                 user.setLeaveRequestObjId(leaveRequestObjId);
                 user.update(objectId, new UpdateListener() {
                     @Override
@@ -178,7 +186,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
                         SharedPreferences.Editor editor = getSharedPreferences("user", MODE_PRIVATE).edit();
                         editor.putString(LEAVE_REQUEST_OBJ_ID, leaveRequestObjId);
                         editor.apply();
-                        uploadleaveObjIdinfo();
+                        uploadleaveObjIdInfo();
                         Toast.makeText(PersonalInfoActivity.this, "请假表创建成功", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(PersonalInfoActivity.this, "创建失败", Toast.LENGTH_SHORT).show();
@@ -193,7 +201,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
     /**
      * 如果为空，就直接先上传一下，避免出现多次建表的情况
      */
-    private void uploadleaveObjIdinfo(){
+    private void uploadleaveObjIdInfo(){
         UserBean user = new UserBean();
         user.setLeaveRequestObjId(leaveRequestObjId);
         user.update(objectId, new UpdateListener() {
@@ -208,9 +216,10 @@ public class PersonalInfoActivity extends AppCompatActivity {
         });
 
         LeaveRequestBean leaveRequest = new LeaveRequestBean();
-        leaveRequest.setLeaveRequestReason(new ArrayList<String>());
-        leaveRequest.setLeaveRequestState(new ArrayList<String>());
-        leaveRequest.setLeaveRequestTime(new ArrayList<String>());
+        // 新建的一行数据的列表赋值一个空的 List
+        leaveRequest.setLeaveRequestReason(Collections.<String>emptyList());
+        leaveRequest.setLeaveRequestState(Collections.<String>emptyList());
+        leaveRequest.setLeaveRequestTime(Collections.<String>emptyList());
         leaveRequest.setUserObjectId(objectId);
         leaveRequest.update(leaveRequestObjId, new UpdateListener() {
             @Override
