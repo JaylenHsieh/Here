@@ -111,6 +111,16 @@
             app:layout_constraintTop_toBottomOf="@+id/tvIMEI" />
 
         <CheckBox
+            android:id="@+id/checkStatusIsInstructor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/check_img"
+            android:text=" 同时我是辅导员"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@+id/checkStatus"
+            app:layout_constraintTop_toBottomOf="@+id/checkStatus" />
+
+        <CheckBox
             android:id="@+id/checkIsRead"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

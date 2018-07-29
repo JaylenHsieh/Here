@@ -46,7 +46,7 @@ public class UserBean extends BmobObject {
         return isInstructor;
     }
 
-    public void setInstructor(boolean instructor) {
+    public void setIsInstructor(boolean instructor) {
         isInstructor = instructor;
     }
 

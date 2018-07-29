@@ -40,7 +40,7 @@ public interface UserInterface {
      * 登录
      * @param listener 监听
      */
-    void login(String userNumber, String imei, boolean isTeacher, LoginListener listener);
+    void login(String userNumber, String imei, boolean isTeacher, boolean isInstructor, LoginListener listener);
 
 
     /**

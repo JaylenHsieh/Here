@@ -9,7 +9,7 @@ import com.hdu.newe.here.page.base.BaseView
 interface LoginContract {
     interface Presenter : BasePresenter {
 
-        fun clickLogin(userNumber: String, imei: String, isTeacher: Boolean)
+        fun clickLogin(userNumber: String, imei: String, isTeacher: Boolean, isInstructor: Boolean)
 
     }
 

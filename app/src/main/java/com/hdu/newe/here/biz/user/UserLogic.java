@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import com.hdu.newe.here.biz.user.entity.UserBean;
 import com.hdu.newe.here.biz.BaseLogic;
 import com.hdu.newe.here.page.main.profile.PersonalInfoActivity;
+import com.hdu.newe.here.utils.db;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class UserLogic extends BaseLogic implements UserInterface {
 
 
     @Override
-    public void login(final String userNumber, final String imei, final boolean isTeacher, final LoginListener listener) {
+    public void login(final String userNumber, final String imei, final boolean isTeacher, final boolean isInstructor, final LoginListener listener) {
         BmobQuery<UserBean> bmobQuery = new BmobQuery<>();
         bmobQuery.addWhereEqualTo("userNumber", userNumber);
         bmobQuery.findObjects(new FindListener<UserBean>() {
@@ -47,7 +48,7 @@ public class UserLogic extends BaseLogic implements UserInterface {
                             // 校验IMEI是否被注册过
                             if (list == null || list.isEmpty()) {
                                 // register
-                                register(userNumber, imei, isTeacher, listener);
+                                register(userNumber, imei, isTeacher, isInstructor, listener);
                                 return;
                             } else {
                                 listener.onFailure("该IMEI已绑定其他学号");
@@ -69,11 +70,12 @@ public class UserLogic extends BaseLogic implements UserInterface {
         });
     }
 
-    private void register(String userNumber, String imei, boolean isTeacher, final LoginListener listener) {
+    private void register(String userNumber, String imei, boolean isTeacher, boolean isInstructor, final LoginListener listener) {
         final UserBean userBean = new UserBean();
         userBean.setUserNumber(userNumber);
         userBean.setImei(imei);
         userBean.setIsTeacher(isTeacher);
+        userBean.setIsInstructor(isInstructor);
 
         userBean.save(new SaveListener<String>() {
             @Override
@@ -95,7 +97,7 @@ public class UserLogic extends BaseLogic implements UserInterface {
         editor.putString("userNumber", user.getUserNumber());
         editor.putString("IMEI", user.getImei());
         editor.putBoolean("isTeacher", user.isTeacher());
-
+        editor.putBoolean(db.IS_INSTRUCTOR,user.isInstructor());
         // 把leaveRequestOIbjId 放到本地
         editor.putString(PersonalInfoActivity.LEAVE_REQUEST_OBJ_ID,user.getLeaveRequestObjId());
         editor.apply();

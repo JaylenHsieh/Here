@@ -28,11 +28,11 @@ class LoginPresenter(
 
     }
 
-    override fun clickLogin(userNumber: String, imei: String, isTeacher: Boolean) {
+    override fun clickLogin(userNumber: String, imei: String, isTeacher: Boolean, isInstructor: Boolean) {
 
         //TODO 判合法性
 
-        loginInterface.login(userNumber, imei, isTeacher, object : UserInterface.LoginListener {
+        loginInterface.login(userNumber, imei, isTeacher, isInstructor, object : UserInterface.LoginListener {
             override fun onStartLogin() {
 
             }

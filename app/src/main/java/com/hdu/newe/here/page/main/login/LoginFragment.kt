@@ -55,6 +55,7 @@ class LoginFragment : BaseFragment<LoginContract.Presenter>(),
         checkStatus.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 tvUserNumber.text = "工号:"
+                checkStatusIsInstructor.visibility = View.VISIBLE
             } else {
                 tvUserNumber.text = "学号:"
             }
@@ -69,10 +70,6 @@ class LoginFragment : BaseFragment<LoginContract.Presenter>(),
         //TODO 用户须知点击监听 跳转至LoginNoticeFragemnt
         //TODO 创建一个public的方法用来传递用户是否完成《用户须知》的阅读 传递参数 boolean isRead
         checkIsRead.setOnClickListener {
-//            activity?.supportFragmentManager
-//                    ?.beginTransaction()
-//                    ?.add(R.id.container, LoginNoticeFragment())
-//                    ?.commit()
             LoginNoticeBottomSheetFragment().show(activity!!.supportFragmentManager, "dialog")
         }
     }
@@ -80,14 +77,8 @@ class LoginFragment : BaseFragment<LoginContract.Presenter>(),
     override fun render() {
 
         btnLogin.setOnClickListener {
-            mPresenter.clickLogin(edUserNumber.takeString(), tvIMEI.takeString(), checkStatus.isChecked)
+            mPresenter.clickLogin(edUserNumber.takeString(), tvIMEI.takeString(), checkStatus.isChecked, checkStatusIsInstructor.isChecked)
         }
-
-//        view?.findViewById<TextView>(R.id.btnLogin)?.setOnClickListener{
-//            user.userNumber = view?.findViewById<EditText>(R.id.edUserNumber)?.text.toString()
-//            user.imei = view?.findViewById<TextView>(R.id.TvIMEI)?.text.toString()
-//            user.isTeacher = view?.findViewById<CheckBox>(R.id.)?.isChecked ?: true
-//        }
     }
 
     @AfterPermissionGranted(PERMISSION_REQUEST)
