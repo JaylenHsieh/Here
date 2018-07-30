@@ -14,6 +14,7 @@ import com.hdu.newe.here.biz.variousdata.student.bean.LeaveRequestBean
 import com.hdu.newe.here.page.main.leaverequest.teacher.adapter.LeaveRequestTVeiwBinder
 import com.hdu.newe.here.utils.notifyItemChanged
 import com.hdu.newe.here.utils.query
+import kotlinx.android.synthetic.main.fragment_leave_requst_fragment_teacher.*
 import me.drakeet.multitype.MultiTypeAdapter
 import me.drakeet.multitype.register
 import java.util.*
@@ -45,6 +46,8 @@ class LeaveRequestFragmentTeacher : Fragment(){
             adapter = leaveRequestTAdapter
         }
         fetchList()
+
+        fabRefresh.setOnClickListener{fetchList()}
         return view
     }
 

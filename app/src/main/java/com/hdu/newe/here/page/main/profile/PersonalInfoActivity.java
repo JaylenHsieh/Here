@@ -16,7 +16,6 @@ import com.hdu.newe.here.biz.variousdata.student.bean.LeaveRequestBean;
 import com.hdu.newe.here.biz.user.entity.UserBean;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -173,7 +172,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
     }
 
     /**
-     * 获取到用户的 @param leaveRequestObjId，如果为空，则再LeaveRequestBean创建一行新的数据
+     * 获取到用户的 @param leaveRequestObjId，如果为空，则在 LeaveRequestBean创建一行新的数据
      * 如果不为空，则获取到leaveRequestObjId，
      *
      * @param user
@@ -181,6 +180,13 @@ public class PersonalInfoActivity extends AppCompatActivity {
     private void createLeaveRequestData(UserBean user) {
         if ("".equals(user.getLeaveRequestObjId()) || user.getLeaveRequestObjId() == null) {
             LeaveRequestBean leaveRequestBean = new LeaveRequestBean();
+            // 新建的一行数据的列表赋值一个空的 List
+            mList.add("");
+            leaveRequestBean.setLeaveRequestReason(mList);
+            leaveRequestBean.setLeaveRequestState(mList);
+            mList.add("");
+            leaveRequestBean.setLeaveRequestTime(mList);
+            leaveRequestBean.setUserObjectId(objectId);
             leaveRequestBean.save(new SaveListener<String>() {
                 @Override
                 public void done(String objectId, BmobException e) {
@@ -189,7 +195,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
                         SharedPreferences.Editor editor = getSharedPreferences("user", MODE_PRIVATE).edit();
                         editor.putString(LEAVE_REQUEST_OBJ_ID, leaveRequestObjId);
                         editor.apply();
-                        uploadleaveObjIdInfo();
+                        uploadLeaveObjIdInfo();
                         Toast.makeText(PersonalInfoActivity.this, "请假表创建成功", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(PersonalInfoActivity.this, "创建失败", Toast.LENGTH_SHORT).show();
@@ -204,9 +210,11 @@ public class PersonalInfoActivity extends AppCompatActivity {
     /**
      * 如果为空，就直接先上传一下，避免出现多次建表的情况
      */
-    private void uploadleaveObjIdInfo(){
+    private void uploadLeaveObjIdInfo(){
         UserBean user = new UserBean();
         user.setLeaveRequestObjId(leaveRequestObjId);
+        user.setIsInstructor(mIsInstructor);
+        user.setIsTeacher(mIsTeacher);
         user.update(objectId, new UpdateListener() {
             @Override
             public void done(BmobException e) {
@@ -219,13 +227,6 @@ public class PersonalInfoActivity extends AppCompatActivity {
         });
 
         LeaveRequestBean leaveRequest = new LeaveRequestBean();
-        // 新建的一行数据的列表赋值一个空的 List
-        mList.add("");
-        leaveRequest.setLeaveRequestReason(mList);
-        leaveRequest.setLeaveRequestState(mList);
-        mList.add("");
-        leaveRequest.setLeaveRequestTime(mList);
-        leaveRequest.setUserObjectId(objectId);
         leaveRequest.setIsTeacher(mIsTeacher);
         leaveRequest.update(leaveRequestObjId, new UpdateListener() {
             @Override
