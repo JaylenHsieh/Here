@@ -94,7 +94,13 @@ public class UserLogic extends BaseLogic implements UserInterface {
     private void saveLoginInfo(UserBean user, String objId) {
         SharedPreferences.Editor editor = getContext().getSharedPreferences("user", Context.MODE_PRIVATE).edit();
         editor.putString("objId", objId);
+        editor.putString("userName",user.getUserName());
         editor.putString("userNumber", user.getUserNumber());
+        editor.putString("userClass",user.getUserClass());
+        editor.putString("userClassNum",user.getUserClassNum());
+        editor.putString("userMajor",user.getUserMajor());
+        editor.putString("userCollege",user.getUserCollege());
+        editor.putString("userInstructor",user.getUserInstructor());
         editor.putString("IMEI", user.getImei());
         editor.putBoolean("isTeacher", user.isTeacher());
         editor.putBoolean(db.IS_INSTRUCTOR,user.isInstructor());
