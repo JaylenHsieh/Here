@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_list"
+    android:orientation="vertical"
+    android:visibility="visible">
+
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/scrollView2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tv_create_subject_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="教学科目："
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_create_subject_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="上课时间："
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/tv_create_subject_teacher"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_create_teacher_name" />
+
+                <TextView
+                    android:id="@+id/tv_create_teacher_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="该用户名"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_create_subject_teacher"
+                    app:layout_constraintEnd_toEndOf="@+id/editText_create_subject_name"
+                    app:layout_constraintStart_toEndOf="@+id/tv_create_subject_teacher"
+                    app:layout_constraintTop_toTopOf="@+id/tv_create_subject_teacher" />
+
+                <EditText
+                    android:id="@+id/editText_create_subject_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:ems="10"
+                    android:hint="请输入完整课程名"
+                    android:inputType="textPersonName"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_create_subject_name"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tv_create_subject_name"
+                    app:layout_constraintTop_toTopOf="@+id/tv_create_subject_name" />
+
+                <TextView
+                    android:id="@+id/tv_create_subject_teacher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="任课教师："
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/tv_create_subject_name"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_create_subject_name" />
+
+                <Button
+                    android:id="@+id/btn_create"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/bg_textview_login"
+                    android:text="创建"
+                    android:textColor="@color/black_2"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/numberPicker_create_day_of_week2"
+                    app:layout_constraintVertical_bias="1.0" />
+
+                <NumberPicker
+                    android:id="@+id/numberPicker_create_day_of_week"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintStart_toStartOf="@+id/tv_create_subject_time"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_create_subject_time" />
+
+                <NumberPicker
+                    android:id="@+id/numberPicker_create_last_class"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/numberPicker_create_day_of_week"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_create_teacher_name"
+                    app:layout_constraintTop_toTopOf="@+id/numberPicker_create_day_of_week" />
+
+                <TextView
+                    android:id="@+id/textView23"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="至"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/numberPicker_create_last_class"
+                    app:layout_constraintEnd_toStartOf="@+id/numberPicker_create_last_class"
+                    app:layout_constraintTop_toTopOf="@+id/numberPicker_create_last_class" />
+
+                <NumberPicker
+                    android:id="@+id/numberPicker_create_first_class"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/numberPicker_create_day_of_week"
+                    app:layout_constraintEnd_toStartOf="@+id/textView23"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@+id/numberPicker_create_day_of_week"
+                    app:layout_constraintTop_toTopOf="@+id/numberPicker_create_day_of_week" />
+
+                <TextView
+                    android:id="@+id/textView25"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="若该课程每周分两个时间段授课，则在下面选择第二时间段。若无第二时间段则选无！"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_create_teacher_name"
+                    app:layout_constraintStart_toStartOf="@+id/tv_create_subject_time"
+                    app:layout_constraintTop_toBottomOf="@+id/numberPicker_create_day_of_week" />
+
+                <NumberPicker
+                    android:id="@+id/numberPicker_create_day_of_week2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="@+id/numberPicker_create_day_of_week"
+                    app:layout_constraintTop_toBottomOf="@+id/textView25" />
+
+                <NumberPicker
+                    android:id="@+id/numberPicker_create_last_class2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@+id/numberPicker_create_day_of_week2"
+                    app:layout_constraintEnd_toEndOf="@+id/numberPicker_create_last_class"
+                    app:layout_constraintTop_toTopOf="@+id/numberPicker_create_day_of_week2" />
+
+                <TextView
+                    android:id="@+id/textView27"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="至"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/numberPicker_create_last_class2"
+                    app:layout_constraintEnd_toStartOf="@+id/numberPicker_create_last_class2"
+                    app:layout_constraintTop_toTopOf="@+id/numberPicker_create_last_class2" />
+
+                <NumberPicker
+                    android:id="@+id/numberPicker_create_first_class2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/numberPicker_create_day_of_week2"
+                    app:layout_constraintEnd_toStartOf="@+id/textView27"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@+id/numberPicker_create_day_of_week2"
+                    app:layout_constraintTop_toTopOf="@+id/numberPicker_create_day_of_week2" />
+
+            </android.support.constraint.ConstraintLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

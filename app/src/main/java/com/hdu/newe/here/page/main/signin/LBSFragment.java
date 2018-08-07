@@ -1,6 +1,9 @@
 package com.hdu.newe.here.page.main.signin;
 
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -12,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -26,6 +31,19 @@ import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
 import com.hdu.newe.here.R;
+import com.hdu.newe.here.biz.profile.bean.ClassDataBean;
+import com.hdu.newe.here.biz.user.entity.UserBean;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.QueryListener;
 
 import static android.content.Context.SENSOR_SERVICE;
 
@@ -38,7 +56,21 @@ import static android.content.Context.SENSOR_SERVICE;
  */
 public class LBSFragment extends Fragment {
 
-    private SignOnFragment signOnFragment;
+    @BindView(R.id.tv_class_teacher2)
+    TextView tvClassTeacher2;
+    @BindView(R.id.tv_class_name2)
+    TextView tvClassName2;
+    @BindView(R.id.tv_class_place2)
+    TextView tvClassPlace2;
+    @BindView(R.id.tv_class_time2)
+    TextView tvClassTime2;
+    @BindView(R.id.tv_student_number2)
+    TextView tvStudentNumber2;
+    Unbinder unbinder;
+    @BindView(R.id.btn_check2)
+    TextView btnCheck2;
+    @BindView(R.id.btn_check3)
+    TextView btnCheck3;
 
     private boolean isDispaly = false;
 
@@ -78,6 +110,12 @@ public class LBSFragment extends Fragment {
     private ConstraintLayout layoutGroup1;
     private ConstraintLayout layoutGroup2;
 
+    private Calendar calendar;
+
+    private String userObjId;
+    private String userName;
+    private boolean isTeacher;
+    private List<String> subjectList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -86,11 +124,12 @@ public class LBSFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_lbs, container, false);
 
         //初始化控件
-        initWidgt(view);
+        initWidget(view);
 
         //绑定监听
         bindListener();
 
+        unbinder = ButterKnife.bind(this, view);
         return view;
 
     }
@@ -142,9 +181,120 @@ public class LBSFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 changeVisibility();
+                getSignInMsg();
             }
         });
 
+    }
+
+    private void getSignInMsg() {
+        SharedPreferences preferences = getActivity().getSharedPreferences("user", Context.MODE_PRIVATE);
+        userObjId = preferences.getString("objId", null);
+        isTeacher = preferences.getBoolean("isTeacher", false);
+        if (userObjId == null || userObjId.equals("")) {
+            Toast.makeText(getActivity(), "登录异常", Toast.LENGTH_SHORT);
+            return;
+        }
+
+        BmobQuery<UserBean> query = new BmobQuery();
+        query.getObject(userObjId, new QueryListener<UserBean>() {
+            @Override
+            public void done(UserBean userBean, BmobException e) {
+                if (e == null) {
+                    subjectList = userBean.getSubjectList();
+                    showAddSubject();
+                    //TODO 判定当前上课情况 有课的情况也需判定有没有当前时间段的课
+//                    if (subjectList == null || subjectList.size() == 0) {
+//                        //当没有课时 显示无课的fragment
+//                        showAddSubject();
+//                    } else {
+//                        //当有课时 加载相应课程信息
+//                        loadSubjectMsg();
+//                    }
+                } else {
+                    Toast.makeText(getActivity(), "查询异常" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    /**
+     * 加载课程信息
+     */
+    private void loadSubjectMsg() {
+        //TODO 相关逻辑未完成。由于未使用到，暂且这样
+        int size = subjectList.size();
+        List<String> subjectTimes = new ArrayList<>(size);
+        for (int i = 0; i < size; i++) {
+            BmobQuery<ClassDataBean> query = new BmobQuery<>();
+            query.getObject(subjectList.get(i), new QueryListener<ClassDataBean>() {
+                @Override
+                public void done(ClassDataBean classDataBean, BmobException e) {
+                    if (e == null) {
+                        int day = calendar.get(Calendar.DAY_OF_WEEK);
+                        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                        int min = calendar.get(Calendar.MINUTE);
+                        classDataBean.changeToCode(day,hour,min);
+                    }
+                }
+            });
+        }
+    }
+
+    /**
+     * 显示增加课程的Fragment
+     */
+    private void showAddSubject() {
+        //TODO 显示增加课程的Fragment
+        if (isTeacher) {
+            //老师 创建课程
+            createSubject();
+        } else {
+            //学生 加入课程
+            joinSubject();
+        }
+    }
+
+    /**
+     * 加入课程
+     */
+    private void joinSubject() {
+        //对界面进行更改
+        tvClassTeacher2.setText(R.string.join_subject_notice);
+        tvClassName2.setVisibility(View.GONE);
+        tvClassPlace2.setVisibility(View.GONE);
+        tvClassTime2.setVisibility(View.GONE);
+        tvStudentNumber2.setVisibility(View.GONE);
+        btnCheck2.setText(R.string.join_subject);
+        btnCheck3.setText(R.string.cancel);
+        //TODO 完成相关点击业务逻辑
+    }
+
+    /**
+     * 创建课程
+     */
+    private void createSubject() {
+        //对界面进行更改
+        tvClassTeacher2.setText(R.string.create_subject_notice);
+        tvClassName2.setVisibility(View.INVISIBLE);
+        tvClassPlace2.setVisibility(View.INVISIBLE);
+        tvClassTime2.setVisibility(View.INVISIBLE);
+        tvStudentNumber2.setVisibility(View.INVISIBLE);
+        btnCheck2.setText(R.string.create_subject);
+        btnCheck3.setText(R.string.cancel);
+        btnCheck2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),NewSubjectActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnCheck3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeVisibility();
+            }
+        });
     }
 
     /**
@@ -152,7 +302,7 @@ public class LBSFragment extends Fragment {
      *
      * @param view 膨胀出的视图
      */
-    private void initWidgt(View view) {
+    private void initWidget(View view) {
 
         layoutGroup2 = view.findViewById(R.id.layout_group2);
         layoutGroup1 = view.findViewById(R.id.layout_group1);
@@ -179,6 +329,8 @@ public class LBSFragment extends Fragment {
         mLocClient.requestLocation();
 
         imageView = view.findViewById(R.id.Image_sign_on);
+
+        calendar = Calendar.getInstance();
 
     }
 
@@ -246,6 +398,12 @@ public class LBSFragment extends Fragment {
 
     public void onAccuracyChanged(Sensor sensor, int i) {
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
     /**
@@ -339,7 +497,7 @@ public class LBSFragment extends Fragment {
     }
 
 
-    public boolean isDispaly() {
+    public boolean isDisplay() {
         return isDispaly;
     }
 }

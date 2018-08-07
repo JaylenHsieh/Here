@@ -24,6 +24,7 @@
         android:layout_marginBottom="32dp"
         android:background="@drawable/bg_circle"
         android:elevation="2dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -142,7 +143,7 @@
         <TextView
             android:id="@+id/tv_student_number2"
             android:layout_width="0dp"
-            android:layout_height="17dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:gravity="center_vertical"
             android:minWidth="332dp"
