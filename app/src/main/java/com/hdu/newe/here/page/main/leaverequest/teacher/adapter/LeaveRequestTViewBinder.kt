@@ -13,9 +13,10 @@ import me.drakeet.multitype.ItemViewBinder
  * @author Jaylen Hsieh
  * @date 2018/07/29
  */
-class LeaveRequestTVeiwBinder(
-        private val tapLeaveRequestItem: (pos: Int) -> Unit
-) : ItemViewBinder<LeaveRequestBean, LeaveRequestTVeiwBinder.ViewHolder>() {
+class LeaveRequestTViewBinder(
+        private val tapLeaveRequestItem: (pos: Int) -> Unit,
+        private val acceptOrRefuseClick: (state: Boolean, pos: Int) -> Unit
+) : ItemViewBinder<LeaveRequestBean, LeaveRequestTViewBinder.ViewHolder>() {
 
     override fun onCreateViewHolder(inflater: LayoutInflater, parent: ViewGroup): ViewHolder {
         val root = inflater.inflate(R.layout.item_leave_request_check, parent, false)
@@ -38,6 +39,14 @@ class LeaveRequestTVeiwBinder(
         holder.itemView.setOnClickListener {
             tapLeaveRequestItem(holder.adapterPosition)
         }
+        // 拒绝按钮的点击事件
+        holder.btnRefuse.setOnClickListener {
+            acceptOrRefuseClick(false,holder.adapterPosition)
+        }
+        holder.btnPermit.setOnClickListener {
+            acceptOrRefuseClick(true,holder.adapterPosition)
+        }
+
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

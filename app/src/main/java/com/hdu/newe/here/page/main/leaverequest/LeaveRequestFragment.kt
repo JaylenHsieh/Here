@@ -29,7 +29,7 @@ class LeaveRequestFragment : Fragment(), View.OnClickListener {
 
     var leaveRequestReasonList: MutableList<String> = mutableListOf()
     var leaveRequestTimeList: MutableList<String> = mutableListOf()
-    var leaveRequestState: MutableList<String> = mutableListOf()
+    var leaveRequestStateList: MutableList<String> = mutableListOf()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -67,6 +67,7 @@ class LeaveRequestFragment : Fragment(), View.OnClickListener {
                 if (e == null) {
                     leaveRequestReasonList = leaveRequest.leaveRequestReason
                     leaveRequestTimeList = leaveRequest.leaveRequestTime
+                    leaveRequestStateList = leaveRequest.leaveRequestState
                 } else {
                     Toast.makeText(context, "获取信息失败" + e.message, Toast.LENGTH_SHORT).show()
                 }
@@ -122,7 +123,9 @@ class LeaveRequestFragment : Fragment(), View.OnClickListener {
                 leaveRequest.leaveRequestReason = leaveRequestReasonList
                 leaveRequestTimeList.add(tvStartTime.text.toString())
                 leaveRequestTimeList.add(tvFinishTime.text.toString())
+                leaveRequestStateList.add("待审核")
                 leaveRequest.leaveRequestTime = leaveRequestTimeList
+                leaveRequest.leaveRequestState = leaveRequestStateList
                 val leaveRequestObjId = activity?.getSharedPreferences("user", Context.MODE_PRIVATE)?.getString(PersonalInfoActivity.LEAVE_REQUEST_OBJ_ID, "")
                 leaveRequest.update(leaveRequestObjId, object : UpdateListener() {
                     override fun done(e: BmobException?) {
