@@ -5,14 +5,17 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.exception.BmobException
+import cn.bmob.v3.listener.QueryListener
 import cn.bmob.v3.listener.UpdateListener
 import com.hdu.newe.here.R
+import com.hdu.newe.here.biz.user.entity.UserBean
 import com.hdu.newe.here.biz.variousdata.student.bean.LeaveRequestBean
 import com.hdu.newe.here.page.main.leaverequest.teacher.adapter.LeaveRequestTViewBinder
 import com.hdu.newe.here.page.main.profile.PersonalInfoActivity
@@ -38,8 +41,19 @@ class LeaveRequestFragmentTeacher : Fragment(){
         },{
             accept,pos ->
             val leaveRequestObjId = leaveRequestData[pos].objectId
+            val leaveRequestQuery = BmobQuery<LeaveRequestBean>()
+            val leaveRequest = LeaveRequestBean()
+            leaveRequestQuery.getObject(leaveRequestObjId, object :QueryListener<LeaveRequestBean>(){
+                override fun done(leaveRequestBean: LeaveRequestBean?, e: BmobException?) {
+                    if (e == null){
+                        leaveRequest.leaveRequestState = leaveRequestBean?.leaveRequestState
+                        leaveRequest.leaveRequestState.removeAt(leaveRequest.leaveRequestState.size - 1)
+                    } else {
+                        Toast.makeText(context,e.message,Toast.LENGTH_SHORT).show()
+                    }
+                }
+            })
             if (accept){
-                val leaveRequest = LeaveRequestBean()
                 leaveRequest.leaveRequestState.add("通过")
                 leaveRequest.update(leaveRequestObjId, object : UpdateListener() {
                     override fun done(e: BmobException?) {
@@ -50,8 +64,8 @@ class LeaveRequestFragmentTeacher : Fragment(){
                         }
                     }
                 })
+
             } else {
-                val leaveRequest = LeaveRequestBean()
                 leaveRequest.leaveRequestState.add("未通过")
                 leaveRequest.update(leaveRequestObjId, object : UpdateListener() {
                     override fun done(e: BmobException?) {
@@ -65,6 +79,8 @@ class LeaveRequestFragmentTeacher : Fragment(){
             }
         }))
     }
+
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
