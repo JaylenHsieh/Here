@@ -92,4 +92,70 @@ public class ClassDataBean extends BmobObject {
     public void setClassMember(List<String> classMember) {
         this.classMember = classMember;
     }
+
+    /**
+     * 将传入的时间码转换成毫秒为单位的时间码
+     *
+     * @param timeCode 课程码中提取出来的时间码（第5~7位和第9~11位）
+     * @return 返回用分作为单位时间码（第1~4位标识课程开始时间，第5~8位标识课程结束时间）
+     */
+    public String changeToMinTime(String timeCode) {
+
+        String startTime = "";
+        int finishTime = 0;
+        int firstClassTime = Integer.valueOf(timeCode.substring(0, 2));
+        int countOfClass = Integer.valueOf(timeCode.substring(2,3));
+        switch (firstClassTime) {
+            case 1:
+                startTime = "0485";
+                if (countOfClass >= 2){
+                    finishTime += 15;
+                }
+                break;
+            case 2:
+                startTime = "0535";
+                finishTime += 15;
+                break;
+            case 3:
+                startTime = "0600";
+                break;
+            case 4:
+                startTime = "0650";
+                break;
+            case 5:
+                startTime = "0700";
+                break;
+            case 6:
+                startTime = "0815";
+                break;
+            case 7:
+                startTime = "0865";
+                break;
+            case 8:
+                startTime = "0915";
+                break;
+            case 9:
+                startTime = "0965";
+                break;
+            case 10:
+                startTime = "1110";
+                break;
+            case 11:
+                startTime = "1160";
+                break;
+            case 12:
+                startTime = "1210";
+                break;
+            default:
+                break;
+        }
+        finishTime += Integer.valueOf(startTime)+50*countOfClass;
+        String time = startTime;
+        if (String.valueOf(finishTime).length()<4){
+            time += "0";
+        }
+        time += String.valueOf(finishTime);
+        return time;
+
+    }
 }

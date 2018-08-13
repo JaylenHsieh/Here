@@ -99,7 +99,7 @@ class MainActivity : AppCompatActivity() {
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
         if (currentPos == 0) {
             val fragment = findOrGenerateFragment(0) as LBSFragment
-            if (fragment.isDispaly) {
+            if (fragment.isDisplay) {
                 fragment.changeVisibility()
                 return false
             }

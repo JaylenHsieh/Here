@@ -234,7 +234,7 @@ public class LBSFragment extends Fragment {
                         int day = calendar.get(Calendar.DAY_OF_WEEK);
                         int hour = calendar.get(Calendar.HOUR_OF_DAY);
                         int min = calendar.get(Calendar.MINUTE);
-                        classDataBean.changeToCode(day,hour,min);
+//                        classDataBean.changeToCode(day,hour,min);
                     }
                 }
             });

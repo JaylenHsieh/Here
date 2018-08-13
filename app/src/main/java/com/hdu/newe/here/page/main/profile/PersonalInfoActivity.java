@@ -12,8 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hdu.newe.here.R;
-import com.hdu.newe.here.biz.variousdata.student.bean.LeaveRequestBean;
 import com.hdu.newe.here.biz.user.entity.UserBean;
+import com.hdu.newe.here.biz.variousdata.student.bean.LeaveRequestBean;
 
 import java.util.ArrayList;
 import java.util.List;
