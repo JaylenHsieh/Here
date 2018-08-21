@@ -46,7 +46,7 @@ dependencies {
     implementation 'com.android.support:support-v4:27.1.1'
     implementation 'com.newe:label-view:0.2.5-alpha3'
 
-    implementation'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34'
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34'
 
     //权限库
     implementation 'pub.devrel:easypermissions:1.2.0'

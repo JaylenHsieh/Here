@@ -94,7 +94,7 @@ public class ClassDataBean extends BmobObject {
     }
 
     /**
-     * 将传入的时间码转换成毫秒为单位的时间码
+     * 将传入的时间码转换成分为单位的时间码
      *
      * @param timeCode 课程码中提取出来的时间码（第5~7位和第9~11位）
      * @return 返回用分作为单位时间码（第1~4位标识课程开始时间，第5~8位标识课程结束时间）

@@ -47,14 +47,10 @@ import cn.bmob.v3.listener.QueryListener;
 
 import static android.content.Context.SENSOR_SERVICE;
 
-//import com.baidu.mapapi.SDKInitializer;
-//import com.baidu.mapapi.map.TextureMapView;
-
-
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LBSFragment extends Fragment {
+public class LBSFragment extends Fragment implements SensorEventListener {
 
     @BindView(R.id.tv_class_teacher2)
     TextView tvClassTeacher2;
@@ -78,7 +74,7 @@ public class LBSFragment extends Fragment {
      * 定位相关参数
      */
     public LocationClient mLocClient;
-    public MyLocationListenner myListener = new MyLocationListenner();
+    public MyLocationListener myListener = new MyLocationListener();
     private MyLocationConfiguration.LocationMode mCurrentMode;
     private BitmapDescriptor mCurrentMarker;
 
@@ -92,6 +88,7 @@ public class LBSFragment extends Fragment {
     private double mCurrentLat = 0.0;
     private double mCurrentLon = 0.0;
     private float mCurrentAccracy;
+    private int calculationTime = 0;
 
     /**
      * 是否首次定位
@@ -131,6 +128,43 @@ public class LBSFragment extends Fragment {
 
         unbinder = ButterKnife.bind(this, view);
         return view;
+
+    }
+
+    /**
+     * 初始化控件
+     *
+     * @param view 膨胀出的视图
+     */
+    private void initWidget(View view) {
+
+        layoutGroup2 = view.findViewById(R.id.layout_group2);
+        layoutGroup1 = view.findViewById(R.id.layout_group1);
+
+        imageViewNavigation = view.findViewById(R.id.imageView_location);
+
+        //获取传感器管理服务
+        mSensorManager = (SensorManager) getActivity().getSystemService(SENSOR_SERVICE);
+        mCurrentMode = MyLocationConfiguration.LocationMode.NORMAL;
+
+        // 地图初始化
+        mMapView = view.findViewById(R.id.bmapView);
+        mBaiduMap = mMapView.getMap();
+
+        // 开启定位图层
+        mBaiduMap.setMyLocationEnabled(true);
+        // 定位初始化
+        mLocClient = new LocationClient(getActivity().getApplicationContext());
+        mLocClient.registerLocationListener(myListener);
+
+        //初始化
+        initLocation();
+        mLocClient.start();
+        mLocClient.requestLocation();
+
+        imageView = view.findViewById(R.id.Image_sign_on);
+
+        calendar = Calendar.getInstance();
 
     }
 
@@ -182,8 +216,180 @@ public class LBSFragment extends Fragment {
             public void onClick(View v) {
                 changeVisibility();
                 getSignInMsg();
+                getLocation();
             }
         });
+
+    }
+
+    /**
+     * 初始化定位
+     */
+    private void initLocation() {
+        LocationClientOption option = new LocationClientOption();
+        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
+        //可选，设置定位模式，默认高精度
+        //LocationMode.Hight_Accuracy：高精度；
+        //LocationMode. Battery_Saving：低功耗；
+        //LocationMode. Device_Sensors：仅使用设备
+
+        option.setCoorType("bd09ll");
+        //可选，设置返回经纬度坐标类型，默认gcj02
+        //gcj02：国测局坐标；
+        //bd09ll：百度经纬度坐标；
+        //bd09：百度墨卡托坐标；
+        //海外地区定位，无需设置坐标类型，统一返回wgs84类型坐标
+
+        int span = 1000;
+        option.setScanSpan(span);
+        //可选，设置发起定位请求的间隔，int类型，单位ms
+        // 如果设置为0，则代表单次定位，即仅定位一次，默认为0
+        // 如果设置非0，需设置1000ms以上才有效
+
+
+        //可选，设置是否需要地址信息，默认不需要
+        option.setIsNeedAddress(true);
+
+        option.setOpenGps(true);
+        //可选，设置是否使用gps，默认false
+        // 使用高精度和仅用设备两种定位模式的，参数必须设置为true
+
+        //可选，默认false，设置是否当gps有效时按照1S1次频率输出GPS结果
+        option.setLocationNotify(true);
+
+        //可选，默认false，设置是否需要位置语义化结果，可以在BDLocation.getLocationDescribe里得到，结果类似于“在北京天安门附近”
+        option.setIsNeedLocationDescribe(true);
+
+        //可选，默认false，设置是否需要POI结果，可以在BDLocation.getPoiList里得到
+        option.setIsNeedLocationPoiList(true);
+
+        //可选，默认true，定位SDK内部是一个SERVICE，并放到了独立进程，设置是否在stop的时候杀死这个进程，默认不杀死
+        option.setIgnoreKillProcess(false);
+
+        //可选，默认false，设置是否收集CRASH信息，默认收集
+        option.SetIgnoreCacheException(false);
+
+        //可选，默认false，设置是否需要过滤gps仿真结果，默认需要
+        option.setEnableSimulateGps(false);
+
+        mLocClient.setLocOption(option);
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        double x = sensorEvent.values[SensorManager.DATA_X];
+        if (Math.abs(x - lastX) > 1.0) {
+            mCurrentDirection = (int) x;
+            locData = new MyLocationData.Builder()
+                    .accuracy(mCurrentAccracy)
+                    // 此处设置开发者获取到的方向信息，顺时针0-360
+                    .direction(mCurrentDirection).latitude(mCurrentLat)
+                    .longitude(mCurrentLon).build();
+            mBaiduMap.setMyLocationData(locData);
+        }
+        lastX = x;
+
+    }
+
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    /**
+     * 定位SDK监听函数
+     */
+    public class MyLocationListener implements BDLocationListener {
+
+        @Override
+        public void onReceiveLocation(BDLocation location) {
+            // map view 销毁后不在处理新接收的位置
+            if (location == null || mMapView == null) {
+                return;
+            }
+
+            //获取纬度信息
+            mCurrentLat = location.getLatitude();
+            //获取经度信息
+            mCurrentLon = location.getLongitude();
+            mCurrentAccracy = location.getRadius();
+            locData = new MyLocationData.Builder()
+                    .accuracy(location.getRadius())
+                    // 此处设置开发者获取到的方向信息，顺时针0-360
+                    .direction(mCurrentDirection).latitude(location.getLatitude())
+                    .longitude(location.getLongitude()).build();
+            mBaiduMap.setMyLocationData(locData);
+            if (isFirstLoc) {
+                isFirstLoc = false;
+                LatLng ll = new LatLng(location.getLatitude(),
+                        location.getLongitude());
+                MapStatus.Builder builder = new MapStatus.Builder();
+                builder.target(ll).zoom(18.0f);
+                mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
+            }
+        }
+
+        public void onReceivePoi(BDLocation poiLocation) {
+        }
+    }
+
+    @Override
+    public void onPause() {
+        mMapView.onPause();
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        mMapView.onResume();
+        super.onResume();
+        //为系统的方向传感器注册监听器
+        mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),
+                SensorManager.SENSOR_DELAY_UI);
+    }
+
+    @Override
+    public void onStop() {
+        //取消注册传感器监听
+        mSensorManager.unregisterListener(this);
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        // 退出时销毁定位
+        if (mLocClient != null) {
+            mLocClient.stop();
+        }
+        // 关闭定位图层
+        if (mBaiduMap != null) {
+            mBaiduMap.setMyLocationEnabled(false);
+        }
+        if (mMapView != null) {
+            mMapView.onDestroy();
+        }
+        super.onDestroy();
+
+    }
+
+    private LocationBean getLocation() {
+
+        LocationBean bean = new LocationBean();
+        if (mCurrentLat == 4.9E-324 && mCurrentLon == 4.9E-324) {
+            BDLocation bdLocation = new BDLocation();
+            bean.setErrorCode(bdLocation.getLocType());
+            return bean;
+        }
+        bean.setmCurrentLat(mCurrentLat);
+        bean.setmCurrentLon(mCurrentLon);
+        return bean;
 
     }
 
@@ -285,7 +491,7 @@ public class LBSFragment extends Fragment {
         btnCheck2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(),NewSubjectActivity.class);
+                Intent intent = new Intent(getActivity(), NewSubjectActivity.class);
                 startActivity(intent);
             }
         });
@@ -295,43 +501,6 @@ public class LBSFragment extends Fragment {
                 changeVisibility();
             }
         });
-    }
-
-    /**
-     * 初始化控件
-     *
-     * @param view 膨胀出的视图
-     */
-    private void initWidget(View view) {
-
-        layoutGroup2 = view.findViewById(R.id.layout_group2);
-        layoutGroup1 = view.findViewById(R.id.layout_group1);
-
-        imageViewNavigation = view.findViewById(R.id.imageView_location);
-
-        //获取传感器管理服务
-        mSensorManager = (SensorManager) getActivity().getSystemService(SENSOR_SERVICE);
-        mCurrentMode = MyLocationConfiguration.LocationMode.NORMAL;
-
-        // 地图初始化
-        mMapView = view.findViewById(R.id.bmapView);
-        mBaiduMap = mMapView.getMap();
-
-        // 开启定位图层
-        mBaiduMap.setMyLocationEnabled(true);
-        // 定位初始化
-        mLocClient = new LocationClient(getActivity().getApplicationContext());
-        mLocClient.registerLocationListener(myListener);
-
-        //初始化
-        initLocation();
-        mLocClient.start();
-        mLocClient.requestLocation();
-
-        imageView = view.findViewById(R.id.Image_sign_on);
-
-        calendar = Calendar.getInstance();
-
     }
 
     /**
@@ -347,153 +516,6 @@ public class LBSFragment extends Fragment {
             layoutGroup1.setVisibility(View.INVISIBLE);
             isDispaly = true;
         }
-    }
-
-    /**
-     * 初始化定位
-     */
-    private void initLocation() {
-        LocationClientOption option = new LocationClientOption();
-        //可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
-        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
-        //可选，默认gcj02，设置返回的定位结果坐标系
-        option.setCoorType("bd09ll");
-        int span = 1000;
-        //可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
-        option.setScanSpan(span);
-        //可选，设置是否需要地址信息，默认不需要
-        option.setIsNeedAddress(true);
-        //可选，默认false,设置是否使用gps
-        option.setOpenGps(true);
-        //可选，默认false，设置是否当gps有效时按照1S1次频率输出GPS结果
-        option.setLocationNotify(true);
-        //可选，默认false，设置是否需要位置语义化结果，可以在BDLocation.getLocationDescribe里得到，结果类似于“在北京天安门附近”
-        option.setIsNeedLocationDescribe(true);
-        //可选，默认false，设置是否需要POI结果，可以在BDLocation.getPoiList里得到
-        option.setIsNeedLocationPoiList(true);
-        //可选，默认true，定位SDK内部是一个SERVICE，并放到了独立进程，设置是否在stop的时候杀死这个进程，默认不杀死
-        option.setIgnoreKillProcess(false);
-        //可选，默认false，设置是否收集CRASH信息，默认收集
-        option.SetIgnoreCacheException(false);
-        //可选，默认false，设置是否需要过滤gps仿真结果，默认需要
-        option.setEnableSimulateGps(false);
-        mLocClient.setLocOption(option);
-    }
-
-    public void onSensorChanged(SensorEvent sensorEvent) {
-        double x = sensorEvent.values[SensorManager.DATA_X];
-        if (Math.abs(x - lastX) > 1.0) {
-            mCurrentDirection = (int) x;
-            locData = new MyLocationData.Builder()
-                    .accuracy(mCurrentAccracy)
-                    // 此处设置开发者获取到的方向信息，顺时针0-360
-                    .direction(mCurrentDirection).latitude(mCurrentLat)
-                    .longitude(mCurrentLon).build();
-            mBaiduMap.setMyLocationData(locData);
-        }
-        lastX = x;
-
-    }
-
-
-    public void onAccuracyChanged(Sensor sensor, int i) {
-
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
-
-    /**
-     * 定位SDK监听函数
-     */
-    public class MyLocationListenner implements BDLocationListener {
-
-        @Override
-        public void onReceiveLocation(BDLocation location) {
-            // map view 销毁后不在处理新接收的位置
-            if (location == null || mMapView == null) {
-                return;
-            }
-            mCurrentLat = location.getLatitude();
-            mCurrentLon = location.getLongitude();
-            mCurrentAccracy = location.getRadius();
-            locData = new MyLocationData.Builder()
-                    .accuracy(location.getRadius())
-                    // 此处设置开发者获取到的方向信息，顺时针0-360
-                    .direction(mCurrentDirection).latitude(location.getLatitude())
-                    .longitude(location.getLongitude()).build();
-            mBaiduMap.setMyLocationData(locData);
-            if (isFirstLoc) {
-                isFirstLoc = false;
-                LatLng ll = new LatLng(location.getLatitude(),
-                        location.getLongitude());
-                MapStatus.Builder builder = new MapStatus.Builder();
-                builder.target(ll).zoom(18.0f);
-                mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
-            }
-        }
-
-        public void onReceivePoi(BDLocation poiLocation) {
-        }
-    }
-
-    private SensorEventListener mEventListener = new SensorEventListener() {
-        @Override
-        public void onSensorChanged(SensorEvent event) {
-
-        }
-
-        @Override
-        public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-        }
-    };
-
-    public void test() {
-        mSensorManager.registerListener(
-                mEventListener,
-                mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),
-                SensorManager.SENSOR_DELAY_UI
-        );
-    }//为系统的方向传感器注册监听器
-
-    @Override
-    public void onPause() {
-        mMapView.onPause();
-        super.onPause();
-    }
-
-    @Override
-    public void onResume() {
-        mMapView.onResume();
-        super.onResume();
-    }
-
-    @Override
-    public void onStop() {
-        //取消注册传感器监听
-        mSensorManager.unregisterListener(mEventListener);
-        super.onStop();
-    }
-
-    @Override
-    public void onDestroy() {
-        // 退出时销毁定位
-        if (mLocClient != null) {
-            mLocClient.stop();
-        }
-        // 关闭定位图层
-        if (mBaiduMap != null) {
-            mBaiduMap.setMyLocationEnabled(false);
-        }
-        if (mMapView != null) {
-            mMapView.onDestroy();
-        }
-        super.onDestroy();
-
     }
 
 
