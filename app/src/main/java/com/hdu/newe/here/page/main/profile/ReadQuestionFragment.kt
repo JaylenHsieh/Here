@@ -35,7 +35,7 @@ class ReadQuestionFragment : Fragment() {
     /** QA 列表适配器 */
     private val qaAdapter = MultiTypeAdapter().apply {
         register(QandAViewBinder{
-            Toast.makeText(context, qaData[it].question, Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, qaData[it].answer, Toast.LENGTH_SHORT).show()
         })
     }
 

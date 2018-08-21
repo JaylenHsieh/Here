@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,13 +14,11 @@ import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.QueryListener
 import cn.bmob.v3.listener.UpdateListener
 import com.hdu.newe.here.R
-import com.hdu.newe.here.biz.user.entity.UserBean
 import com.hdu.newe.here.biz.variousdata.student.bean.LeaveRequestBean
 import com.hdu.newe.here.page.main.leaverequest.teacher.adapter.LeaveRequestTViewBinder
 import com.hdu.newe.here.page.main.profile.PersonalInfoActivity
 import com.hdu.newe.here.utils.notifyItemChanged
 import com.hdu.newe.here.utils.query
-import kotlinx.android.synthetic.main.fragment_leave_requst_fragment_teacher.*
 import me.drakeet.multitype.MultiTypeAdapter
 import me.drakeet.multitype.register
 import java.util.*
