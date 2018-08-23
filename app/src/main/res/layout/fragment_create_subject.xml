@@ -34,6 +34,36 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
+                <NumberPicker
+                    android:id="@+id/numberPicker_building_derection2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/numberPicker_building2"
+                    app:layout_constraintEnd_toStartOf="@+id/textView_building_derection2"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@+id/textView32"
+                    app:layout_constraintTop_toTopOf="@+id/numberPicker_building2" />
+
+                <NumberPicker
+                    android:id="@+id/numberPicker_classroom2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/numberPicker_building2"
+                    app:layout_constraintEnd_toEndOf="@+id/textView31"
+                    app:layout_constraintTop_toTopOf="@+id/numberPicker_building2" />
+
+                <NumberPicker
+                    android:id="@+id/numberPicker_building2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="184dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="@+id/textView31"
+                    app:layout_constraintTop_toBottomOf="@+id/textView31" />
+
                 <TextView
                     android:id="@+id/tv_create_subject_name"
                     android:layout_width="wrap_content"
@@ -56,8 +86,8 @@
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="@+id/tv_create_subject_teacher"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_create_teacher_name" />
+                    app:layout_constraintStart_toStartOf="@+id/textView31"
+                    app:layout_constraintTop_toBottomOf="@+id/numberPicker_building2" />
 
                 <TextView
                     android:id="@+id/tv_create_teacher_name"
@@ -129,9 +159,8 @@
                     android:id="@+id/numberPicker_create_last_class"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
                     app:layout_constraintBottom_toBottomOf="@+id/numberPicker_create_day_of_week"
-                    app:layout_constraintEnd_toEndOf="@+id/tv_create_teacher_name"
+                    app:layout_constraintEnd_toEndOf="@+id/numberPicker_classroom2"
                     app:layout_constraintTop_toTopOf="@+id/numberPicker_create_day_of_week" />
 
                 <TextView
@@ -210,6 +239,111 @@
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toEndOf="@+id/numberPicker_create_day_of_week2"
                     app:layout_constraintTop_toTopOf="@+id/numberPicker_create_day_of_week2" />
+
+                <TextView
+                    android:id="@+id/textView28"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="上课地点："
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/tv_create_subject_teacher"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_create_teacher_name" />
+
+                <NumberPicker
+                    android:id="@+id/numberPicker_building"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintStart_toStartOf="@+id/textView28"
+                    app:layout_constraintTop_toBottomOf="@+id/textView28" />
+
+                <NumberPicker
+                    android:id="@+id/numberPicker_classroom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/numberPicker_building"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_create_teacher_name"
+                    app:layout_constraintTop_toTopOf="@+id/numberPicker_building" />
+
+                <TextView
+                    android:id="@+id/textView29"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="教"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/numberPicker_building"
+                    app:layout_constraintStart_toEndOf="@+id/numberPicker_building"
+                    app:layout_constraintTop_toTopOf="@+id/numberPicker_building" />
+
+                <TextView
+                    android:id="@+id/textView32"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="教"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/numberPicker_building2"
+                    app:layout_constraintStart_toEndOf="@+id/numberPicker_building2"
+                    app:layout_constraintTop_toTopOf="@+id/numberPicker_building2" />
+
+                <NumberPicker
+                    android:id="@+id/numberPicker_building_derection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/numberPicker_building"
+                    app:layout_constraintEnd_toStartOf="@+id/textView_building_derection"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@+id/textView29"
+                    app:layout_constraintTop_toTopOf="@+id/numberPicker_building" />
+
+                <TextView
+                    android:id="@+id/textView_building_derection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="楼"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/numberPicker_classroom"
+                    app:layout_constraintEnd_toStartOf="@+id/numberPicker_classroom"
+                    app:layout_constraintTop_toTopOf="@+id/numberPicker_classroom" />
+
+                <TextView
+                    android:id="@+id/textView_building_derection2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="楼"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/numberPicker_classroom2"
+                    app:layout_constraintEnd_toStartOf="@+id/numberPicker_classroom2"
+                    app:layout_constraintTop_toTopOf="@+id/numberPicker_classroom2" />
+
+                <TextView
+                    android:id="@+id/textView31"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="若该课程每周分两个时间段授课，则在下面选择第二时间段的上课地点。若无第二时间段则选无！"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_create_teacher_name"
+                    app:layout_constraintStart_toStartOf="@+id/textView28"
+                    app:layout_constraintTop_toBottomOf="@+id/numberPicker_building" />
 
             </android.support.constraint.ConstraintLayout>
         </LinearLayout>

@@ -9,6 +9,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.baidu.location.Poi;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.MapStatus;
@@ -40,6 +42,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
@@ -67,6 +70,14 @@ public class LBSFragment extends Fragment implements SensorEventListener {
     TextView btnCheck2;
     @BindView(R.id.btn_check3)
     TextView btnCheck3;
+    @BindView(R.id.imgview_check3)
+    ImageView imgviewCheck3;
+    @BindView(R.id.tv_message)
+    TextView tvMessage;
+    @BindView(R.id.btn_check_cancel)
+    TextView btnCheckCancel;
+    @BindView(R.id.btn_check_refresh)
+    TextView btnCheckRefresh;
 
     private boolean isDispaly = false;
 
@@ -89,6 +100,17 @@ public class LBSFragment extends Fragment implements SensorEventListener {
     private double mCurrentLon = 0.0;
     private float mCurrentAccracy;
     private int calculationTime = 0;
+
+    private String addr;
+    private String country;
+    private String province;
+    private String city;
+    private String district;
+    private String street;
+    private String locationDescribe;
+    private List<Poi> poiList;
+    private double altitude;
+    private String buildingName;
 
     /**
      * 是否首次定位
@@ -113,6 +135,8 @@ public class LBSFragment extends Fragment implements SensorEventListener {
     private String userName;
     private boolean isTeacher;
     private List<String> subjectList;
+
+    private CountDownTime mTime;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -303,6 +327,18 @@ public class LBSFragment extends Fragment implements SensorEventListener {
         unbinder.unbind();
     }
 
+    @OnClick({R.id.btn_check_cancel, R.id.btn_check_refresh})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btn_check_cancel:
+                break;
+            case R.id.btn_check_refresh:
+                break;
+            default:
+                break;
+        }
+    }
+
     /**
      * 定位SDK监听函数
      */
@@ -320,6 +356,26 @@ public class LBSFragment extends Fragment implements SensorEventListener {
             //获取经度信息
             mCurrentLon = location.getLongitude();
             mCurrentAccracy = location.getRadius();
+
+            //获取详细地址信息
+            addr = location.getAddrStr();
+            //获取国家
+            country = location.getCountry();
+            //获取省份
+            province = location.getProvince();
+            //获取城市
+            city = location.getCity();
+            //获取区县
+            district = location.getDistrict();
+            //获取街道信息
+            street = location.getStreet();
+            //获取位置描述信息
+            locationDescribe = location.getLocationDescribe();
+            //获取周边POI信息
+            poiList = location.getPoiList();
+            altitude = location.getAltitude();
+            buildingName = location.getBuildingName();
+
             locData = new MyLocationData.Builder()
                     .accuracy(location.getRadius())
                     // 此处设置开发者获取到的方向信息，顺时针0-360
@@ -387,8 +443,8 @@ public class LBSFragment extends Fragment implements SensorEventListener {
             bean.setErrorCode(bdLocation.getLocType());
             return bean;
         }
-        bean.setmCurrentLat(mCurrentLat);
-        bean.setmCurrentLon(mCurrentLon);
+        bean.setLatitude(mCurrentLat);
+        bean.setLongitude(mCurrentLon);
         return bean;
 
     }
@@ -522,5 +578,37 @@ public class LBSFragment extends Fragment implements SensorEventListener {
     public boolean isDisplay() {
         return isDispaly;
     }
+
+    /**
+     * 自定义倒计时器 用于倒计时刷新按钮
+     */
+    class CountDownTime extends CountDownTimer{
+
+        /**
+         * 构造函数
+         * @param millisInFuture 总计时时长（单位毫秒）
+         * @param countDownInterval 计时间隔时长（单位毫秒）
+         */
+        public CountDownTime(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        /**
+         * 每计时一次回调一次该方法
+         */
+        @Override
+        public void onTick(long l) {
+
+        }
+
+        /**
+         * 计时结束回调该方法
+         */
+        @Override
+        public void onFinish() {
+
+        }
+    }
+
 }
 

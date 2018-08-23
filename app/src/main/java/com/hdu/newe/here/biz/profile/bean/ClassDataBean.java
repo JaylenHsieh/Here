@@ -45,6 +45,19 @@ public class ClassDataBean extends BmobObject {
      */
     private String subjectName;
 
+    /**
+     * 上课地点码
+     */
+    private String placeCode;
+
+    public String getPlaceCode() {
+        return placeCode;
+    }
+
+    public void setPlaceCode(String placeCode) {
+        this.placeCode = placeCode;
+    }
+
     public String getSubjectCode() {
         return subjectCode;
     }

@@ -7,24 +7,24 @@ package com.hdu.newe.here.page.main.signin;
 
 public class LocationBean {
 
-    double mCurrentLat;
-    double mCurrentLon;
+    double latitude;
+    double longitude;
     int errorCode;
 
-    public double getmCurrentLat() {
-        return mCurrentLat;
+    public double getLatitude() {
+        return latitude;
     }
 
-    public void setmCurrentLat(double mCurrentLat) {
-        this.mCurrentLat = mCurrentLat;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 
-    public double getmCurrentLon() {
-        return mCurrentLon;
+    public double getLongitude() {
+        return longitude;
     }
 
-    public void setmCurrentLon(double mCurrentLon) {
-        this.mCurrentLon = mCurrentLon;
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     public int getErrorCode() {
