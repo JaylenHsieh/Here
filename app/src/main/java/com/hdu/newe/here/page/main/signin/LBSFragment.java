@@ -1,6 +1,7 @@
 package com.hdu.newe.here.page.main.signin;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -78,8 +79,38 @@ public class LBSFragment extends Fragment implements SensorEventListener {
     TextView btnCheckCancel;
     @BindView(R.id.btn_check_refresh)
     TextView btnCheckRefresh;
-
-    private boolean isDispaly = false;
+    @BindView(R.id.group1_signin_icon)
+    ConstraintLayout group1SigninIcon;
+    @BindView(R.id.group2_subject_message)
+    ConstraintLayout group2SubjectMessage;
+    @BindView(R.id.group3_signin_check_ispresent)
+    ConstraintLayout group3SigninCheckIspresent;
+    @BindView(R.id.group4_checking)
+    ConstraintLayout group4Checking;
+    @BindView(R.id.tv_message_title)
+    TextView tvMessageTitle;
+    @BindView(R.id.btn_signin_change)
+    TextView btnSigninChange;
+    @BindView(R.id.btn_signin_check)
+    TextView btnSigninCheck;
+    @BindView(R.id.btn_signin_finish)
+    TextView btnSigninFinish;
+    @BindView(R.id.btn_signin_cancel)
+    TextView btnSigninCancel;
+    @BindView(R.id.btn_signin_absent_list)
+    TextView btnSigninAbsentList;
+    @BindView(R.id.btn_signin_refresh)
+    TextView btnSigninRefresh;
+    @BindView(R.id.tv_signin_all_people)
+    TextView tvSigninAllPeople;
+    @BindView(R.id.tv_signin_attend_people)
+    TextView tvSigninAttendPeople;
+    @BindView(R.id.tv_signin_attendance)
+    TextView tvSigninAttendance;
+    @BindView(R.id.tv_signin_absent_people)
+    TextView tvSigninAbsentPeople;
+    @BindView(R.id.tv_signin_leave_people)
+    TextView tvSigninLeavePeople;
 
     /**
      * 定位相关参数
@@ -126,9 +157,6 @@ public class LBSFragment extends Fragment implements SensorEventListener {
     public MapView mMapView;
     public BaiduMap mBaiduMap;
 
-    private ConstraintLayout layoutGroup1;
-    private ConstraintLayout layoutGroup2;
-
     private Calendar calendar;
 
     private String userObjId;
@@ -137,6 +165,8 @@ public class LBSFragment extends Fragment implements SensorEventListener {
     private List<String> subjectList;
 
     private CountDownTime mTime;
+
+    private ProgressDialog progressDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -162,10 +192,10 @@ public class LBSFragment extends Fragment implements SensorEventListener {
      */
     private void initWidget(View view) {
 
-        layoutGroup2 = view.findViewById(R.id.layout_group2);
-        layoutGroup1 = view.findViewById(R.id.layout_group1);
-
         imageViewNavigation = view.findViewById(R.id.imageView_location);
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("正在跳转...");
+        progressDialog.setTitle("请稍等！");
 
         //获取传感器管理服务
         mSensorManager = (SensorManager) getActivity().getSystemService(SENSOR_SERVICE);
@@ -238,9 +268,8 @@ public class LBSFragment extends Fragment implements SensorEventListener {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changeVisibility();
+                progressDialog.show();
                 getSignInMsg();
-                getLocation();
             }
         });
 
@@ -357,25 +386,6 @@ public class LBSFragment extends Fragment implements SensorEventListener {
             mCurrentLon = location.getLongitude();
             mCurrentAccracy = location.getRadius();
 
-            //获取详细地址信息
-            addr = location.getAddrStr();
-            //获取国家
-            country = location.getCountry();
-            //获取省份
-            province = location.getProvince();
-            //获取城市
-            city = location.getCity();
-            //获取区县
-            district = location.getDistrict();
-            //获取街道信息
-            street = location.getStreet();
-            //获取位置描述信息
-            locationDescribe = location.getLocationDescribe();
-            //获取周边POI信息
-            poiList = location.getPoiList();
-            altitude = location.getAltitude();
-            buildingName = location.getBuildingName();
-
             locData = new MyLocationData.Builder()
                     .accuracy(location.getRadius())
                     // 此处设置开发者获取到的方向信息，顺时针0-360
@@ -435,6 +445,11 @@ public class LBSFragment extends Fragment implements SensorEventListener {
 
     }
 
+    /**
+     * 获取当前位置
+     *
+     * @return 返回一个包含经纬度或错误信息的Bean
+     */
     private LocationBean getLocation() {
 
         LocationBean bean = new LocationBean();
@@ -464,8 +479,10 @@ public class LBSFragment extends Fragment implements SensorEventListener {
             public void done(UserBean userBean, BmobException e) {
                 if (e == null) {
                     subjectList = userBean.getSubjectList();
+                    //TODO 当前先不管有课的情况 先完成无课的情况
                     showAddSubject();
                     //TODO 判定当前上课情况 有课的情况也需判定有没有当前时间段的课
+                    //TODO 先判断有没有课 根据不同情况加载不同的布局
 //                    if (subjectList == null || subjectList.size() == 0) {
 //                        //当没有课时 显示无课的fragment
 //                        showAddSubject();
@@ -513,6 +530,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
             createSubject();
         } else {
             //学生 加入课程
+            //TODO 具体逻辑未完成
             joinSubject();
         }
     }
@@ -551,10 +569,12 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                 startActivity(intent);
             }
         });
+        changeVisibility(1,2);
+        progressDialog.dismiss();
         btnCheck3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changeVisibility();
+                changeVisibility(2,1);
             }
         });
     }
@@ -562,31 +582,50 @@ public class LBSFragment extends Fragment implements SensorEventListener {
     /**
      * 更改签到详情页是否显示
      */
-    public void changeVisibility() {
-        if (isDispaly) {
-            layoutGroup2.setVisibility(View.INVISIBLE);
-            layoutGroup1.setVisibility(View.VISIBLE);
-            isDispaly = false;
-        } else {
-            layoutGroup2.setVisibility(View.VISIBLE);
-            layoutGroup1.setVisibility(View.INVISIBLE);
-            isDispaly = true;
+    public void changeVisibility(int hideGroup, int showGroup) {
+        switch (hideGroup) {
+            case 1:
+                group1SigninIcon.setVisibility(View.INVISIBLE);
+                break;
+            case 2:
+                group2SubjectMessage.setVisibility(View.INVISIBLE);
+                break;
+            case 3:
+                group3SigninCheckIspresent.setVisibility(View.INVISIBLE);
+                break;
+            case 4:
+                group4Checking.setVisibility(View.INVISIBLE);
+                break;
+            default:
+                break;
         }
-    }
-
-
-    public boolean isDisplay() {
-        return isDispaly;
+        switch (showGroup){
+            case 1:
+                group1SigninIcon.setVisibility(View.VISIBLE);
+                break;
+            case 2:
+                group2SubjectMessage.setVisibility(View.VISIBLE);
+                break;
+            case 3:
+                group3SigninCheckIspresent.setVisibility(View.VISIBLE);
+                break;
+            case 4:
+                group4Checking.setVisibility(View.VISIBLE);
+                break;
+            default:
+                break;
+        }
     }
 
     /**
      * 自定义倒计时器 用于倒计时刷新按钮
      */
-    class CountDownTime extends CountDownTimer{
+    class CountDownTime extends CountDownTimer {
 
         /**
          * 构造函数
-         * @param millisInFuture 总计时时长（单位毫秒）
+         *
+         * @param millisInFuture    总计时时长（单位毫秒）
          * @param countDownInterval 计时间隔时长（单位毫秒）
          */
         public CountDownTime(long millisInFuture, long countDownInterval) {

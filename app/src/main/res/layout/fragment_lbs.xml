@@ -18,17 +18,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/layout_group1"
+        android:id="@+id/group1_signin_icon"
         android:layout_width="102dp"
         android:layout_height="102dp"
         android:layout_marginBottom="32dp"
         android:background="@drawable/bg_circle"
         android:elevation="2dp"
         android:visibility="visible"
-        tools:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="invisible">
 
         <ImageView
             android:id="@+id/Image_sign_on"
@@ -59,7 +59,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/layout_group2"
+        android:id="@+id/group2_subject_message"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="64dp"
@@ -196,7 +196,7 @@
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/layout_group3"
+        android:id="@+id/group3_signin_check_ispresent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="64dp"
@@ -205,7 +205,6 @@
         android:layout_marginTop="64dp"
         android:background="@drawable/bg_check_information"
         android:visibility="invisible"
-        tools:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -277,6 +276,315 @@
             app:layout_constraintEnd_toEndOf="@+id/tv_message"
             app:layout_constraintStart_toStartOf="@+id/tv_message"
             app:layout_constraintTop_toBottomOf="@+id/tv_message" />
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/group4_checking"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="64dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="64dp"
+        android:background="@drawable/bg_check_information"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible">
+
+        <TextView
+            android:id="@+id/tv_message_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:gravity="center_vertical"
+            android:minWidth="332dp"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="马克思主义原理" />
+
+        <TextView
+            android:id="@+id/btn_signin_change"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_textview_login"
+            android:minWidth="332dp"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:text="更改出勤情况"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.166"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_signin_absent_list" />
+
+        <TextView
+            android:id="@+id/btn_signin_check"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_textview_login"
+            android:minWidth="332dp"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:text="出勤抽查"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.166"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_signin_change" />
+
+        <TextView
+            android:id="@+id/btn_signin_finish"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_textview_login"
+            android:minWidth="332dp"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:text="关闭考勤"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.166"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_signin_check" />
+
+        <TextView
+            android:id="@+id/btn_signin_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_textview_login"
+            android:minWidth="332dp"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:text="取消考勤"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.166"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_signin_finish" />
+
+        <TextView
+            android:id="@+id/btn_signin_absent_list"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/bg_textview_login"
+            android:gravity="center"
+            android:minWidth="332dp"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:text="缺勤名单"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/imageView8"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_signin_absent_people" />
+
+        <TextView
+            android:id="@+id/btn_signin_refresh"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:layout_marginStart="4dp"
+            android:background="@drawable/bg_textview_login"
+            android:gravity="center"
+            android:minWidth="332dp"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:text="刷新"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_signin_absent_list"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/imageView8"
+            app:layout_constraintTop_toTopOf="@+id/btn_signin_absent_list" />
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="2dp"
+            android:layout_height="44dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="40dp"
+            android:src="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_message_title" />
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="2dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="32dp"
+            android:src="@color/black"
+            app:layout_constraintEnd_toEndOf="@+id/imageView6"
+            app:layout_constraintStart_toStartOf="@+id/imageView6"
+            app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+
+        <TextView
+            android:id="@+id/textView30"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
+            android:text="出勤情况"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/imageView6"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_message_title" />
+
+        <TextView
+            android:id="@+id/textView33"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="出勤率"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView30"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView6"
+            app:layout_constraintTop_toTopOf="@+id/textView30" />
+
+        <TextView
+            android:id="@+id/textView34"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:text="/"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toStartOf="@+id/imageView6"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView30" />
+
+        <TextView
+            android:id="@+id/textView35"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="缺勤人数"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/textView30"
+            app:layout_constraintStart_toStartOf="@+id/textView30"
+            app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+
+        <TextView
+            android:id="@+id/textView36"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="请假人数"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView35"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView8"
+            app:layout_constraintTop_toTopOf="@+id/textView35" />
+
+        <TextView
+            android:id="@+id/tv_signin_all_people"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView34"
+            app:layout_constraintEnd_toStartOf="@+id/imageView6"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/textView34"
+            app:layout_constraintTop_toTopOf="@+id/textView34"
+            tools:text="120" />
+
+        <TextView
+            android:id="@+id/tv_signin_attend_people"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView34"
+            app:layout_constraintEnd_toStartOf="@+id/textView34"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView34"
+            tools:text="108" />
+
+        <TextView
+            android:id="@+id/tv_signin_attendance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_signin_all_people"
+            app:layout_constraintEnd_toEndOf="@+id/textView33"
+            app:layout_constraintStart_toStartOf="@+id/textView33"
+            app:layout_constraintTop_toTopOf="@+id/tv_signin_all_people"
+            tools:text="90.00%" />
+
+        <TextView
+            android:id="@+id/tv_signin_absent_people"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="@+id/textView35"
+            app:layout_constraintStart_toStartOf="@+id/textView35"
+            app:layout_constraintTop_toBottomOf="@+id/textView35"
+            tools:text="11" />
+
+        <TextView
+            android:id="@+id/tv_signin_leave_people"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_signin_absent_people"
+            app:layout_constraintEnd_toEndOf="@+id/textView36"
+            app:layout_constraintStart_toStartOf="@+id/textView36"
+            app:layout_constraintTop_toBottomOf="@+id/textView35"
+            tools:text="1" />
     </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

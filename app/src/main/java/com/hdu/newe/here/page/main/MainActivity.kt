@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.KeyEvent
+import android.view.View
 import android.widget.Toast
 import com.hdu.newe.here.R
 import com.hdu.newe.here.biz.ModelFactory
@@ -22,6 +23,7 @@ import com.hdu.newe.here.page.main.variousdata.student.VariousDataPresenter
 import com.hdu.newe.here.utils.UIUtils
 import com.jonnyhsia.uilib.widget.BottomNavigation
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_lbs.*
 import java.util.*
 
 
@@ -99,8 +101,8 @@ class MainActivity : AppCompatActivity() {
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
         if (currentPos == 0) {
             val fragment = findOrGenerateFragment(0) as LBSFragment
-            if (fragment.isDisplay) {
-                fragment.changeVisibility()
+            if (fragment.group2_subject_message.visibility == View.VISIBLE) {
+                fragment.changeVisibility(2,1)
                 return false
             }
         }
