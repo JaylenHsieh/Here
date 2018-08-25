@@ -102,7 +102,7 @@ class MainActivity : AppCompatActivity() {
         if (currentPos == 0) {
             val fragment = findOrGenerateFragment(0) as LBSFragment
             if (fragment.group2_subject_message.visibility == View.VISIBLE) {
-                fragment.changeVisibility(2,1)
+                fragment.hideAndShowGroup(2,1)
                 return false
             }
         }

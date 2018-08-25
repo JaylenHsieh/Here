@@ -117,11 +117,11 @@ public class ClassDataBean extends BmobObject {
         String startTime = "";
         int finishTime = 0;
         int firstClassTime = Integer.valueOf(timeCode.substring(0, 2));
-        int countOfClass = Integer.valueOf(timeCode.substring(2,3));
+        int countOfClass = Integer.valueOf(timeCode.substring(2, 3));
         switch (firstClassTime) {
             case 1:
                 startTime = "0485";
-                if (countOfClass >= 2){
+                if (countOfClass >= 2) {
                     finishTime += 15;
                 }
                 break;
@@ -162,13 +162,57 @@ public class ClassDataBean extends BmobObject {
             default:
                 break;
         }
-        finishTime += Integer.valueOf(startTime)+50*countOfClass;
+        finishTime += Integer.valueOf(startTime) + 50 * countOfClass;
         String time = startTime;
-        if (String.valueOf(finishTime).length()<4){
+        if (String.valueOf(finishTime).length() < 4) {
             time += "0";
         }
         time += String.valueOf(finishTime);
         return time;
 
     }
+
+    /**
+     * 将去除了随机三位数的课程码中的时间码提取出来，转换成文字描述并返回
+     *
+     * @param timeCode 去除了随机数的课程码
+     * @return 上课时间的文字描述
+     */
+    public String changeToDescription(String timeCode) {
+
+        String time = timeCode.substring(0, 4);
+        String description = "周";
+        switch (Integer.valueOf(time.substring(0, 1))) {
+            case 1:
+                description += "一 ";
+                break;
+            case 2:
+                description += "二 ";
+                break;
+            case 3:
+                description += "三 ";
+                break;
+            case 4:
+                description += "四 ";
+                break;
+            case 5:
+                description += "五 ";
+                break;
+            case 6:
+                description += "六 ";
+                break;
+            case 7:
+                description += "日 ";
+                break;
+            default:
+                break;
+        }
+        int startClass = Integer.valueOf(time.substring(1, 3));
+        description += startClass + "~" + (startClass + Integer.valueOf(time.substring(3, 4))) + "节";
+        if (time.length() == 8) {
+            description += " 和 " + changeToDescription(time.substring(4));
+        }
+        return description;
+    }
+
 }

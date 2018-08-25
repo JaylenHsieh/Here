@@ -57,6 +57,19 @@ public class SignInDataBean extends BmobObject {
      */
     private Number checkCount;
 
+    /**
+     * 发起教师的Id
+     */
+    private String teacherId;
+
+    public String getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(String teacherId) {
+        this.teacherId = teacherId;
+    }
+
     public static int getListTypeLeaverequest() {
         return LIST_TYPE_LEAVEREQUEST;
     }
