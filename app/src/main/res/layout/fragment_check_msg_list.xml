@@ -1,0 +1,165 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.hdu.newe.here.page.main.signin.CheckMsgListFragment">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview_check_msg_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/group_msg"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="80dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/bg_check_information"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.017"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.231">
+
+        <TextView
+            android:id="@+id/tv_msg_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="张三三" />
+
+        <ImageView
+            android:id="@+id/imgview_msg_avatar"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_msg_name"
+            app:srcCompat="@drawable/img_avatar_default" />
+
+        <TextView
+            android:id="@+id/tv_msg_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/grass_green"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/imgview_msg_avatar"
+            app:layout_constraintStart_toStartOf="@+id/imgview_msg_avatar"
+            app:layout_constraintTop_toBottomOf="@+id/imgview_msg_avatar"
+            tools:text="√已出勤" />
+
+        <TextView
+            android:id="@+id/tv_msg_num"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="#学号#"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_msg_state"
+            tools:text="#学号#12345678" />
+
+        <TextView
+            android:id="@+id/tv_msg_class"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="#班级#"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/tv_msg_num"
+            app:layout_constraintStart_toStartOf="@+id/tv_msg_num"
+            app:layout_constraintTop_toBottomOf="@+id/tv_msg_num"
+            tools:text="#班级#什么什么班" />
+
+        <TextView
+            android:id="@+id/tv_msg_major"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="#专业#"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/tv_msg_class"
+            app:layout_constraintStart_toStartOf="@+id/tv_msg_class"
+            app:layout_constraintTop_toBottomOf="@+id/tv_msg_class"
+            tools:text="#专业#什么什么什么专业" />
+
+        <TextView
+            android:id="@+id/tv_msg_college"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="#学院#"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/tv_msg_major"
+            app:layout_constraintStart_toStartOf="@+id/tv_msg_major"
+            app:layout_constraintTop_toBottomOf="@+id/tv_msg_major"
+            tools:text="#学院#什么什么学院" />
+
+        <TextView
+            android:id="@+id/btn_msg_left"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:layout_marginEnd="64dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_btn_standard"
+            android:padding="8dp"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/imgview_msg_avatar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_msg_college"
+            tools:text="取消" />
+
+        <TextView
+            android:id="@+id/btn_msg_right"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="64dp"
+            android:background="@drawable/bg_btn_standard"
+            android:padding="8dp"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_msg_left"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/imgview_msg_avatar"
+            app:layout_constraintTop_toTopOf="@+id/btn_msg_left"
+            tools:text="变更为缺勤" />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>

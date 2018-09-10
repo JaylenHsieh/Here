@@ -57,7 +57,7 @@
         android:layout_marginBottom="24dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:background="@drawable/bg_create_subject_unselect"
+        android:background="@drawable/bg_btn_standard"
         android:paddingBottom="8dp"
         android:paddingLeft="40dp"
         android:paddingRight="40dp"

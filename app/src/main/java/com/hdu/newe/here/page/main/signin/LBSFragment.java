@@ -2,9 +2,8 @@ package com.hdu.newe.here.page.main.signin;
 
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -37,18 +36,27 @@ import com.hdu.newe.here.biz.profile.bean.ClassDataBean;
 import com.hdu.newe.here.biz.signin.bean.SignInDataBean;
 import com.hdu.newe.here.biz.user.entity.UserBean;
 
+import org.json.JSONObject;
+
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobRealTimeData;
+import cn.bmob.v3.datatype.BmobDate;
+import cn.bmob.v3.datatype.BmobGeoPoint;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListener;
+import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
+import cn.bmob.v3.listener.ValueEventListener;
 
 import static android.content.Context.SENSOR_SERVICE;
 
@@ -72,8 +80,6 @@ public class LBSFragment extends Fragment implements SensorEventListener {
     TextView btnCheck2;
     @BindView(R.id.btn_check3)
     TextView btnCheck3;
-    @BindView(R.id.imgview_check3)
-    ImageView imgviewCheck3;
     @BindView(R.id.tv_message)
     TextView tvMessage;
     @BindView(R.id.btn_check_cancel)
@@ -100,8 +106,8 @@ public class LBSFragment extends Fragment implements SensorEventListener {
     TextView btnSigninCancel;
     @BindView(R.id.btn_signin_absent_list)
     TextView btnSigninAbsentList;
-    @BindView(R.id.btn_signin_refresh)
-    TextView btnSigninRefresh;
+    @BindView(R.id.btn_signin_leave_list)
+    TextView btnSigninLeaveList;
     @BindView(R.id.tv_signin_all_people)
     TextView tvSigninAllPeople;
     @BindView(R.id.tv_signin_attend_people)
@@ -112,6 +118,10 @@ public class LBSFragment extends Fragment implements SensorEventListener {
     TextView tvSigninAbsentPeople;
     @BindView(R.id.tv_signin_leave_people)
     TextView tvSigninLeavePeople;
+    @BindView(R.id.image_refresh)
+    ImageView imageRefresh;
+    @BindView(R.id.imageview_emoji)
+    ImageView imageEmoji;
 
     /**
      * 定位相关参数
@@ -257,19 +267,21 @@ public class LBSFragment extends Fragment implements SensorEventListener {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressDialog.show();
-                SharedPreferences preferences = getActivity().getSharedPreferences("user", Context.MODE_PRIVATE);
-                userObjId = preferences.getString("objId", null);
-                isTeacher = preferences.getBoolean("isTeacher", false);
-                //分教师和学生的情况
-                if (isTeacher) {
-                    //教师
-                    //检查当前是否有未完成的考勤
-                    haveUnfinishedChecking();
-                } else {
-                    //学生
-                    haveLessonNow();
-                }
+                hideAndShowGroup(1, 3);
+                checkIsChecking(null);
+//                progressDialog.show();
+//                SharedPreferences preferences = getActivity().getSharedPreferences("user", Context.MODE_PRIVATE);
+//                userObjId = preferences.getString("objId", null);
+//                isTeacher = preferences.getBoolean("isTeacher", false);
+//                //分教师和学生的情况
+//                if (isTeacher) {
+//                    //教师
+//                    //检查当前是否有未完成的考勤
+//                    haveUnfinishedChecking();
+//                } else {
+//                    //学生
+//                    haveLessonNow();
+//                }
             }
         });
 
@@ -293,7 +305,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                     //跳转到创建新课程
                     Intent intent = new Intent(getActivity(), NewSubjectActivity.class);
                     startActivity(intent);
-                    hideAndShowGroup(2,1);
+                    hideAndShowGroup(2, 1);
                 }
             });
         } else {
@@ -307,9 +319,9 @@ public class LBSFragment extends Fragment implements SensorEventListener {
             btnCheck2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //TODO 跳转到加入新课程
-
-                    hideAndShowGroup(2,1);
+                    Intent intent = new Intent(getActivity(), NewSubjectActivity.class);
+                    startActivity(intent);
+                    hideAndShowGroup(2, 1);
                 }
             });
         }
@@ -317,7 +329,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
         btnCheck3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                hideAndShowGroup(2,1);
+                hideAndShowGroup(2, 1);
             }
         });
         progressDialog.dismiss();
@@ -329,14 +341,14 @@ public class LBSFragment extends Fragment implements SensorEventListener {
      * @param subjectCode 当前教学班的subjectCode
      */
     private void loadSubjectMsg(String subjectCode) {
-        //TODO 从ClassDataBean加载当前教学班的信息
+        //从ClassDataBean加载当前教学班的信息
         BmobQuery<ClassDataBean> query = new BmobQuery<>();
         query.addWhereEqualTo("subjectCode", subjectCode);
         query.findObjects(new FindListener<ClassDataBean>() {
             @Override
             public void done(List<ClassDataBean> list, BmobException e) {
                 if (e == null) {
-                    ClassDataBean classDataBean = list.get(0);
+                    final ClassDataBean classDataBean = list.get(0);
                     BmobQuery<UserBean> query1 = new BmobQuery<>();
                     query1.getObject(classDataBean.getTeacherId(), new QueryListener<UserBean>() {
                         @Override
@@ -345,6 +357,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                                 tvClassTeacher2.setText("任课教师：" + userBean.getUserName());
                             } else {
                                 Toast.makeText(getActivity(), "error123\n" + e.getMessage(), Toast.LENGTH_LONG).show();
+                                progressDialog.dismiss();
                             }
                         }
                     });
@@ -360,7 +373,9 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                         btnCheck2.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                //TODO 教师开始考勤的逻辑
+                                //教师开始考勤的逻辑
+                                progressDialog.show();
+                                startCheck(classDataBean);
                             }
                         });
                     } else {
@@ -368,7 +383,9 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                         btnCheck2.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                //TODO 学生开始签到的逻辑
+                                //学生开始签到的逻辑
+                                //检查该学生是否够资格签到
+                                checkIsChecking(classDataBean);
                             }
                         });
                     }
@@ -376,22 +393,260 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                     btnCheck3.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            hideAndShowGroup(2,1);
+                            hideAndShowGroup(2, 1);
                         }
                     });
                     progressDialog.dismiss();
                 } else {
                     Toast.makeText(getActivity(), "error741\n" + e.getMessage(), Toast.LENGTH_LONG).show();
+                    progressDialog.dismiss();
                 }
             }
         });
     }
 
     /**
+     * 检查该课程是否发起考勤
+     *
+     * @param classDataBean 被签到教学班数据Bean
+     */
+    private void checkIsChecking(final ClassDataBean classDataBean) {
+
+        hideAndShowGroup(2, 3);
+        imageEmoji.setImageResource(R.mipmap.ic_calm);
+        tvMessage.setText("正在查询您当前的课程是否正在考勤，请稍等片刻~");
+        btnCheckRefresh.setText("刷新");
+        btnCheckCancel.setText("取消");
+        btnCheckCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hideAndShowGroup(3, 1);
+            }
+        });
+        btnCheckRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CountDownTime timer = new CountDownTime(15000, 1000, CountDownTime.BTN_FROM_GROUP3);
+                timer.start();
+                BmobQuery<SignInDataBean> query = new BmobQuery<>();
+                query.addWhereEqualTo("subjectCode", classDataBean.getSubjectCode());
+                query.addWhereEqualTo("isChecking", true);
+                query.findObjects(new FindListener<SignInDataBean>() {
+                    @Override
+                    public void done(List<SignInDataBean> list, BmobException e) {
+                        if (e == null) {
+                            if (list.isEmpty() || list == null) {
+                                //说明当前教学班没有考勤
+                                imageEmoji.setImageResource(R.mipmap.ic_happy);
+                                tvMessage.setText("您当前的课程暂未发起考勤~");
+                            } else {
+                                //说明当前教学班有考勤，检查定位是否符合要求
+                                checkLocation(list.get(0));
+                            }
+                        } else {
+                            Toast.makeText(getActivity(), "error159:" + e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+            }
+        });
+        btnCheckRefresh.callOnClick();
+
+    }
+
+    private void checkLocation(final SignInDataBean signInDataBean) {
+        LocationBean locationBean = getLocation();
+        BmobGeoPoint bmobGeoPoint = signInDataBean.getCheckLocation();
+        double mLatitude = locationBean.getLatitude();
+        double mLongitude = locationBean.getLongitude();
+        double checkLatitude = bmobGeoPoint.getLatitude();
+        double checkLongitude = bmobGeoPoint.getLongitude();
+        boolean latitudeCheck = false;
+        boolean longitudeCheck = false;
+        if (mLatitude > checkLatitude - mCurrentAccracy && mLatitude < checkLatitude + mCurrentAccracy) {
+            latitudeCheck = true;
+        }
+        if (mLongitude > checkLongitude - mCurrentAccracy && mLongitude < checkLongitude + mCurrentAccracy) {
+            longitudeCheck = true;
+        }
+        if (latitudeCheck && longitudeCheck) {
+            //定位符合要求
+            List<String> absentStudentList = signInDataBean.getAbsentStudentList();
+            //旷课学生列表中删除该用户
+            for (int i = 0; i < absentStudentList.size(); i++) {
+                if (absentStudentList.get(i).equals(userObjId)) {
+                    absentStudentList.remove(i);
+                }
+            }
+            signInDataBean.setAbsentStudentList(absentStudentList);
+            signInDataBean.update(new UpdateListener() {
+                @Override
+                public void done(BmobException e) {
+                    if (e == null) {
+                        imageEmoji.setImageResource(R.mipmap.ic_happy);
+                        tvMessage.setText("该课程正在考勤，已为您完成签到~");
+                        btnCheckRefresh.setVisibility(View.INVISIBLE);
+                        btnCheckCancel.setText("完成");
+                    } else {
+                        Toast.makeText(getActivity(), "error999:" + e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+        } else {
+            //定位不符合要求
+            imageEmoji.setImageResource(R.mipmap.ic_sad);
+            tvMessage.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+            tvMessage.setText("该课程正在考勤，但非常抱歉，您距离上课地点较远，不能签到..." +
+                    "\n如果您已出勤，请检查您的网络设置是否有问题（建议连接WiFi以提高精度）后点击刷新。" +
+                    "\n您也可以直接向老师说明情况，让老师手动更改出勤情况！");
+            btnCheckRefresh.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    CountDownTime timer = new CountDownTime(15000, 1000, CountDownTime.BTN_FROM_GROUP3_SIMPLE);
+                    timer.start();
+                    checkLocation(signInDataBean);
+                }
+            });
+        }
+    }
+
+    /**
+     * 开始考勤
+     *
+     * @param classDataBean 被考勤教学班数据Bean
+     */
+    private void startCheck(final ClassDataBean classDataBean) {
+
+        final int[] flag = {0};
+
+        final SignInDataBean signInDataBean = new SignInDataBean();
+
+        //检查该课之前考勤的次数
+        BmobQuery<SignInDataBean> query = new BmobQuery<>();
+        query.addWhereEqualTo("subjectCode", classDataBean.getSubjectCode());
+        query.findObjects(new FindListener<SignInDataBean>() {
+            @Override
+            public void done(List<SignInDataBean> list, BmobException e) {
+                if (e == null) {
+                    if (list.isEmpty() || list == null) {
+                        //之前未考过勤
+                        signInDataBean.setCheckCount(0);
+                    } else {
+                        //考过勤
+                        signInDataBean.setCheckCount(list.size());
+                    }
+                    flag[0]++;
+                    if (flag[0] == 2) {
+                        signInDataBean.save(new SaveListener<String>() {
+                            @Override
+                            public void done(String s, BmobException e) {
+                                if (e == null) {
+                                    Toast.makeText(getActivity(), "开始考勤！", Toast.LENGTH_LONG).show();
+                                    initCheckingMsg(classDataBean.getSubjectName(),
+                                            classDataBean.getClassMember().size(), s);
+                                } else {
+                                    Toast.makeText(getActivity(), "error777:" + e.getMessage(), Toast.LENGTH_LONG).show();
+                                    progressDialog.dismiss();
+                                }
+                            }
+                        });
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "error744:" + e.getMessage(), Toast.LENGTH_LONG).show();
+                    progressDialog.dismiss();
+                }
+            }
+        });
+
+        signInDataBean.setSubjectCode(classDataBean.getSubjectCode());
+        signInDataBean.setStudentList(classDataBean.getClassMember());
+        signInDataBean.setChecking(true);
+        signInDataBean.setCheckTime(new BmobDate(new Date()));
+        LocationBean locationBean = getLocation();
+        if (locationBean.getErrorCode() == 0) {
+            //获取定位成功
+            BmobGeoPoint bmobGeoPoint = new BmobGeoPoint(locationBean.getLongitude(), locationBean.getLatitude());
+            signInDataBean.setCheckLocation(bmobGeoPoint);
+            //TODO 获取请假学生列表
+            signInDataBean.setLeaveRequestStudentList(new ArrayList<String>());
+            signInDataBean.setAbsentStudentList(classDataBean.getClassMember());
+            signInDataBean.setTeacherId(classDataBean.getTeacherId());
+            flag[0]++;
+            if (flag[0] == 2) {
+                signInDataBean.save(new SaveListener<String>() {
+                    @Override
+                    public void done(String s, BmobException e) {
+                        if (e == null) {
+                            Toast.makeText(getActivity(), "开始考勤！", Toast.LENGTH_LONG).show();
+                            initCheckingMsg(classDataBean.getSubjectName(),
+                                    classDataBean.getClassMember().size(), s);
+                        } else {
+                            Toast.makeText(getActivity(), "error777:" + e.getMessage(), Toast.LENGTH_LONG).show();
+                            progressDialog.dismiss();
+                        }
+                    }
+                });
+            }
+
+        } else {
+            //获取定位失败
+            Toast.makeText(getActivity(), "error606:" + locationBean.getErrorCode(), Toast.LENGTH_LONG).show();
+            progressDialog.dismiss();
+        }
+
+    }
+
+    /**
+     * 初始化Group4的考勤信息
+     *
+     * @param subjectName 被考勤的课程名
+     * @param memberNum   班级人数
+     * @param objectId    考勤表中数据的ObjectId
+     */
+    private void initCheckingMsg(String subjectName, int memberNum, String objectId) {
+        tvMessageTitle.setText(subjectName);
+        tvSigninAllPeople.setText(memberNum);
+        tvSigninAttendPeople.setText("0");
+        tvSigninAttendance.setText("00.00%");
+        tvSigninAbsentPeople.setText(memberNum);
+        tvSigninLeavePeople.setText("0");
+        bindDataListener(objectId);
+        bindCheckingBtnListener(objectId);
+        hideAndShowGroup(2, 4);
+        progressDialog.dismiss();
+    }
+
+    /**
+     * 绑定数据监听器 当数据发生变化实时更新UI
+     *
+     * @param objectId 被监听的行数据的ObjectId
+     */
+    private void bindDataListener(String objectId) {
+
+        BmobRealTimeData realTimeData = new BmobRealTimeData();
+        realTimeData.subRowUpdate("SignInDataBean", objectId);
+        realTimeData.start(new ValueEventListener() {
+            @Override
+            public void onConnectCompleted(Exception e) {
+                if (e != null) {
+                    Toast.makeText(getActivity(), "数据监听连接失败" + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onDataChange(JSONObject jsonObject) {
+                //TODO 数据有变化时发生的回调
+                //TODO 将数据实时加载到Group上
+            }
+        });
+
+    }
+
+    /**
      * 查询用户当前是否有课
      */
     private void haveLessonNow() {
-        //TODO 查询用户当前是否有课 若有则将该课的subjectCode赋值给nowLessonId并返回true
+        //查询用户当前是否有课
         BmobQuery<UserBean> query = new BmobQuery<>();
         query.getObject(userObjId, new QueryListener<UserBean>() {
             @Override
@@ -431,9 +686,9 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                         //则剩下的情况就是当前没课的情况，询问用户是否需要创建/加入新的教学班
                         newSubject();
                     }
-                    //TODO
                 } else {
                     Toast.makeText(getActivity(), "error852\n" + e.getMessage(), Toast.LENGTH_LONG).show();
+                    progressDialog.dismiss();
                 }
             }
         });
@@ -442,11 +697,134 @@ public class LBSFragment extends Fragment implements SensorEventListener {
     /**
      * 加载未完成考勤的教学班信息 继续考勤
      *
-     * @param unfinishedCheckingId 未完成考勤的教学班的subjectCode
+     * @param signInDataBean 未完成考勤的教学班的数据Bean
      */
-    private void loadUnfinishedCheckingMsg(String unfinishedCheckingId) {
-        //TODO 通过查询ClassDataBean中subjectCode字段与unfinishedCheckingId相等的数据并加载到Group4中
+    private void loadUnfinishedCheckingMsg(SignInDataBean signInDataBean) {
+        //获取数据加载到Group4中继续上次未完成的考勤
+        BmobQuery<ClassDataBean> query = new BmobQuery<>();
+        query.addWhereEqualTo("subjectCode", signInDataBean.getSubjectCode());
+        query.findObjects(new FindListener<ClassDataBean>() {
+            @Override
+            public void done(List<ClassDataBean> list, BmobException e) {
+                if (e == null) {
+                    tvMessageTitle.setText(list.get(0).getSubjectName());
+                } else {
+                    Toast.makeText(getActivity(), "error111:" + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+        int memberNum = signInDataBean.getStudentList().size();
+        int absentNum = signInDataBean.getAbsentStudentList().size();
+        tvSigninAllPeople.setText(memberNum);
+        tvSigninAttendPeople.setText(memberNum - absentNum);
+        double attendance = ((memberNum - absentNum) / memberNum) * 10;
+        DecimalFormat df = new DecimalFormat("#0.00");
+        tvSigninAttendance.setText(df.format(attendance) + "%");
+        tvSigninAbsentPeople.setText(absentNum);
+        //TODO 获取请假人数
+        tvSigninLeavePeople.setText(null);
+        bindCheckingBtnListener(signInDataBean.getObjectId());
+        bindDataListener(signInDataBean.getObjectId());
+        hideAndShowGroup(1, 4);
+        Toast.makeText(getActivity(), "检测到您之前有未完成的考勤，已为您加载！", Toast.LENGTH_LONG).show();
         progressDialog.dismiss();
+    }
+
+    private void bindCheckingBtnListener(final String objectId) {
+
+        btnSigninAbsentList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //缺勤名单
+                Intent intent = new Intent(getActivity(), CheckingInformationActivity.class);
+                intent.putExtra("viewCode", 1);
+                intent.putExtra("objectId", objectId);
+                startActivity(intent);
+            }
+        });
+
+        btnSigninLeaveList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //请假名单
+                Intent intent = new Intent(getActivity(), CheckingInformationActivity.class);
+                intent.putExtra("viewCode", 2);
+                intent.putExtra("objectId", objectId);
+                startActivity(intent);
+            }
+        });
+
+        btnSigninChange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //更改出勤情况
+                Intent intent = new Intent(getActivity(), CheckingInformationActivity.class);
+                intent.putExtra("viewCode", 3);
+                intent.putExtra("objectId", objectId);
+                startActivity(intent);
+            }
+        });
+
+        btnSigninCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //出勤抽查
+                Toast.makeText(getActivity(),"该功能尚未开发完成，敬请期待~",Toast.LENGTH_SHORT).show();
+//                Intent intent = new Intent(getActivity(), CheckingInformationActivity.class);
+//                intent.putExtra("viewCode", 4);
+//                intent.putExtra("objectId", objectId);
+//                startActivity(intent);
+            }
+        });
+
+        btnSigninFinish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //关闭考勤
+                //TODO 更改请假列表中的相关数据
+                BmobQuery<SignInDataBean> query = new BmobQuery<>();
+                query.getObject(objectId, new QueryListener<SignInDataBean>() {
+                    @Override
+                    public void done(SignInDataBean signInDataBean, BmobException e) {
+                        if (e == null) {
+                            signInDataBean.setChecking(false);
+                        } else {
+                            Toast.makeText(getActivity(), "error003:" + e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+            }
+        });
+
+        btnSigninCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BmobQuery<SignInDataBean> query = new BmobQuery<>();
+                query.getObject(objectId, new QueryListener<SignInDataBean>() {
+                    @Override
+                    public void done(SignInDataBean signInDataBean, BmobException e) {
+                        if (e == null) {
+                            signInDataBean.delete(new UpdateListener() {
+                                @Override
+                                public void done(BmobException e) {
+                                    if (e == null) {
+                                        //取消成功
+                                        //TODO 如果涉及到请假数据的话 需要将请假数据根据情况还原
+                                        Toast.makeText(getActivity(), "取消成功", Toast.LENGTH_LONG).show();
+                                        hideAndShowGroup(4,1);
+                                    } else {
+                                        Toast.makeText(getActivity(), "取消失败\nerror005:" + e.getMessage(), Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            });
+                        } else {
+                            Toast.makeText(getActivity(), "error004:" + e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+            }
+        });
+
     }
 
     /**
@@ -466,11 +844,11 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                         haveLessonNow();
                     } else {
                         //如果老师之前有未结束的考勤 则先加载未结束的那次考勤
-                        //TODO
-                        loadUnfinishedCheckingMsg(list.get(0).getSubjectCode());
+                        loadUnfinishedCheckingMsg(list.get(0));
                     }
                 } else {
                     Toast.makeText(getActivity(), "error963\n" + e.getMessage(), Toast.LENGTH_LONG).show();
+                    progressDialog.dismiss();
                 }
             }
         });
@@ -555,18 +933,6 @@ public class LBSFragment extends Fragment implements SensorEventListener {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-    }
-
-    @OnClick({R.id.btn_check_cancel, R.id.btn_check_refresh})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.btn_check_cancel:
-                break;
-            case R.id.btn_check_refresh:
-                break;
-            default:
-                break;
-        }
     }
 
     /**
@@ -661,6 +1027,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
         }
         bean.setLatitude(mCurrentLat);
         bean.setLongitude(mCurrentLon);
+        bean.setErrorCode(0);
         return bean;
 
     }
@@ -708,14 +1075,20 @@ public class LBSFragment extends Fragment implements SensorEventListener {
      */
     class CountDownTime extends CountDownTimer {
 
+        private final static int BTN_FROM_GROUP3 = 8;
+        private final static int BTN_FROM_GROUP4 = 7;
+        private final static int BTN_FROM_GROUP3_SIMPLE = 6;
+        private int code = -1;
+
         /**
          * 构造函数
          *
          * @param millisInFuture    总计时时长（单位毫秒）
          * @param countDownInterval 计时间隔时长（单位毫秒）
          */
-        public CountDownTime(long millisInFuture, long countDownInterval) {
+        public CountDownTime(long millisInFuture, long countDownInterval, int code) {
             super(millisInFuture, countDownInterval);
+            this.code = code;
         }
 
         /**
@@ -723,7 +1096,22 @@ public class LBSFragment extends Fragment implements SensorEventListener {
          */
         @Override
         public void onTick(long l) {
-
+            switch (code) {
+                case BTN_FROM_GROUP3_SIMPLE:
+                    btnCheckRefresh.setText(l / 1000 + "s");
+                    btnCheckRefresh.setClickable(false);
+                    btnCheckRefresh.setTextColor(Color.GRAY);
+                    break;
+                case BTN_FROM_GROUP3:
+                    btnCheckRefresh.setText(l / 1000 + "s后重新查询");
+                    btnCheckRefresh.setClickable(false);
+                    btnCheckRefresh.setTextColor(Color.GRAY);
+                    break;
+                case BTN_FROM_GROUP4:
+                    break;
+                default:
+                    break;
+            }
         }
 
         /**
@@ -731,7 +1119,22 @@ public class LBSFragment extends Fragment implements SensorEventListener {
          */
         @Override
         public void onFinish() {
-
+            switch (code) {
+                case BTN_FROM_GROUP3_SIMPLE:
+                    btnCheckRefresh.setClickable(true);
+                    btnCheckRefresh.setText("刷新");
+                    btnCheckRefresh.setTextColor(Color.BLACK);
+                    break;
+                case BTN_FROM_GROUP3:
+                    btnCheckRefresh.setClickable(true);
+                    btnCheckRefresh.setText("重新查询");
+                    btnCheckRefresh.setTextColor(Color.BLACK);
+                    break;
+                case BTN_FROM_GROUP4:
+                    break;
+                default:
+                    break;
+            }
         }
     }
 

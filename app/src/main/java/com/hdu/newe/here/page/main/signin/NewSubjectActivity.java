@@ -73,7 +73,7 @@ public class NewSubjectActivity extends AppCompatActivity {
     }
 
     /**
-     * 加载Fragment方法 目前暂定教师用户加载“创建教学班”，学生用户加载“加入教学班”。
+     * 加载Fragment方法 教师用户加载“创建教学班”，学生用户加载“加入教学班”。
      */
     private void loadFragment() {
         sharedPreferences = getSharedPreferences("user", MODE_PRIVATE);
