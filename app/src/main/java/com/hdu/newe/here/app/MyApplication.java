@@ -3,7 +3,9 @@ package com.hdu.newe.here.app;
 import android.app.Application;
 
 import com.baidu.mapapi.SDKInitializer;
+import com.hdu.newe.here.BuildConfig;
 import com.hdu.newe.here.biz.ModelFactory;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import cn.bmob.v3.Bmob;
 
@@ -28,6 +30,9 @@ public class MyApplication extends Application {
 
         //初始化百度地图相关SDK
         SDKInitializer.initialize(this);
+
+        // Bugly
+        CrashReport.initCrashReport(getApplicationContext(), "e5baf555cf", true);
 
         ModelFactory.init(this);
     }
