@@ -88,7 +88,7 @@ public class ResultFragment extends Fragment {
         tvSubjectCode.setVisibility(View.INVISIBLE);
         tvResultTitle.setText("加入\n成功");
         tvResultTitle.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        tvResultTitle.setTextSize(48);
+        tvResultTitle.setTextSize(72);
         progressDialog.dismiss();
     }
 

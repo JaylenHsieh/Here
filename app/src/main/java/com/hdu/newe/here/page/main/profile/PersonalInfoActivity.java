@@ -56,6 +56,11 @@ public class PersonalInfoActivity extends AppCompatActivity {
     String leaveRequestObjId;
     Boolean mIsTeacher;
     Boolean mIsInstructor;
+    UserBean user;
+
+    public void setUser(UserBean user) {
+        this.user = user;
+    }
 
     public static final String LEAVE_REQUEST_OBJ_ID = "LeaveRequestObjId";
 
@@ -89,6 +94,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
             @Override
             public void done(UserBean user, BmobException e) {
                 if (e == null) {
+                    setUser(user);
                     mTvUserName.setText(user.getUserName());
                     mTvUserNumber.setText(user.getUserNumber());
                     mTvStuFaculty.setText(user.getUserCollege());
@@ -100,7 +106,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
                     // TODO 虽然没有改动，但是后台会把这两个值变成 false
                     mIsTeacher = user.isTeacher();
                     mIsInstructor = user.isInstructor();
-                    Toast.makeText(PersonalInfoActivity.this, "从后台获取数据成功", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(PersonalInfoActivity.this, "从后台获取数据成功", Toast.LENGTH_SHORT).show();
 
                     createLeaveRequestData(user);
                 } else {
@@ -143,23 +149,28 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 mTvSubmit.setVisibility(View.VISIBLE);
                 break;
             case R.id.tvSubmit:
-                UserBean user = new UserBean();
-                //会出现莫有上传的值变成 false，所以改成传一下所有数据
                 user.setUserName(mTvUserName.getText().toString());
                 user.setUserMajor(mTvStuSpeciality.getText().toString());
                 user.setUserCollege(mTvStuFaculty.getText().toString());
                 user.setUserClass(mTvStuClass.getText().toString());
                 user.setUserClassNum(mTvStuClassNum.getText().toString());
                 user.setUserInstructor(mTvInstructor.getText().toString());
-                // TODO 虽然没有改动，但是后台会把这两个值变成 false
-                user.setIsInstructor(mIsInstructor);
-                user.setIsTeacher(mIsTeacher);
                 user.setLeaveRequestObjId(leaveRequestObjId);
                 user.update(objectId, new UpdateListener() {
                     @Override
                     public void done(BmobException e) {
                         if (e == null) {
-                            Toast.makeText(PersonalInfoActivity.this, "保存成功，下次启动生效", Toast.LENGTH_SHORT).show();
+                            SharedPreferences.Editor editor = getSharedPreferences("user",MODE_PRIVATE).edit();
+                            editor.putString("userName",mTvUserName.getText().toString());
+                            editor.putString("userMajor",mTvStuSpeciality.getText().toString());
+                            editor.putString("userCollege",mTvStuFaculty.getText().toString());
+                            editor.putString("userClass",mTvStuClass.getText().toString());
+                            editor.putString("userClassNum",mTvStuClassNum.getText().toString());
+                            editor.putString("userInstructor",mTvInstructor.getText().toString());
+                            editor.putString("userLeaveObjId",leaveRequestObjId);
+                            editor.apply();
+                            Toast.makeText(PersonalInfoActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
+                            finish();
                         } else {
                             Toast.makeText(PersonalInfoActivity.this, "失败" + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
@@ -196,7 +207,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
                         editor.putString(LEAVE_REQUEST_OBJ_ID, leaveRequestObjId);
                         editor.apply();
                         uploadLeaveObjIdInfo();
-                        Toast.makeText(PersonalInfoActivity.this, "请假表创建成功", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(PersonalInfoActivity.this, "请假表创建成功", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(PersonalInfoActivity.this, "创建失败", Toast.LENGTH_SHORT).show();
                     }

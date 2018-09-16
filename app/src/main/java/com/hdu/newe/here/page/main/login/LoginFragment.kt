@@ -2,6 +2,7 @@ package com.hdu.newe.here.page.main.login
 
 
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
@@ -10,17 +11,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-
 import com.hdu.newe.here.R
 import com.hdu.newe.here.biz.user.entity.UserBean
 import com.hdu.newe.here.page.base.BaseFragment
+import com.hdu.newe.here.page.main.MainActivity
 import com.hdu.newe.here.utils.takeString
 import kotlinx.android.synthetic.main.fragment_login.*
-import pub.devrel.easypermissions.EasyPermissions
-import kotlin.properties.Delegates
-import android.Manifest.permission.*
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.AppSettingsDialog
+import pub.devrel.easypermissions.EasyPermissions
+import kotlin.properties.Delegates
 
 
 class LoginFragment : BaseFragment<LoginContract.Presenter>(),
@@ -77,6 +77,7 @@ class LoginFragment : BaseFragment<LoginContract.Presenter>(),
     override fun render() {
 
         btnLogin.setOnClickListener {
+            Toast.makeText(context,"请稍等...",Toast.LENGTH_LONG).show()
             mPresenter.clickLogin(edUserNumber.takeString(), tvIMEI.takeString(), checkStatus.isChecked, checkStatusIsInstructor.isChecked)
         }
     }
@@ -126,6 +127,7 @@ class LoginFragment : BaseFragment<LoginContract.Presenter>(),
     }
 
     override fun loginSucceed() {
+        startActivity(Intent(context,MainActivity::class.java))
         activity?.finish()
     }
 

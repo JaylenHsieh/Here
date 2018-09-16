@@ -2,7 +2,9 @@ package com.hdu.newe.here.page.main.signin;
 
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -35,6 +37,7 @@ import com.hdu.newe.here.R;
 import com.hdu.newe.here.biz.profile.bean.ClassDataBean;
 import com.hdu.newe.here.biz.signin.bean.SignInDataBean;
 import com.hdu.newe.here.biz.user.entity.UserBean;
+import com.hdu.newe.here.page.main.profile.PersonalInfoActivity;
 
 import org.json.JSONObject;
 
@@ -267,21 +270,21 @@ public class LBSFragment extends Fragment implements SensorEventListener {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                hideAndShowGroup(1, 3);
-                checkIsChecking(null);
-//                progressDialog.show();
-//                SharedPreferences preferences = getActivity().getSharedPreferences("user", Context.MODE_PRIVATE);
-//                userObjId = preferences.getString("objId", null);
-//                isTeacher = preferences.getBoolean("isTeacher", false);
-//                //分教师和学生的情况
-//                if (isTeacher) {
-//                    //教师
-//                    //检查当前是否有未完成的考勤
-//                    haveUnfinishedChecking();
-//                } else {
-//                    //学生
-//                    haveLessonNow();
-//                }
+//                hideAndShowGroup(1, 3);
+//                checkIsChecking(null);
+                progressDialog.show();
+                SharedPreferences preferences = getActivity().getSharedPreferences("user", Context.MODE_PRIVATE);
+                userObjId = preferences.getString("objId", null);
+                isTeacher = preferences.getBoolean("isTeacher", false);
+                //分教师和学生的情况
+                if (isTeacher) {
+                    //教师
+                    //检查当前是否有未完成的考勤
+                    haveUnfinishedChecking();
+                } else {
+                    //学生
+                    haveLessonNow();
+                }
             }
         });
 
@@ -303,9 +306,18 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                 @Override
                 public void onClick(View view) {
                     //跳转到创建新课程
+                    progressDialog.show();
+                    SharedPreferences preferences = getActivity().getSharedPreferences("user", Context.MODE_PRIVATE);
+                    if (preferences.getString("userName","").equals("")){
+                        Toast.makeText(getActivity(),"请先完善个人信息",Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getActivity(), PersonalInfoActivity.class);
+                        startActivity(intent);
+                        return;
+                    }
                     Intent intent = new Intent(getActivity(), NewSubjectActivity.class);
                     startActivity(intent);
                     hideAndShowGroup(2, 1);
+                    progressDialog.dismiss();
                 }
             });
         } else {
@@ -319,9 +331,11 @@ public class LBSFragment extends Fragment implements SensorEventListener {
             btnCheck2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    progressDialog.show();
                     Intent intent = new Intent(getActivity(), NewSubjectActivity.class);
                     startActivity(intent);
                     hideAndShowGroup(2, 1);
+                    progressDialog.dismiss();
                 }
             });
         }
@@ -655,6 +669,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                     List<String> subjectList = userBean.getSubjectList();
                     if (subjectList == null || subjectList.size() == 0) {
                         //用户该字段还没有数据的情况，也就是没课的情况，则询问用户是否需要创建/加入新的教学班
+                        hideAndShowGroup(1,2);
                         newSubject();
                     } else {
                         //用户该字段有数据，检验有没有当前时间段的课程
@@ -684,6 +699,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                             }
                         }
                         //则剩下的情况就是当前没课的情况，询问用户是否需要创建/加入新的教学班
+                        hideAndShowGroup(1,2);
                         newSubject();
                     }
                 } else {

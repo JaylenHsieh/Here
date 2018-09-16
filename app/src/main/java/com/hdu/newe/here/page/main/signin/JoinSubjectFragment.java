@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.hdu.newe.here.R;
 import com.hdu.newe.here.biz.profile.bean.ClassDataBean;
 import com.hdu.newe.here.biz.user.entity.UserBean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -74,6 +76,7 @@ public class JoinSubjectFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_join_subject, container, false);
         unbinder = ButterKnife.bind(this, view);
 
+        progressDialog = new ProgressDialog(getActivity());
         progressDialog.setTitle("请稍等");
         progressDialog.setMessage("正在加载...");
 
@@ -127,6 +130,8 @@ public class JoinSubjectFragment extends Fragment {
                                 joinSubject(classDataBean);
                             }
                         });
+                        cardviewGroup.setVisibility(View.VISIBLE);
+                        progressDialog.dismiss();
                     }
                 } else {
                     Toast.makeText(getActivity(), "error456\n" + e.getMessage(), Toast.LENGTH_LONG).show();
@@ -137,6 +142,7 @@ public class JoinSubjectFragment extends Fragment {
 
     private void joinSubject(final ClassDataBean classDataBean) {
 
+        progressDialog.show();
         //向该班ClassDataBean中的classMember字段添加该用户
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("user", Context.MODE_PRIVATE);
         String objId = sharedPreferences.getString("objId", "错误");
@@ -158,6 +164,7 @@ public class JoinSubjectFragment extends Fragment {
                         NewSubjectActivity newSubjectActivity = (NewSubjectActivity) getActivity();
                         newSubjectActivity.setSubjectName(classDataBean.getSubjectName());
                         newSubjectActivity.lunchResultFragment();
+                        progressDialog.dismiss();
                     }
                 } else {
                     Toast.makeText(getActivity(), "加入失败:error222\n" + e.getMessage(), Toast.LENGTH_LONG).show();
@@ -171,6 +178,9 @@ public class JoinSubjectFragment extends Fragment {
             public void done(UserBean userBean, BmobException e) {
                 if (e == null){
                     List<String> subjectList = userBean.getSubjectList();
+                    if (subjectList == null){
+                        subjectList = new ArrayList<>();
+                    }
                     subjectList.add(classDataBean.getSubjectCode());
                     userBean.setSubjectList(subjectList);
                     userBean.update(new UpdateListener() {
@@ -181,10 +191,10 @@ public class JoinSubjectFragment extends Fragment {
                                 flag++;
                                 if (flag == 2){
                                     //加入成功
-                                    Toast.makeText(getActivity(),"加入成功",Toast.LENGTH_LONG).show();
                                     NewSubjectActivity newSubjectActivity = (NewSubjectActivity) getActivity();
                                     newSubjectActivity.setSubjectName(classDataBean.getSubjectName());
                                     newSubjectActivity.lunchResultFragment();
+                                    progressDialog.dismiss();
                                 }
                             }else {
                                 Toast.makeText(getActivity(), "加入失败:error444\n" + e.getMessage(), Toast.LENGTH_LONG).show();
@@ -193,6 +203,7 @@ public class JoinSubjectFragment extends Fragment {
                     });
                 }else {
                     Toast.makeText(getActivity(),"加入失败:error333\n"+e.getMessage(),Toast.LENGTH_LONG).show();
+                    Log.i("报错",e.getMessage());
                 }
             }
         });
