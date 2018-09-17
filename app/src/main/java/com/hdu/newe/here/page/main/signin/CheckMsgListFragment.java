@@ -145,7 +145,7 @@ public class CheckMsgListFragment extends Fragment {
                 break;
             case 2:
                 //请假名单
-                dataList = signInDataBean.getLeaveRequestStudentList();
+                dataList = signInDataBean.getLeaveStudentList();
                 break;
             case 3:
                 //手动更改出勤设置 全部名单

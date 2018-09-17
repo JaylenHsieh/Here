@@ -54,7 +54,7 @@ public class VariousDataLogicT extends BaseLogic implements VariousDataInterface
                     //初始化两个与目标数据长度等长的列表用以存放数据
                     final List<UserBeanForList> leaveRequestList = new ArrayList<>();
                     final List<UserBeanForList> absentList = new ArrayList<>();
-                    for (int i = 0; i < signInDataBean.getLeaveRequestStudentList().size(); i++) {
+                    for (int i = 0; i < signInDataBean.getLeaveStudentList().size(); i++) {
                         leaveRequestList.add(new UserBeanForList());
                     }
                     for (int i = 0; i < signInDataBean.getAbsentStudentList().size(); i++) {
@@ -64,17 +64,17 @@ public class VariousDataLogicT extends BaseLogic implements VariousDataInterface
                     count = -1;
 
                     //for循环检索每一个请假用户的个人信息
-                    for (int i = 0; i < signInDataBean.getLeaveRequestStudentList().size(); i++) {
+                    for (int i = 0; i < signInDataBean.getLeaveStudentList().size(); i++) {
                         BmobQuery<UserBean> query1 = new BmobQuery<>();
                         final int finalI = i;
-                        query1.getObject(signInDataBean.getLeaveRequestStudentList().get(i)
+                        query1.getObject(signInDataBean.getLeaveStudentList().get(i)
                                 , new QueryListener<UserBean>() {
                                     @Override
                                     public void done(UserBean userBean, BmobException e) {
                                         if (e == null) {
                                             leaveRequestList.get(finalI).setStudentName(userBean.getUserName());
                                             leaveRequestList.get(finalI).setStudentNum(userBean.getUserNumber());
-                                            if (finalI == signInDataBean.getLeaveRequestStudentList().size() - 1) {
+                                            if (finalI == signInDataBean.getLeaveStudentList().size() - 1) {
                                                 count++;
                                                 if (count == 1) {
                                                     onCheckDataCallback.onGetSuccess(signInDataBean, leaveRequestList, absentList);

@@ -75,8 +75,8 @@ public class VariousDataOfSubjectFragmentT extends Fragment {
         tvAttendanceSubjectMembernum.setText(signInDataBean.getStudentList().size());
         tvAttendanceSubjectAttendance.setText(signInDataBean.getStudentList().size()
                 - signInDataBean.getAbsentStudentList().size()
-                - signInDataBean.getLeaveRequestStudentList().size());
-        tvAttendanceSubjectLeavenum.setText(signInDataBean.getLeaveRequestStudentList().size());
+                - signInDataBean.getLeaveStudentList().size());
+        tvAttendanceSubjectLeavenum.setText(signInDataBean.getLeaveStudentList().size());
         tvAttendanceSubjectAbsentnum.setText(signInDataBean.getAbsentStudentList().size());
 
     }

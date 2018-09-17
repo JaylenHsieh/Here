@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -389,6 +390,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                             public void onClick(View view) {
                                 //教师开始考勤的逻辑
                                 progressDialog.show();
+                                hideAndShowGroup(2,4);
                                 startCheck(classDataBean);
                             }
                         });
@@ -560,6 +562,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                                             classDataBean.getClassMember().size(), s);
                                 } else {
                                     Toast.makeText(getActivity(), "error777:" + e.getMessage(), Toast.LENGTH_LONG).show();
+                                    Log.i("报错",e.getMessage());
                                     progressDialog.dismiss();
                                 }
                             }
@@ -582,7 +585,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
             BmobGeoPoint bmobGeoPoint = new BmobGeoPoint(locationBean.getLongitude(), locationBean.getLatitude());
             signInDataBean.setCheckLocation(bmobGeoPoint);
             //TODO 获取请假学生列表
-            signInDataBean.setLeaveRequestStudentList(new ArrayList<String>());
+            signInDataBean.setLeaveStudentList(new ArrayList<String>());
             signInDataBean.setAbsentStudentList(classDataBean.getClassMember());
             signInDataBean.setTeacherId(classDataBean.getTeacherId());
             flag[0]++;
@@ -694,6 +697,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                             int finishTime = Integer.valueOf(classDataBean.changeToMinTime(id.substring(0, 3)).substring(4, 8));
                             if (timeCodeNow >= startTime && timeCodeNow <= finishTime) {
                                 //说明当前有课，并加载该课程信息
+                                hideAndShowGroup(1,2);
                                 loadSubjectMsg(subjectList.get(Integer.valueOf(id.substring(3, 4))));
                                 return;
                             }
@@ -864,6 +868,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                     }
                 } else {
                     Toast.makeText(getActivity(), "error963\n" + e.getMessage(), Toast.LENGTH_LONG).show();
+                    Log.i("报错",e.getMessage());
                     progressDialog.dismiss();
                 }
             }

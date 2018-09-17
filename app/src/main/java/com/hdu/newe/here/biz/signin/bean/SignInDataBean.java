@@ -35,7 +35,7 @@ public class SignInDataBean extends BmobObject {
     /**
      * 请假学生列表
      */
-    private List<String> leaveRequestStudentList;
+    private List<String> leaveStudentList;
 
     /**
      * 旷课学生列表
@@ -102,12 +102,12 @@ public class SignInDataBean extends BmobObject {
         isChecking = checking;
     }
 
-    public List<String> getLeaveRequestStudentList() {
-        return leaveRequestStudentList;
+    public List<String> getLeaveStudentList() {
+        return leaveStudentList;
     }
 
-    public void setLeaveRequestStudentList(List<String> leaveRequestStudentList) {
-        this.leaveRequestStudentList = leaveRequestStudentList;
+    public void setLeaveStudentList(List<String> leaveStudentList) {
+        this.leaveStudentList = leaveStudentList;
     }
 
     public List<String> getAbsentStudentList() {
