@@ -288,7 +288,6 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                 }
             }
         });
-
     }
 
     /**
@@ -743,6 +742,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
      * @param signInDataBean 未完成考勤的教学班的数据Bean
      */
     private void loadUnfinishedCheckingMsg(SignInDataBean signInDataBean) {
+
         //获取数据加载到Group4中继续上次未完成的考勤
         BmobQuery<ClassDataBean> query = new BmobQuery<>();
         query.addWhereEqualTo("subjectCode", signInDataBean.getSubjectCode());
@@ -753,6 +753,8 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                     tvMessageTitle.setText(list.get(0).getSubjectName());
                 } else {
                     Toast.makeText(getActivity(), "error111:" + e.getMessage(), Toast.LENGTH_LONG).show();
+                    Log.i("报错111", e.getMessage());
+                    progressDialog.dismiss();
                 }
             }
         });
@@ -774,6 +776,27 @@ public class LBSFragment extends Fragment implements SensorEventListener {
     }
 
     private void bindCheckingBtnListener(final String objectId) {
+
+        //Group4的刷新按钮的监听
+        imageRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BmobQuery<SignInDataBean> query = new BmobQuery<>();
+                query.getObject(objectId, new QueryListener<SignInDataBean>() {
+                    @Override
+                    public void done(SignInDataBean signInDataBean, BmobException e) {
+                        if (e == null){
+                            progressDialog.show();
+                            loadUnfinishedCheckingMsg(signInDataBean);
+                        }else {
+                            Toast.makeText(getActivity(),"error471",Toast.LENGTH_LONG).show();
+                            Log.i("报错471",e.getMessage());
+                            progressDialog.dismiss();
+                        }
+                    }
+                });
+            }
+        });
 
         btnSigninAbsentList.setOnClickListener(new View.OnClickListener() {
             @Override
