@@ -20,7 +20,7 @@ import cn.bmob.v3.listener.FindListener;
 public class VariousDataLogic extends BaseLogic implements VariousDataInterface {
 
     private static VariousDataLogic INSTANCE;
-    private String objectId = "da2d833c2d";
+    private String objectId ;
 
     /**
      * 获取数据的Model层数据逻辑
