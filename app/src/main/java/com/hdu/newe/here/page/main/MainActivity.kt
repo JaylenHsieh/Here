@@ -16,7 +16,6 @@ import com.hdu.newe.here.page.main.leaverequest.teacher.LeaveRequestActivityTeac
 import com.hdu.newe.here.page.main.login.LoginActivity
 import com.hdu.newe.here.page.main.profile.PersonalInfoActivity
 import com.hdu.newe.here.page.main.profile.ProfileFragment
-import com.hdu.newe.here.page.main.profile.ProfilePresenter
 import com.hdu.newe.here.page.main.signin.LBSFragment
 import com.hdu.newe.here.page.main.variousdata.student.VariousDataFragment
 import com.hdu.newe.here.page.main.variousdata.student.VariousDataPresenter
@@ -128,7 +127,8 @@ class MainActivity : AppCompatActivity() {
 //            1 -> VariousDataFragmentT().also { VariousDataPresenterT(it) }
             1 -> VariousDataFragment().also { VariousDataPresenter(it) }
             3 -> InboxFragment()
-            4 -> ProfileFragment().also { ProfilePresenter(it) }
+//            4 -> ProfileFragment().also { ProfilePresenter(it) }
+            4 -> ProfileFragment()
             else -> throw Exception("Position 不可以是 0,1,3,4 以外的数")
         }
     }

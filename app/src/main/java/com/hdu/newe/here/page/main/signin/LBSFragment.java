@@ -309,8 +309,8 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                     //跳转到创建新课程
                     progressDialog.show();
                     SharedPreferences preferences = getActivity().getSharedPreferences("user", Context.MODE_PRIVATE);
-                    if (preferences.getString("userName","").equals("")){
-                        Toast.makeText(getActivity(),"请先完善个人信息",Toast.LENGTH_LONG).show();
+                    if (preferences.getString("userName", "").equals("")) {
+                        Toast.makeText(getActivity(), "请先完善个人信息", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(getActivity(), PersonalInfoActivity.class);
                         startActivity(intent);
                         return;
@@ -369,6 +369,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                         @Override
                         public void done(UserBean userBean, BmobException e) {
                             if (e == null) {
+                                tvClassTeacher2.setVisibility(View.VISIBLE);
                                 tvClassTeacher2.setText("任课教师：" + userBean.getUserName());
                             } else {
                                 Toast.makeText(getActivity(), "error123\n" + e.getMessage(), Toast.LENGTH_LONG).show();
@@ -376,13 +377,18 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                             }
                         }
                     });
+                    tvClassName2.setVisibility(View.VISIBLE);
                     tvClassName2.setText("课程名称：" + classDataBean.getSubjectName());
                     String placeCode = classDataBean.getPlaceCode();
                     int building = Integer.valueOf(placeCode.substring(0, 2));
                     int classroom = Integer.valueOf(placeCode.substring(2));
+                    tvClassPlace2.setVisibility(View.VISIBLE);
                     tvClassPlace2.setText("上课地点：" + building + "教" + classroom);
+                    tvClassTime2.setVisibility(View.VISIBLE);
                     tvClassTime2.setText("上课时间：" + classDataBean.changeToDescription(classDataBean.getSubjectCode().substring(3)));
+                    tvStudentNumber2.setVisibility(View.VISIBLE);
                     tvStudentNumber2.setText("课程人数：" + classDataBean.getClassMember().size() + "人");
+                    btnCheck2.setText("开始考勤");
                     if (isTeacher) {
                         //教师加载教师的监听
                         btnCheck2.setOnClickListener(new View.OnClickListener() {
@@ -390,7 +396,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                             public void onClick(View view) {
                                 //教师开始考勤的逻辑
                                 progressDialog.show();
-                                hideAndShowGroup(2,4);
+                                hideAndShowGroup(2, 4);
                                 startCheck(classDataBean);
                             }
                         });
@@ -562,7 +568,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                                             classDataBean.getClassMember().size(), s);
                                 } else {
                                     Toast.makeText(getActivity(), "error777:" + e.getMessage(), Toast.LENGTH_LONG).show();
-                                    Log.i("报错",e.getMessage());
+                                    Log.i("报错", e.getMessage());
                                     progressDialog.dismiss();
                                 }
                             }
@@ -580,6 +586,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
         signInDataBean.setChecking(true);
         signInDataBean.setCheckTime(new BmobDate(new Date()));
         LocationBean locationBean = getLocation();
+//        LocationBean locationBean = PlaceCodeQuery.PlaceCodeQuery(classDataBean.getPlaceCode());
         if (locationBean.getErrorCode() == 0) {
             //获取定位成功
             BmobGeoPoint bmobGeoPoint = new BmobGeoPoint(locationBean.getLongitude(), locationBean.getLatitude());
@@ -622,12 +629,12 @@ public class LBSFragment extends Fragment implements SensorEventListener {
      */
     private void initCheckingMsg(String subjectName, int memberNum, String objectId) {
         tvMessageTitle.setText(subjectName);
-        tvSigninAllPeople.setText(memberNum);
+        tvSigninAllPeople.setText(String.valueOf(memberNum));
         tvSigninAttendPeople.setText("0");
         tvSigninAttendance.setText("00.00%");
-        tvSigninAbsentPeople.setText(memberNum);
+        tvSigninAbsentPeople.setText(String.valueOf(memberNum));
         tvSigninLeavePeople.setText("0");
-        bindDataListener(objectId);
+//        bindDataListener(objectId);
         bindCheckingBtnListener(objectId);
         hideAndShowGroup(2, 4);
         progressDialog.dismiss();
@@ -672,7 +679,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                     List<String> subjectList = userBean.getSubjectList();
                     if (subjectList == null || subjectList.size() == 0) {
                         //用户该字段还没有数据的情况，也就是没课的情况，则询问用户是否需要创建/加入新的教学班
-                        hideAndShowGroup(1,2);
+                        hideAndShowGroup(1, 2);
                         newSubject();
                     } else {
                         //用户该字段有数据，检验有没有当前时间段的课程
@@ -697,13 +704,13 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                             int finishTime = Integer.valueOf(classDataBean.changeToMinTime(id.substring(0, 3)).substring(4, 8));
                             if (timeCodeNow >= startTime && timeCodeNow <= finishTime) {
                                 //说明当前有课，并加载该课程信息
-                                hideAndShowGroup(1,2);
+                                hideAndShowGroup(1, 2);
                                 loadSubjectMsg(subjectList.get(Integer.valueOf(id.substring(3, 4))));
                                 return;
                             }
                         }
                         //则剩下的情况就是当前没课的情况，询问用户是否需要创建/加入新的教学班
-                        hideAndShowGroup(1,2);
+                        hideAndShowGroup(1, 2);
                         newSubject();
                     }
                 } else {
@@ -735,16 +742,16 @@ public class LBSFragment extends Fragment implements SensorEventListener {
         });
         int memberNum = signInDataBean.getStudentList().size();
         int absentNum = signInDataBean.getAbsentStudentList().size();
-        tvSigninAllPeople.setText(memberNum);
-        tvSigninAttendPeople.setText(memberNum - absentNum);
+        tvSigninAllPeople.setText(String.valueOf(memberNum));
+        tvSigninAttendPeople.setText(String.valueOf(memberNum - absentNum));
         double attendance = ((memberNum - absentNum) / memberNum) * 10;
         DecimalFormat df = new DecimalFormat("#0.00");
-        tvSigninAttendance.setText(df.format(attendance) + "%");
-        tvSigninAbsentPeople.setText(absentNum);
+        tvSigninAttendance.setText(String.valueOf(df.format(attendance) + "%"));
+        tvSigninAbsentPeople.setText(String.valueOf(absentNum));
         //TODO 获取请假人数
         tvSigninLeavePeople.setText(null);
         bindCheckingBtnListener(signInDataBean.getObjectId());
-        bindDataListener(signInDataBean.getObjectId());
+//        bindDataListener(signInDataBean.getObjectId());
         hideAndShowGroup(1, 4);
         Toast.makeText(getActivity(), "检测到您之前有未完成的考勤，已为您加载！", Toast.LENGTH_LONG).show();
         progressDialog.dismiss();
@@ -789,7 +796,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
             @Override
             public void onClick(View view) {
                 //出勤抽查
-                Toast.makeText(getActivity(),"该功能尚未开发完成，敬请期待~",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "该功能尚未开发完成，敬请期待~", Toast.LENGTH_SHORT).show();
 //                Intent intent = new Intent(getActivity(), CheckingInformationActivity.class);
 //                intent.putExtra("viewCode", 4);
 //                intent.putExtra("objectId", objectId);
@@ -802,14 +809,31 @@ public class LBSFragment extends Fragment implements SensorEventListener {
             public void onClick(View view) {
                 //关闭考勤
                 //TODO 更改请假列表中的相关数据
+                progressDialog.show();
                 BmobQuery<SignInDataBean> query = new BmobQuery<>();
                 query.getObject(objectId, new QueryListener<SignInDataBean>() {
                     @Override
                     public void done(SignInDataBean signInDataBean, BmobException e) {
                         if (e == null) {
                             signInDataBean.setChecking(false);
+                            signInDataBean.update(new UpdateListener() {
+                                @Override
+                                public void done(BmobException e) {
+                                    if (e == null) {
+                                        Toast.makeText(getActivity(), "关闭成功！", Toast.LENGTH_LONG).show();
+                                        hideAndShowGroup(4,1);
+                                        progressDialog.dismiss();
+                                    } else {
+                                        Toast.makeText(getActivity(), "error001", Toast.LENGTH_LONG).show();
+                                        Log.i("报错001", e.getMessage());
+                                        progressDialog.dismiss();
+                                    }
+                                }
+                            });
                         } else {
-                            Toast.makeText(getActivity(), "error003:" + e.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), "error003", Toast.LENGTH_LONG).show();
+                            Log.i("报错003",e.getMessage());
+                            progressDialog.dismiss();
                         }
                     }
                 });
@@ -819,6 +843,8 @@ public class LBSFragment extends Fragment implements SensorEventListener {
         btnSigninCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //取消考勤
+                progressDialog.show();
                 BmobQuery<SignInDataBean> query = new BmobQuery<>();
                 query.getObject(objectId, new QueryListener<SignInDataBean>() {
                     @Override
@@ -831,14 +857,17 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                                         //取消成功
                                         //TODO 如果涉及到请假数据的话 需要将请假数据根据情况还原
                                         Toast.makeText(getActivity(), "取消成功", Toast.LENGTH_LONG).show();
-                                        hideAndShowGroup(4,1);
+                                        hideAndShowGroup(4, 1);
                                     } else {
-                                        Toast.makeText(getActivity(), "取消失败\nerror005:" + e.getMessage(), Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getActivity(), "error005", Toast.LENGTH_LONG).show();
+                                        Log.i("报错005", e.getMessage());
+                                        progressDialog.dismiss();
                                     }
                                 }
                             });
                         } else {
-                            Toast.makeText(getActivity(), "error004:" + e.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), "error004", Toast.LENGTH_LONG).show();
+                            Log.i("报错004", e.getMessage());
                         }
                     }
                 });
@@ -868,7 +897,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                     }
                 } else {
                     Toast.makeText(getActivity(), "error963\n" + e.getMessage(), Toast.LENGTH_LONG).show();
-                    Log.i("报错",e.getMessage());
+                    Log.i("报错", e.getMessage());
                     progressDialog.dismiss();
                 }
             }
@@ -934,7 +963,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
         if (Math.abs(x - lastX) > 1.0) {
             mCurrentDirection = (int) x;
             locData = new MyLocationData.Builder()
-                    .accuracy(mCurrentAccracy)
+                    .accuracy(mCurrentAccracy / 2)
                     // 此处设置开发者获取到的方向信息，顺时针0-360
                     .direction(mCurrentDirection).latitude(mCurrentLat)
                     .longitude(mCurrentLon).build();

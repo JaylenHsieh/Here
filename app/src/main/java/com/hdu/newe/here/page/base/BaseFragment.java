@@ -7,7 +7,6 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 /**
- *
  * @author Jaylen Hsieh
  * @date 2017/11/19
  */
@@ -37,7 +36,9 @@ public class BaseFragment<T extends BasePresenter> extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter.onCreate();
+        if (mPresenter != null) {
+            mPresenter.onCreate();
+        }
     }
 
     @Override
@@ -48,24 +49,32 @@ public class BaseFragment<T extends BasePresenter> extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.onResume();
+        if (mPresenter != null) {
+            mPresenter.onResume();
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mPresenter.onPause();
+        if (mPresenter != null) {
+            mPresenter.onPause();
+        }
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        mPresenter.onStop();
+        if (mPresenter != null) {
+            mPresenter.onStop();
+        }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mPresenter.onStop();
+        if (mPresenter != null) {
+            mPresenter.onStop();
+        }
     }
 }
