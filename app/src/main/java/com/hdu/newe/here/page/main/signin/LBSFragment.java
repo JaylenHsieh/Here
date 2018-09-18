@@ -388,9 +388,9 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                     tvClassTime2.setText("上课时间：" + classDataBean.changeToDescription(classDataBean.getSubjectCode().substring(3)));
                     tvStudentNumber2.setVisibility(View.VISIBLE);
                     tvStudentNumber2.setText("课程人数：" + classDataBean.getClassMember().size() + "人");
-                    btnCheck2.setText("开始考勤");
                     if (isTeacher) {
                         //教师加载教师的监听
+                        btnCheck2.setText("开始考勤");
                         btnCheck2.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -402,11 +402,14 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                         });
                     } else {
                         //学生加载学生的监听
+                        btnCheck2.setText("开始签到");
                         btnCheck2.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 //学生开始签到的逻辑
                                 //检查该学生是否够资格签到
+                                progressDialog.show();
+                                hideAndShowGroup(2, 3);
                                 checkIsChecking(classDataBean);
                             }
                         });
@@ -434,7 +437,6 @@ public class LBSFragment extends Fragment implements SensorEventListener {
      */
     private void checkIsChecking(final ClassDataBean classDataBean) {
 
-        hideAndShowGroup(2, 3);
         imageEmoji.setImageResource(R.mipmap.ic_calm);
         tvMessage.setText("正在查询您当前的课程是否正在考勤，请稍等片刻~");
         btnCheckRefresh.setText("刷新");
@@ -461,6 +463,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                                 //说明当前教学班没有考勤
                                 imageEmoji.setImageResource(R.mipmap.ic_happy);
                                 tvMessage.setText("您当前的课程暂未发起考勤~");
+                                progressDialog.dismiss();
                             } else {
                                 //说明当前教学班有考勤，检查定位是否符合要求
                                 checkLocation(list.get(0));
@@ -477,6 +480,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
     }
 
     private void checkLocation(final SignInDataBean signInDataBean) {
+
         LocationBean locationBean = getLocation();
         BmobGeoPoint bmobGeoPoint = signInDataBean.getCheckLocation();
         double mLatitude = locationBean.getLatitude();
@@ -498,6 +502,15 @@ public class LBSFragment extends Fragment implements SensorEventListener {
             for (int i = 0; i < absentStudentList.size(); i++) {
                 if (absentStudentList.get(i).equals(userObjId)) {
                     absentStudentList.remove(i);
+                    break;
+                }
+                if (i == absentStudentList.size() - 1) {
+                    imageEmoji.setImageResource(R.mipmap.ic_happy);
+                    tvMessage.setText("您已经完成签到了噢~请勿重复签到");
+                    btnCheckRefresh.setVisibility(View.INVISIBLE);
+                    btnSigninCancel.setText("返回");
+                    progressDialog.dismiss();
+                    return;
                 }
             }
             signInDataBean.setAbsentStudentList(absentStudentList);
@@ -509,8 +522,10 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                         tvMessage.setText("该课程正在考勤，已为您完成签到~");
                         btnCheckRefresh.setVisibility(View.INVISIBLE);
                         btnCheckCancel.setText("完成");
+                        progressDialog.dismiss();
                     } else {
                         Toast.makeText(getActivity(), "error999:" + e.getMessage(), Toast.LENGTH_LONG).show();
+                        progressDialog.dismiss();
                     }
                 }
             });
@@ -529,6 +544,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                     checkLocation(signInDataBean);
                 }
             });
+            progressDialog.dismiss();
         }
     }
 
@@ -821,7 +837,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                                 public void done(BmobException e) {
                                     if (e == null) {
                                         Toast.makeText(getActivity(), "关闭成功！", Toast.LENGTH_LONG).show();
-                                        hideAndShowGroup(4,1);
+                                        hideAndShowGroup(4, 1);
                                         progressDialog.dismiss();
                                     } else {
                                         Toast.makeText(getActivity(), "error001", Toast.LENGTH_LONG).show();
@@ -832,7 +848,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                             });
                         } else {
                             Toast.makeText(getActivity(), "error003", Toast.LENGTH_LONG).show();
-                            Log.i("报错003",e.getMessage());
+                            Log.i("报错003", e.getMessage());
                             progressDialog.dismiss();
                         }
                     }
@@ -963,7 +979,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
         if (Math.abs(x - lastX) > 1.0) {
             mCurrentDirection = (int) x;
             locData = new MyLocationData.Builder()
-                    .accuracy(mCurrentAccracy / 2)
+                    .accuracy(mCurrentAccracy)
                     // 此处设置开发者获取到的方向信息，顺时针0-360
                     .direction(mCurrentDirection).latitude(mCurrentLat)
                     .longitude(mCurrentLon).build();
@@ -1001,7 +1017,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
             mCurrentLat = location.getLatitude();
             //获取经度信息
             mCurrentLon = location.getLongitude();
-            mCurrentAccracy = location.getRadius();
+            mCurrentAccracy = location.getRadius() / 2;
 
             locData = new MyLocationData.Builder()
                     .accuracy(location.getRadius())

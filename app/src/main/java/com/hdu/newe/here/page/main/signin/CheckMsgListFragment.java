@@ -105,6 +105,7 @@ public class CheckMsgListFragment extends Fragment {
 
     private void initSomething() {
 
+        progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("正在加载...");
         progressDialog.setTitle("请稍等");
 
@@ -138,6 +139,9 @@ public class CheckMsgListFragment extends Fragment {
 
 
     private void getData(int viewCode) {
+        if (dataList == null){
+            dataList = new ArrayList<>();
+        }
         switch (viewCode) {
             case 1:
                 //缺勤名单
