@@ -8,6 +8,7 @@ import com.hdu.newe.here.biz.BaseLogic;
 import com.hdu.newe.here.page.main.profile.PersonalInfoActivity;
 import com.hdu.newe.here.utils.db;
 
+import java.util.Calendar;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
@@ -74,6 +75,8 @@ public class UserLogic extends BaseLogic implements UserInterface {
         final UserBean userBean = new UserBean();
         userBean.setUserNumber(userNumber);
         userBean.setImei(imei);
+        Calendar calendar = Calendar.getInstance();
+        userBean.setImeiTimeLimit(calendar.getTimeInMillis());
         userBean.setIsTeacher(isTeacher);
         userBean.setIsInstructor(isInstructor);
 

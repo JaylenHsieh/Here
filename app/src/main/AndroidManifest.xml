@@ -75,7 +75,8 @@
         <activity android:name=".page.main.profile.AboutUsActivity" />
         <activity android:name=".page.main.leaverequest.teacher.LeaveRequestActivityTeacher" />
         <activity android:name=".page.main.signin.NewSubjectActivity" />
-        <activity android:name=".page.main.signin.CheckingInformationActivity"></activity>
+        <activity android:name=".page.main.signin.CheckingInformationActivity" />
+        <activity android:name=".page.main.profile.ChangeImeiActivity"></activity>
     </application>
 
 </manifest>

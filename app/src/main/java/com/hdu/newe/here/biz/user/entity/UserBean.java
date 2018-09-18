@@ -27,6 +27,9 @@ public class UserBean extends BmobObject {
     private String userInstructor;
     private String imei;
     private String leaveRequestObjId;
+    private long imeiTimeLimit;
+
+
 
     private boolean isTeacher;
     private boolean isInstructor;
@@ -144,5 +147,13 @@ public class UserBean extends BmobObject {
 
     public void setLeaveRequestObjId(String leaveRequestObjId) {
         this.leaveRequestObjId = leaveRequestObjId;
+    }
+
+    public long getImeiTimeLimit() {
+        return imeiTimeLimit;
+    }
+
+    public void setImeiTimeLimit(long imeiTimeLimit) {
+        this.imeiTimeLimit = imeiTimeLimit;
     }
 }

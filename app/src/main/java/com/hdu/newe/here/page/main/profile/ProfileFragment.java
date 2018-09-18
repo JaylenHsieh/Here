@@ -101,8 +101,7 @@ public class ProfileFragment extends BaseFragment<ProfileContract.Presenter> imp
                 mContext.startActivity(new Intent(mContext, PersonalInfoActivity.class));
                 break;
             case R.id.change_phone:
-                EditPhoneNumberDialog editDialog = new EditPhoneNumberDialog();
-                editDialog.show(((MainActivity) mContext).getSupportFragmentManager(), "editDialog");
+                mContext.startActivity(new Intent(mContext, ChangeImeiActivity.class));
                 break;
             case R.id.common_question:
                 isFirstClickCommonQuestion();
