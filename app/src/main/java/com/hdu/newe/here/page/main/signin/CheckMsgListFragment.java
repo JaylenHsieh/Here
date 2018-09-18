@@ -108,6 +108,8 @@ public class CheckMsgListFragment extends Fragment {
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("正在加载...");
         progressDialog.setTitle("请稍等");
+        progressDialog.show();
+        hideOrShowMsg();
 
         Bundle bundle = getArguments();
         viewCode = bundle.getInt("viewCode");
@@ -119,29 +121,26 @@ public class CheckMsgListFragment extends Fragment {
             public void done(SignInDataBean signInDataBean, BmobException e) {
                 if (e == null) {
                     setSignInDataBean(signInDataBean);
+
+                    isAppearList = new ArrayList<>();
+                    dataList = new ArrayList<>();
+                    getData(viewCode);
+
+                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+                    recyclerviewCheckMsgList.setLayoutManager(layoutManager);
+                    CheckMsgAdapter adapter = new CheckMsgAdapter(viewCode, dataList, isAppearList, getActivity());
+                    recyclerviewCheckMsgList.setAdapter(adapter);
+                    progressDialog.dismiss();
+
                 } else {
                     Toast.makeText(getActivity(), "error488:" + e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
         });
-
-        isAppearList = new ArrayList<>();
-        dataList = new ArrayList<>();
-        getData(viewCode);
-
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerviewCheckMsgList.setLayoutManager(layoutManager);
-        CheckMsgAdapter adapter = new CheckMsgAdapter(viewCode, dataList, isAppearList, getActivity());
-        recyclerviewCheckMsgList.setAdapter(adapter);
-
-
     }
 
 
     private void getData(int viewCode) {
-        if (dataList == null){
-            dataList = new ArrayList<>();
-        }
         switch (viewCode) {
             case 1:
                 //缺勤名单
@@ -243,7 +242,7 @@ public class CheckMsgListFragment extends Fragment {
                 if (isAppear) {
                     btnMsgRight.setText("变更为缺勤");
                     btnMsgRight.setTextColor(Color.GREEN);
-                    btnMsgRight.setBackgroundResource(R.drawable.bg_btn_apprar);
+                    btnMsgRight.setBackgroundResource(R.drawable.bg_btn_appear);
                 } else {
                     btnMsgRight.setText("变更为出勤");
                     btnMsgRight.setTextColor(Color.RED);
@@ -253,7 +252,7 @@ public class CheckMsgListFragment extends Fragment {
             case 4:
                 btnMsgLeft.setText("真实出勤");
                 btnMsgLeft.setTextColor(Color.GREEN);
-                btnMsgLeft.setBackgroundResource(R.drawable.bg_btn_apprar);
+                btnMsgLeft.setBackgroundResource(R.drawable.bg_btn_appear);
                 btnMsgRight.setText("虚假出勤");
                 btnMsgRight.setTextColor(Color.RED);
                 btnMsgRight.setBackgroundResource(R.drawable.bg_btn_notice);

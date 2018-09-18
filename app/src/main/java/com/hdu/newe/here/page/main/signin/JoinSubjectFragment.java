@@ -143,13 +143,26 @@ public class JoinSubjectFragment extends Fragment {
     private void joinSubject(final ClassDataBean classDataBean) {
 
         progressDialog.show();
-        //向该班ClassDataBean中的classMember字段添加该用户
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("user", Context.MODE_PRIVATE);
         String objId = sharedPreferences.getString("objId", "错误");
-        if (objId.equals("错误")){
-            Toast.makeText(getActivity(),"加入失败:error303\n",Toast.LENGTH_LONG).show();
+        if (objId.equals("错误")) {
+            progressDialog.dismiss();
+            Toast.makeText(getActivity(), "加入失败:error303\n", Toast.LENGTH_LONG).show();
+            Log.i("报错303","用户本地的ObjectId有错误");
+            return;
         }
         List<String> newClassMember = classDataBean.getClassMember();
+
+        //检查该用户是否已经加入该班
+        for (int a = 0; a < newClassMember.size(); a++) {
+            if (objId.equals(newClassMember.get(a))){
+                progressDialog.dismiss();
+                Toast.makeText(getActivity(),"您已加入该教学班，请勿重复添加！",Toast.LENGTH_LONG).show();
+                return;
+            }
+        }
+
+        //向该班ClassDataBean中的classMember字段添加该用户
         newClassMember.add(objId);
         classDataBean.setClassMember(newClassMember);
         classDataBean.update(new UpdateListener() {
@@ -158,9 +171,9 @@ public class JoinSubjectFragment extends Fragment {
                 if (e == null) {
                     //添加成功
                     flag++;
-                    if (flag == 2){
+                    if (flag == 2) {
                         //加入成功
-                        Toast.makeText(getActivity(),"加入成功",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "加入成功", Toast.LENGTH_LONG).show();
                         NewSubjectActivity newSubjectActivity = (NewSubjectActivity) getActivity();
                         newSubjectActivity.setSubjectName(classDataBean.getSubjectName());
                         newSubjectActivity.lunchResultFragment();
@@ -176,9 +189,9 @@ public class JoinSubjectFragment extends Fragment {
         query.getObject(objId, new QueryListener<UserBean>() {
             @Override
             public void done(UserBean userBean, BmobException e) {
-                if (e == null){
+                if (e == null) {
                     List<String> subjectList = userBean.getSubjectList();
-                    if (subjectList == null){
+                    if (subjectList == null) {
                         subjectList = new ArrayList<>();
                     }
                     subjectList.add(classDataBean.getSubjectCode());
@@ -186,24 +199,24 @@ public class JoinSubjectFragment extends Fragment {
                     userBean.update(new UpdateListener() {
                         @Override
                         public void done(BmobException e) {
-                            if (e == null){
+                            if (e == null) {
                                 //添加成功
                                 flag++;
-                                if (flag == 2){
+                                if (flag == 2) {
                                     //加入成功
                                     NewSubjectActivity newSubjectActivity = (NewSubjectActivity) getActivity();
                                     newSubjectActivity.setSubjectName(classDataBean.getSubjectName());
                                     newSubjectActivity.lunchResultFragment();
                                     progressDialog.dismiss();
                                 }
-                            }else {
+                            } else {
                                 Toast.makeText(getActivity(), "加入失败:error444\n" + e.getMessage(), Toast.LENGTH_LONG).show();
                             }
                         }
                     });
-                }else {
-                    Toast.makeText(getActivity(),"加入失败:error333\n"+e.getMessage(),Toast.LENGTH_LONG).show();
-                    Log.i("报错",e.getMessage());
+                } else {
+                    Toast.makeText(getActivity(), "加入失败:error333\n" + e.getMessage(), Toast.LENGTH_LONG).show();
+                    Log.i("报错", e.getMessage());
                 }
             }
         });

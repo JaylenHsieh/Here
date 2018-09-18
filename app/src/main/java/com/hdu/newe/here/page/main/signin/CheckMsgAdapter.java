@@ -36,6 +36,7 @@ public class CheckMsgAdapter extends RecyclerView.Adapter<CheckMsgAdapter.ViewHo
         this.viewCode = viewCode;
         this.dataList = dataList;
         this.isAppearList = isAppearList;
+        this.mContext = context;
     }
 
     @NonNull
