@@ -1,5 +1,8 @@
 package com.hdu.newe.here.biz.variousdata.student;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import com.hdu.newe.here.biz.BaseLogic;
 import com.hdu.newe.here.biz.variousdata.student.bean.LeaveRequestBean;
 import com.hdu.newe.here.biz.variousdata.student.bean.VariousDataBean;
@@ -20,7 +23,7 @@ import cn.bmob.v3.listener.FindListener;
 public class VariousDataLogic extends BaseLogic implements VariousDataInterface {
 
     private static VariousDataLogic INSTANCE;
-    private String objectId ;
+    private String objectId;
 
     /**
      * 获取数据的Model层数据逻辑
@@ -29,6 +32,10 @@ public class VariousDataLogic extends BaseLogic implements VariousDataInterface 
      */
     @Override
     public void getAttendanceData(final OnVariousDataCallback onVariousDataCallback) {
+        if (objectId == null){
+            SharedPreferences sharedPreferences = getContext().getSharedPreferences("user", Context.MODE_PRIVATE);
+            objectId = sharedPreferences.getString("objId",null);
+        }
         onVariousDataCallback.onStartGetData();
         BmobQuery<VariousDataBean> query = new BmobQuery<>();
         query.addWhereEqualTo("userObjectId", objectId);
@@ -49,7 +56,11 @@ public class VariousDataLogic extends BaseLogic implements VariousDataInterface 
             @Override
             public void done(List<LeaveRequestBean> list, BmobException e) {
                 if (e == null) {
-                    onVariousDataCallback.onGetSuccess(null, list.get(0));
+                    if (list.isEmpty() || list == null) {
+                        onVariousDataCallback.onGetFailed("无数据");
+                    } else {
+                        onVariousDataCallback.onGetSuccess(null, list.get(0));
+                    }
                 } else {
                     onVariousDataCallback.onGetFailed(e.getMessage());
                 }

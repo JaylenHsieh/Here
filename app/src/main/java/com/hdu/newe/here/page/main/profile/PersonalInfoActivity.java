@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.hdu.newe.here.R;
 import com.hdu.newe.here.biz.user.entity.UserBean;
 import com.hdu.newe.here.biz.variousdata.student.bean.LeaveRequestBean;
+import com.hdu.newe.here.biz.variousdata.student.bean.VariousDataBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
@@ -57,6 +59,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
     Boolean mIsTeacher;
     Boolean mIsInstructor;
     UserBean user;
+    Boolean isTeacher;
 
     public void setUser(UserBean user) {
         this.user = user;
@@ -73,6 +76,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         SharedPreferences pref = getSharedPreferences("user", MODE_PRIVATE);
         objectId = pref.getString("objId", "");
+        isTeacher = pref.getBoolean("isTeacher", false);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -160,15 +164,16 @@ public class PersonalInfoActivity extends AppCompatActivity {
                     @Override
                     public void done(BmobException e) {
                         if (e == null) {
-                            SharedPreferences.Editor editor = getSharedPreferences("user",MODE_PRIVATE).edit();
-                            editor.putString("userName",mTvUserName.getText().toString());
-                            editor.putString("userMajor",mTvStuSpeciality.getText().toString());
-                            editor.putString("userCollege",mTvStuFaculty.getText().toString());
-                            editor.putString("userClass",mTvStuClass.getText().toString());
-                            editor.putString("userClassNum",mTvStuClassNum.getText().toString());
-                            editor.putString("userInstructor",mTvInstructor.getText().toString());
-                            editor.putString("userLeaveObjId",leaveRequestObjId);
+                            SharedPreferences.Editor editor = getSharedPreferences("user", MODE_PRIVATE).edit();
+                            editor.putString("userName", mTvUserName.getText().toString());
+                            editor.putString("userMajor", mTvStuSpeciality.getText().toString());
+                            editor.putString("userCollege", mTvStuFaculty.getText().toString());
+                            editor.putString("userClass", mTvStuClass.getText().toString());
+                            editor.putString("userClassNum", mTvStuClassNum.getText().toString());
+                            editor.putString("userInstructor", mTvInstructor.getText().toString());
+                            editor.putString("userLeaveObjId", leaveRequestObjId);
                             editor.apply();
+                            createVariousDataBean(user.getObjectId());
                             Toast.makeText(PersonalInfoActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
                             finish();
                         } else {
@@ -180,6 +185,46 @@ public class PersonalInfoActivity extends AppCompatActivity {
             default:
                 break;
         }
+    }
+
+    /**
+     * 初始化用户的多种数据表
+     * @param objectId 用户Id
+     */
+    private void createVariousDataBean(final String objectId) {
+
+        BmobQuery<VariousDataBean> query = new BmobQuery<>();
+        query.addWhereEqualTo("userObjectId", objectId);
+        query.findObjects(new FindListener<VariousDataBean>() {
+            @Override
+            public void done(List<VariousDataBean> list, BmobException e) {
+                if (e == null) {
+                    if (list == null || list.isEmpty()) {
+                        //说明未创建数据表
+                        VariousDataBean variousDataBean = new VariousDataBean();
+                        variousDataBean.setUserObjectId(objectId);
+                        variousDataBean.save(new SaveListener<String>() {
+                            @Override
+                            public void done(String s, BmobException e) {
+                                if (e == null) {
+                                    return;
+                                } else {
+                                    Toast.makeText(PersonalInfoActivity.this, "error1112", Toast.LENGTH_LONG).show();
+                                    Log.i("报错1112", e.getMessage());
+                                }
+                            }
+                        });
+                    } else {
+                        //说明已经创建
+                        return;
+                    }
+                } else {
+                    Toast.makeText(PersonalInfoActivity.this, "error1111", Toast.LENGTH_LONG).show();
+                    Log.i("报错11111", e.getMessage());
+                }
+            }
+        });
+
     }
 
     /**
@@ -221,7 +266,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
     /**
      * 如果为空，就直接先上传一下，避免出现多次建表的情况
      */
-    private void uploadLeaveObjIdInfo(){
+    private void uploadLeaveObjIdInfo() {
         UserBean user = new UserBean();
         user.setLeaveRequestObjId(leaveRequestObjId);
         user.setIsInstructor(mIsInstructor);
@@ -229,10 +274,10 @@ public class PersonalInfoActivity extends AppCompatActivity {
         user.update(objectId, new UpdateListener() {
             @Override
             public void done(BmobException e) {
-                if (e == null){
-                    Log.d("TAG","success");
+                if (e == null) {
+                    Log.d("TAG", "success");
                 } else {
-                    Log.d("TAG","error"+e.getMessage());
+                    Log.d("TAG", "error" + e.getMessage());
                 }
             }
         });
@@ -242,10 +287,10 @@ public class PersonalInfoActivity extends AppCompatActivity {
         leaveRequest.update(leaveRequestObjId, new UpdateListener() {
             @Override
             public void done(BmobException e) {
-                if (e == null){
+                if (e == null) {
 
-                }else{
-                    Log.d("TAG",e.getMessage());
+                } else {
+                    Log.d("TAG", e.getMessage());
                 }
             }
         });
