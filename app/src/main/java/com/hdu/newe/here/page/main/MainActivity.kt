@@ -23,6 +23,7 @@ import com.hdu.newe.here.utils.UIUtils
 import com.jonnyhsia.uilib.widget.BottomNavigation
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_lbs.*
+import java.lang.Boolean.getBoolean
 import java.util.*
 
 
@@ -125,6 +126,7 @@ class MainActivity : AppCompatActivity() {
         return when (pos) {
             0 -> LBSFragment()
 //            1 -> VariousDataFragmentT().also { VariousDataPresenterT(it) }
+
             1 -> VariousDataFragment().also { VariousDataPresenter(it) }
             3 -> InboxFragment()
 //            4 -> ProfileFragment().also { ProfilePresenter(it) }

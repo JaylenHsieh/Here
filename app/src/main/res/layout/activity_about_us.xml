@@ -6,15 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".page.main.profile.AboutUsActivity">
 
-    <TextView
+    <ImageView
+        android:id="@+id/img_newe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="这里是新维工作室"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        android:layout_gravity="center"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="88dp"
+        android:layout_marginEnd="20dp"
+        android:src="@mipmap/newe_ads"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
 
 </android.support.constraint.ConstraintLayout>

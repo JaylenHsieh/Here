@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 
 import com.hdu.newe.here.R
 import kotlinx.android.synthetic.main.fragment_inbox.*
@@ -29,7 +30,7 @@ class InboxFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        img_newe.setOnClickListener{ img_newe.visibility = View.INVISIBLE}
+        layout_homework.setOnClickListener { Toast.makeText(context,"布置作业功能开发中", Toast.LENGTH_LONG).show() }
     }
 
 
