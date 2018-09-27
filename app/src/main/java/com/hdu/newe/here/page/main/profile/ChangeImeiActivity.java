@@ -62,6 +62,18 @@ public class ChangeImeiActivity extends AppCompatActivity {
         setContentView(R.layout.activity_change_imei);
         ButterKnife.bind(this);
         objectId = getSharedPreferences("user", Context.MODE_PRIVATE).getString("objId", "");
+        BmobQuery<UserBean> query = new BmobQuery<>();
+        query.getObject(objectId, new QueryListener<UserBean>() {
+            @Override
+            public void done(UserBean userBean, BmobException e) {
+                if (e == null){
+                    setUser(userBean);
+                }else {
+                    Toast.makeText(ChangeImeiActivity.this,"error011",Toast.LENGTH_LONG).show();
+                    Log.i("报错011",e.getMessage());
+                }
+            }
+        });
     }
 
     @Override
@@ -97,10 +109,10 @@ public class ChangeImeiActivity extends AppCompatActivity {
                 break;
             case R.id.tv_submit:
                 // TODO 点击提交会闪退
-                if (mCalendar.getTimeInMillis() > mImeiTimeLimit) {
+//                if (mCalendar.getTimeInMillis() > mImeiTimeLimit) {
                     user.setImei(mEditImei.getText().toString());
                     user.setImeiTimeLimit(mCalendar.getTimeInMillis());
-                    user.update(objectId, new UpdateListener() {
+                    user.update(new UpdateListener() {
                         @Override
                         public void done(BmobException e) {
                             if (e == null) {
@@ -111,10 +123,10 @@ public class ChangeImeiActivity extends AppCompatActivity {
                             }
                         }
                     });
-                } else {
-                    long timeGap = (mImeiTimeLimit - mCalendar.getTimeInMillis()) / 1000 / 60 / 60 / 24;
-                    Toast.makeText(this, "你距离下次更换IMEI还有" + timeGap + "天", Toast.LENGTH_SHORT).show();
-                }
+//                } else {
+//                    long timeGap = (mImeiTimeLimit - mCalendar.getTimeInMillis()) / 1000 / 60 / 60 / 24;
+//                    Toast.makeText(this, "你距离下次更换IMEI还有" + timeGap + "天", Toast.LENGTH_SHORT).show();
+//                }
 
             default:
                 break;
