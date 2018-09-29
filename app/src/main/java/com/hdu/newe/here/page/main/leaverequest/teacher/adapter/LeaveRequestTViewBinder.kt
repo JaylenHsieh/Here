@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import com.hdu.newe.here.R
 import com.hdu.newe.here.biz.variousdata.student.bean.LeaveRequestBean
@@ -33,6 +34,7 @@ class LeaveRequestTViewBinder(
             holder.tvLeaveReason.text = leaveRequestReason[leaveRequestReason.size - 1]
             holder.tvLeaveStartTime.text = leaveRequestTime[leaveRequestTime.size - 2]
             holder.tvLeaveFinishTime.text = leaveRequestTime[leaveRequestTime.size - 1]
+            holder.tvLeaveRequestState.text = leaveRequestState[leaveRequestState.size - 1]
         }
 
         // item的点击事件
@@ -58,7 +60,10 @@ class LeaveRequestTViewBinder(
         val tvLeaveReason: TextView = itemView.findViewById(R.id.tvRequestContent)
         val tvLeaveStartTime: TextView = itemView.findViewById(R.id.tvStartTime)
         val tvLeaveFinishTime: TextView = itemView.findViewById(R.id.tvFinishTime)
+        val tvLeaveRequestState: TextView = itemView.findViewById(R.id.leaveRequestState)
         val btnRefuse: TextView = itemView.findViewById(R.id.btnRefuse)
         val btnPermit: TextView = itemView.findViewById(R.id.btnPermit)
+        val imgRefuse: ImageView = itemView.findViewById(R.id.imgRefuse)
+        val imgAccept: ImageView = itemView.findViewById(R.id.imgAccept)
     }
 }

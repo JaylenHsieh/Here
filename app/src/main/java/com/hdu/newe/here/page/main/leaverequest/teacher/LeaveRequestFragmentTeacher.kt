@@ -20,6 +20,7 @@ import com.hdu.newe.here.utils.bmobQueryById
 import com.hdu.newe.here.utils.notifyItemChanged
 import com.hdu.newe.here.utils.query
 import com.hdu.newe.here.utils.update
+import kotlinx.android.synthetic.main.item_leave_request_check.*
 import me.drakeet.multitype.MultiTypeAdapter
 import me.drakeet.multitype.register
 import java.util.*
@@ -39,6 +40,13 @@ class LeaveRequestFragmentTeacher : Fragment() {
                     Toast.makeText(context, leaveRequestData[it].userName, Toast.LENGTH_SHORT).show()
                 },
                 acceptOrRefuseClick = { accept, pos ->
+                    if (accept){
+                        imgAccept.visibility = View.VISIBLE
+                        imgRefuse.visibility = View.GONE
+                    } else{
+                        imgRefuse.visibility = View.VISIBLE
+                        imgAccept.visibility = View.GONE
+                    }
                     val requestId = leaveRequestData[pos].objectId
                     // 请求查询对应 id 的 LeaveRequestBean
                     bmobQueryById<LeaveRequestBean>(requestId) {
@@ -76,11 +84,15 @@ class LeaveRequestFragmentTeacher : Fragment() {
     }
 
     private fun fetchList() {
-        BmobQuery<LeaveRequestBean>().query {
-            leaveRequestData = it
-            if (it.isEmpty()) {
+        BmobQuery<LeaveRequestBean>().query { requests ->
+            if (requests.isEmpty()) {
                 return@query
             }
+            val modifiedRequests = requests
+                    .filter {
+                        it.leaveRequestReason.lastOrNull()?.isNotEmpty() == true
+                    }
+            leaveRequestData = modifiedRequests
             leaveRequestTAdapter.notifyItemChanged(leaveRequestData)
         }
     }
