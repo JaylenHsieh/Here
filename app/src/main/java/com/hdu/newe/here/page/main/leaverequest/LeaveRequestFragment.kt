@@ -61,7 +61,9 @@ class LeaveRequestFragment : Fragment(), View.OnClickListener {
 
 
         val bmobQuery = BmobQuery<LeaveRequestBean>()
-        val leaveRequestObjId = activity?.getSharedPreferences("user", Context.MODE_PRIVATE)?.getString(PersonalInfoActivity.LEAVE_REQUEST_OBJ_ID, "")
+        val leaveRequestObjId = activity?.
+                getSharedPreferences("user", Context.MODE_PRIVATE)?.
+                getString(PersonalInfoActivity.LEAVE_REQUEST_OBJ_ID, "")
         bmobQuery.getObject(leaveRequestObjId, object : QueryListener<LeaveRequestBean>() {
             override fun done(leaveRequest: LeaveRequestBean, e: BmobException?) {
                 if (e == null) {
