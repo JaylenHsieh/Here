@@ -44,7 +44,11 @@ class LoginFragment : BaseFragment<LoginContract.Presenter>(),
         render()
         if (ContextCompat.checkSelfPermission(context!!, android.Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(
-                    arrayOf(android.Manifest.permission.READ_PHONE_STATE),
+                    arrayOf(android.Manifest.permission.READ_PHONE_STATE,
+                            android.Manifest.permission.ACCESS_FINE_LOCATION,
+                            android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                            android.Manifest.permission.CAMERA),
                     PERMISSION_REQUEST_READ_PHONE_STATE)
         } else {
             tvIMEI.text = getImei()
@@ -62,7 +66,7 @@ class LoginFragment : BaseFragment<LoginContract.Presenter>(),
         }
 
         checkIsRead.setOnCheckedChangeListener { _, isChecked ->
-                btnLogin.isEnabled = isChecked
+            btnLogin.isEnabled = isChecked
         }
 
 
@@ -77,13 +81,13 @@ class LoginFragment : BaseFragment<LoginContract.Presenter>(),
     override fun render() {
 
         btnLogin.setOnClickListener {
-            Toast.makeText(context,"请稍等...",Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "请稍等...", Toast.LENGTH_LONG).show()
             mPresenter.clickLogin(edUserNumber.takeString(), tvIMEI.takeString(), checkStatus.isChecked, checkStatusIsInstructor.isChecked)
         }
     }
 
-    @AfterPermissionGranted(PERMISSION_REQUEST)
-    fun requestPermission() {
+
+    private fun requestPermission() {
         val perms = arrayOf(
                 // 需要申请的权限，虽然有点多，但是都是必要权限，我们不是流氓软件
                 android.Manifest.permission.READ_PHONE_STATE,
@@ -127,7 +131,7 @@ class LoginFragment : BaseFragment<LoginContract.Presenter>(),
     }
 
     override fun loginSucceed() {
-        startActivity(Intent(context,MainActivity::class.java))
+        startActivity(Intent(context, MainActivity::class.java))
         activity?.finish()
     }
 
