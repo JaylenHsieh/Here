@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.hdu.newe.here.R;
 import com.hdu.newe.here.biz.profile.bean.ClassDataBean;
 import com.hdu.newe.here.biz.user.entity.UserBean;
+import com.hdu.newe.here.biz.variousdata.student.bean.VariousDataBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -140,11 +141,15 @@ public class JoinSubjectFragment extends Fragment {
         });
     }
 
+    /**
+     * 加入班级的方法
+     * @param classDataBean 被加入班级的数据Bean
+     */
     private void joinSubject(final ClassDataBean classDataBean) {
 
         progressDialog.show();
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("user", Context.MODE_PRIVATE);
-        String objId = sharedPreferences.getString("objId", "错误");
+        final String objId = sharedPreferences.getString("objId", "错误");
         if (objId.equals("错误")) {
             progressDialog.dismiss();
             Toast.makeText(getActivity(), "加入失败:error303\n", Toast.LENGTH_LONG).show();
@@ -176,6 +181,7 @@ public class JoinSubjectFragment extends Fragment {
                         Toast.makeText(getActivity(), "加入成功", Toast.LENGTH_LONG).show();
                         NewSubjectActivity newSubjectActivity = (NewSubjectActivity) getActivity();
                         newSubjectActivity.setSubjectName(classDataBean.getSubjectName());
+                        addVariousData(classDataBean,objId);
                         newSubjectActivity.lunchResultFragment();
                         progressDialog.dismiss();
                     }
@@ -206,6 +212,7 @@ public class JoinSubjectFragment extends Fragment {
                                     //加入成功
                                     NewSubjectActivity newSubjectActivity = (NewSubjectActivity) getActivity();
                                     newSubjectActivity.setSubjectName(classDataBean.getSubjectName());
+                                    addVariousData(classDataBean,objId);
                                     newSubjectActivity.lunchResultFragment();
                                     progressDialog.dismiss();
                                 }
@@ -220,5 +227,48 @@ public class JoinSubjectFragment extends Fragment {
                 }
             }
         });
+    }
+
+    /**
+     * 加入新课程时，将新课程的数据添加到用户VariousDataBean数据表中
+     * @param classDataBean 新加入的课程班数据
+     * @param objId 用户UserBean中的Id
+     */
+    private void addVariousData(final ClassDataBean classDataBean, String objId) {
+
+        BmobQuery<VariousDataBean> query = new BmobQuery<>();
+        query.addWhereEqualTo("userObjectId",objId);
+        query.findObjects(new FindListener<VariousDataBean>() {
+            @Override
+            public void done(List<VariousDataBean> list, BmobException e) {
+                if (e == null){
+                    VariousDataBean variousDataBean = list.get(0);
+                    List<String> list1 = variousDataBean.getSubjectName();
+                    if (list1 != null && !list1.isEmpty()){
+                        list1.add(classDataBean.getSubjectName());
+                        variousDataBean.setSubjectName(list1);
+                        List<Number> list2 = variousDataBean.getAttendanceRate();
+                        list2.add(100);
+                        variousDataBean.setAttendanceRate(list2);
+                        variousDataBean.update(new UpdateListener() {
+                            @Override
+                            public void done(BmobException e) {
+                                if (e == null){
+                                    Log.i("无报错","成功添加新课程数据到VariousDataBean");
+                                    return;
+                                }else {
+                                    Toast.makeText(getActivity(),"error9654",Toast.LENGTH_LONG).show();
+                                    Log.i("报错9654",e.getMessage());
+                                }
+                            }
+                        });
+                    }
+                }else {
+                    Toast.makeText(getActivity(),"error14512",Toast.LENGTH_LONG).show();
+                    Log.i("报错14512",e.getMessage());
+                }
+            }
+        });
+
     }
 }

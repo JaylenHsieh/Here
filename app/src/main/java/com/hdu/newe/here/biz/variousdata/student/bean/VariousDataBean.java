@@ -44,6 +44,16 @@ public class VariousDataBean extends BmobObject {
     }
 
     /**
+     * 计算总出勤率方法
+     * @param absentTime 缺勤次数
+     * @param appearTime 出勤次数
+     * @return 返回总出勤率
+     */
+    public static Number caculateAllAttendance(int absentTime,int appearTime){
+        return absentTime/(absentTime+appearTime);
+    }
+
+    /**
      * 用户在UserBean中的objectId
      */
     private String userObjectId;
@@ -89,6 +99,19 @@ public class VariousDataBean extends BmobObject {
      * 旷课发生时的考勤次数 与旷课课程列表一一对应
      */
     private List<Number> absentTimeList;
+
+    /**
+     * 参加的考勤次数
+     */
+    private int appearTime;
+
+    public int getAppearTime() {
+        return appearTime;
+    }
+
+    public void setAppearTime(int appearTime) {
+        this.appearTime = appearTime;
+    }
 
     public List<String> getOldIMEI() {
         return OldIMEI;
