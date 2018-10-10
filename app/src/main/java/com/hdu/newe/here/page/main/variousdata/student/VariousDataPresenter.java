@@ -34,8 +34,13 @@ public class VariousDataPresenter extends BasePresenterImpl implements VariousDa
         variousDataInterface.getAttendanceData(new VariousDataInterface.OnVariousDataCallback() {
 
             @Override
-            public void onGetSuccess(VariousDataBean variousDataBean, LeaveRequestBean leaveRequestBean) {
-                view.loadVariousData(variousDataBean, leaveRequestBean);
+            public void onGetSuccess(VariousDataBean variousDataBean) {
+                view.loadVariousData(variousDataBean);
+            }
+
+            @Override
+            public void onGetSuccess(LeaveRequestBean leaveRequestBean) {
+                view.loadLeaverequestData(leaveRequestBean);
             }
 
             @Override

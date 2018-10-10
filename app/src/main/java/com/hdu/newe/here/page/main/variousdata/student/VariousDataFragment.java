@@ -54,6 +54,7 @@ public class VariousDataFragment extends BaseFragment<VariousDataContract.Presen
     private VariousDataContract.Presenter presenter;
 
     private int loadingFlag = 0;
+    private int emptyFlag = 0;
     private VariousDataBean variousDataBean = null;
     private LeaveRequestBean leaveRequestBean = null;
 
@@ -125,31 +126,20 @@ public class VariousDataFragment extends BaseFragment<VariousDataContract.Presen
         unbinder.unbind();
     }
 
-    /**
-     * 加载各种数据的V层逻辑
-     *
-     * @param variousDataBean 数据bean
-     */
     @Override
-    public void loadVariousData(VariousDataBean variousDataBean, LeaveRequestBean leaveRequestBean) {
+    public void loadVariousData(VariousDataBean variousDataBean) {
 
-        if (variousDataBean != null) {
-            if (attendanceRateFragment == null) {
-                attendanceRateFragment = AttendanceRateFragment.newInstance();
-            }
-            if (buffDataFragment == null) {
-                buffDataFragment = BuffDataFragment.newInstance();
-            }
-            attendanceRateFragment.loadAttendanceRate(variousDataBean.getSubjectName(), variousDataBean.getAttendanceRate());
-            buffDataFragment.loadBuffData(variousDataBean.getBuffType(), variousDataBean.getAllAttendanceRate());
-            this.variousDataBean = variousDataBean;
-            loadingFlag++;
+        if (attendanceRateFragment == null) {
+            attendanceRateFragment = AttendanceRateFragment.newInstance();
         }
-        if (leaveRequestBean != null) {
-            this.leaveRequestBean = leaveRequestBean;
-            loadingFlag++;
+        if (buffDataFragment == null) {
+            buffDataFragment = BuffDataFragment.newInstance();
         }
-        if (loadingFlag == 2){
+        attendanceRateFragment.loadAttendanceRate(variousDataBean.getSubjectName(), variousDataBean.getAttendanceRate());
+        buffDataFragment.loadBuffData(variousDataBean.getBuffType(), variousDataBean.getAllAttendanceRate());
+        this.variousDataBean = variousDataBean;
+        loadingFlag++;
+        if (loadingFlag == 2) {
             if (historyDataFragment == null) {
                 historyDataFragment = HistoryDataFragment.newInstance();
             }
@@ -158,12 +148,27 @@ public class VariousDataFragment extends BaseFragment<VariousDataContract.Presen
             this.variousDataBean = null;
             this.leaveRequestBean = null;
         }
-
     }
 
     @Override
     public void loadHistoryData(String objectId) {
         presenter.getVariousData();
+    }
+
+    @Override
+    public void loadLeaverequestData(LeaveRequestBean leaveRequestBean) {
+
+        this.leaveRequestBean = leaveRequestBean;
+        loadingFlag++;
+        if (loadingFlag == 2) {
+            if (historyDataFragment == null) {
+                historyDataFragment = HistoryDataFragment.newInstance();
+            }
+            historyDataFragment.loadHistoryData(getExpandData(this.variousDataBean, this.leaveRequestBean));
+            this.loadingFlag = 0;
+            this.variousDataBean = null;
+            this.leaveRequestBean = null;
+        }
     }
 
     /**
@@ -196,14 +201,46 @@ public class VariousDataFragment extends BaseFragment<VariousDataContract.Presen
         expandDataWarning.setID("1");
         expandDataChange.setID("2");
 
-        expandDataLeaveRequest.setChildNum(leaveRequestBean.getLeaveRequestReason().size());
-        expandDataWarning.setChildNum(variousDataBean.getWarningContent().size());
-        expandDataChange.setChildNum(variousDataBean.getNewPhone().size());
+        List<String> list;
+        list = leaveRequestBean.getLeaveRequestReason();
+        if (list == null || list.isEmpty()) {
+            expandDataLeaveRequest.setChildNum(0);
+        } else {
+            expandDataLeaveRequest.setChildNum(leaveRequestBean.getLeaveRequestReason().size() - 2);
+        }
 
-        expandDataLeaveRequest.setLeaveRequestReason(leaveRequestBean.getLeaveRequestReason());
-        expandDataLeaveRequest.setLeaveRequestState(leaveRequestBean.getLeaveRequestState());
-        expandDataLeaveRequest.setLeaveRequestTime(leaveRequestBean.getLeaveRequestTime());
-        expandDataLeaveRequest.setLeaveRequestType(leaveRequestBean.getLeaveRequestType());
+        list = variousDataBean.getWarningContent();
+        if (list == null || list.isEmpty()) {
+            expandDataWarning.setChildNum(0);
+        } else {
+            expandDataWarning.setChildNum(variousDataBean.getWarningContent().size() - 2);
+        }
+
+        list = variousDataBean.getNewPhone();
+        if (list == null || list.isEmpty()) {
+            expandDataChange.setChildNum(0);
+        } else {
+            expandDataChange.setChildNum(variousDataBean.getNewPhone().size() - 2);
+        }
+
+        if (leaveRequestBean.getLeaveRequestReason() != null && !leaveRequestBean.getLeaveRequestReason().isEmpty()) {
+
+            list = leaveRequestBean.getLeaveRequestReason();
+            list.remove(0);
+            list.remove(0);
+            expandDataLeaveRequest.setLeaveRequestReason(list);
+
+            list = leaveRequestBean.getLeaveRequestState();
+            list.remove(0);
+            list.remove(0);
+            expandDataLeaveRequest.setLeaveRequestState(list);
+
+            list = leaveRequestBean.getLeaveRequestTime();
+            list.remove(0);
+            list.remove(0);
+            expandDataLeaveRequest.setLeaveRequestTime(list);
+//            expandDataLeaveRequest.setLeaveRequestType(leaveRequestBean.getLeaveRequestType());
+        }
 
         expandDataWarning.setChildBean(variousDataBean);
         expandDataChange.setChildBean(variousDataBean);

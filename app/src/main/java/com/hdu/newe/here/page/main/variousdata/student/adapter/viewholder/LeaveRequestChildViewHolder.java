@@ -38,7 +38,7 @@ public class LeaveRequestChildViewHolder extends BaseViewHolder {
         leaveRequestReason.setText(expandDataBean.getLeaveRequestReason().get(0));
         leaveRequestState.setText(expandDataBean.getLeaveRequestState().get(0));
         leaveRequestTime.setText(expandDataBean.getLeaveRequestTime().get(0));
-        leaveRequestType.setText(expandDataBean.getLeaveRequestType().get(0));
+//        leaveRequestType.setText(expandDataBean.getLeaveRequestType().get(0));
 
     }
 }

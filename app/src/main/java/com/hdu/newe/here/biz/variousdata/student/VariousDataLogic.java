@@ -24,6 +24,7 @@ public class VariousDataLogic extends BaseLogic implements VariousDataInterface 
 
     private static VariousDataLogic INSTANCE;
     private String objectId;
+    private String leaveObjId;
 
     /**
      * 获取数据的Model层数据逻辑
@@ -32,9 +33,10 @@ public class VariousDataLogic extends BaseLogic implements VariousDataInterface 
      */
     @Override
     public void getAttendanceData(final OnVariousDataCallback onVariousDataCallback) {
-        if (objectId == null){
+        if (objectId == null || leaveObjId == null) {
             SharedPreferences sharedPreferences = getContext().getSharedPreferences("user", Context.MODE_PRIVATE);
-            objectId = sharedPreferences.getString("objId",null);
+            objectId = sharedPreferences.getString("objId", null);
+            leaveObjId = sharedPreferences.getString("userLeaveObjId", null);
         }
         onVariousDataCallback.onStartGetData();
         BmobQuery<VariousDataBean> query = new BmobQuery<>();
@@ -43,7 +45,11 @@ public class VariousDataLogic extends BaseLogic implements VariousDataInterface 
             @Override
             public void done(List<VariousDataBean> list, BmobException e) {
                 if (e == null) {
-                    onVariousDataCallback.onGetSuccess(list.get(0), null);
+                    if (list == null || list.isEmpty()) {
+                        onVariousDataCallback.onGetFailed("无出勤率数据");
+                    } else {
+                        onVariousDataCallback.onGetSuccess(list.get(0));
+                    }
                 } else {
                     onVariousDataCallback.onGetFailed(e.getMessage());
                 }
@@ -56,10 +62,10 @@ public class VariousDataLogic extends BaseLogic implements VariousDataInterface 
             @Override
             public void done(List<LeaveRequestBean> list, BmobException e) {
                 if (e == null) {
-                    if (list.isEmpty() || list == null) {
-                        onVariousDataCallback.onGetFailed("无数据");
+                    if (list == null || list.isEmpty()) {
+                        onVariousDataCallback.onGetFailed("无请假数据");
                     } else {
-                        onVariousDataCallback.onGetSuccess(null, list.get(0));
+                        onVariousDataCallback.onGetSuccess(list.get(0));
                     }
                 } else {
                     onVariousDataCallback.onGetFailed(e.getMessage());

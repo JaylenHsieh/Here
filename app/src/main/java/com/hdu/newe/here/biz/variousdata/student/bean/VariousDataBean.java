@@ -27,6 +27,23 @@ public class VariousDataBean extends BmobObject {
     public static final int BUFF_TYPE_SKIP_CLASS = 333;
 
     /**
+     * 获取标识类型
+     * @param allAttendanceRate 总出勤率
+     * @return 返回标识类型
+     */
+    public static int getBuffType(int allAttendanceRate){
+        if (allAttendanceRate >= 95){
+            return BUFF_TYPE_STUDY_HARD;
+        }else {
+            if (allAttendanceRate >= 75){
+                return BUFF_TYPE_IRRESOLUTION;
+            }else {
+                return BUFF_TYPE_SKIP_CLASS;
+            }
+        }
+    }
+
+    /**
      * 用户在UserBean中的objectId
      */
     private String userObjectId;

@@ -203,6 +203,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
                         //说明未创建数据表
                         VariousDataBean variousDataBean = new VariousDataBean();
                         variousDataBean.setUserObjectId(objectId);
+                        variousDataBean.setAllAttendanceRate(100);
+                        variousDataBean.setBuffType(VariousDataBean.getBuffType(100));
                         variousDataBean.save(new SaveListener<String>() {
                             @Override
                             public void done(String s, BmobException e) {
