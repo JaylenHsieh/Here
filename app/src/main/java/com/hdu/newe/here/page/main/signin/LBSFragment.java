@@ -377,7 +377,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                         }
                     });
                     tvClassName2.setVisibility(View.VISIBLE);
-                    tvClassName2.setText("课程名称：" + classDataBean.getSubjectName());
+                    tvClassName2.setText("课程名称：" + classDataBean.getSubjectName() + "\n" + classDataBean.getSubjectCode());
                     String placeCode = classDataBean.getPlaceCode();
                     int building = Integer.valueOf(placeCode.substring(0, 2));
                     int classroom = Integer.valueOf(placeCode.substring(2));
@@ -580,7 +580,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                                 if (e == null) {
                                     Toast.makeText(getActivity(), "开始考勤！", Toast.LENGTH_LONG).show();
                                     initCheckingMsg(classDataBean.getSubjectName(),
-                                            classDataBean.getClassMember().size(), s);
+                                            classDataBean.getClassMember().size(), s,classDataBean.getSubjectCode());
                                 } else {
                                     Toast.makeText(getActivity(), "error777:" + e.getMessage(), Toast.LENGTH_LONG).show();
                                     Log.i("报错", e.getMessage());
@@ -618,7 +618,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                         if (e == null) {
                             Toast.makeText(getActivity(), "开始考勤！", Toast.LENGTH_LONG).show();
                             initCheckingMsg(classDataBean.getSubjectName(),
-                                    classDataBean.getClassMember().size(), s);
+                                    classDataBean.getClassMember().size(), s,classDataBean.getSubjectCode());
                         } else {
                             Toast.makeText(getActivity(), "error777:" + e.getMessage(), Toast.LENGTH_LONG).show();
                             progressDialog.dismiss();
@@ -642,8 +642,8 @@ public class LBSFragment extends Fragment implements SensorEventListener {
      * @param memberNum   班级人数
      * @param objectId    考勤表中数据的ObjectId
      */
-    private void initCheckingMsg(String subjectName, int memberNum, String objectId) {
-        tvMessageTitle.setText(subjectName);
+    private void initCheckingMsg(String subjectName, int memberNum, String objectId,String subjectCode) {
+        tvMessageTitle.setText(subjectName+ "\n" + subjectCode);
         tvSigninAllPeople.setText(String.valueOf(memberNum));
         tvSigninAttendPeople.setText("0");
         tvSigninAttendance.setText("00.00%");
