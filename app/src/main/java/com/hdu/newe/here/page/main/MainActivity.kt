@@ -17,6 +17,8 @@ import com.hdu.newe.here.page.main.login.LoginActivity
 import com.hdu.newe.here.page.main.profile.PersonalInfoActivity
 import com.hdu.newe.here.page.main.profile.ProfileFragment
 import com.hdu.newe.here.page.main.signin.LBSFragment
+import com.hdu.newe.here.page.main.variousdata.student.VariousDataFragment
+import com.hdu.newe.here.page.main.variousdata.student.VariousDataPresenter
 import com.hdu.newe.here.page.main.variousdata.teacher.VariousDataFragmentT
 import com.hdu.newe.here.page.main.variousdata.teacher.VariousDataPresenterT
 import com.hdu.newe.here.utils.UIUtils
@@ -58,11 +60,11 @@ class MainActivity : AppCompatActivity() {
                 }
                 .addPrimarySelectListener {
                     val leaveRequestObjId = getSharedPreferences("user", Context.MODE_PRIVATE)?.getString(PersonalInfoActivity.LEAVE_REQUEST_OBJ_ID, "")
-                    val isTeacher = getSharedPreferences("user",Context.MODE_PRIVATE).getBoolean("isTeacher",false)
+                    val isTeacher = getSharedPreferences("user", Context.MODE_PRIVATE).getBoolean("isTeacher", false)
                     if ("".equals(leaveRequestObjId)) {
-                        Toast.makeText(this@MainActivity,"请前往个人信息页面编辑个人信息后才可以请假",Toast.LENGTH_LONG).show()
-                    } else if (isTeacher){
-                        val intent = Intent(this@MainActivity,LeaveRequestActivityTeacher::class.java)
+                        Toast.makeText(this@MainActivity, "请前往个人信息页面编辑个人信息后才可以请假", Toast.LENGTH_LONG).show()
+                    } else if (isTeacher) {
+                        val intent = Intent(this@MainActivity, LeaveRequestActivityTeacher::class.java)
                         startActivity(intent)
                     } else {
                         val intent = Intent(this@MainActivity, LeaveRequestActivity::class.java)
@@ -101,7 +103,7 @@ class MainActivity : AppCompatActivity() {
         if (currentPos == 0) {
             val fragment = findOrGenerateFragment(0) as LBSFragment
             if (fragment.group2_subject_message.visibility == View.VISIBLE) {
-                fragment.hideAndShowGroup(2,1)
+                fragment.hideAndShowGroup(2, 1)
                 return false
             }
         }
@@ -122,10 +124,19 @@ class MainActivity : AppCompatActivity() {
          * 第四个 Fragment 是个人中心
          * 中间那个按钮是创建请假条的 Activity
          */
+        val isTeacher = getSharedPreferences("user", Context.MODE_PRIVATE)
+                .getBoolean("isTeacher", false)
         return when (pos) {
             0 -> LBSFragment()
-            1 -> VariousDataFragmentT().also { VariousDataPresenterT(it) }
-//            1 -> VariousDataFragment().also { VariousDataPresenter(it) }
+            /**
+             * 如果是老师则加载老师的界面
+             * 如果是学生就加载学生的界面
+             */
+            1 -> if (isTeacher) {
+                VariousDataFragmentT().also { VariousDataPresenterT(it) }
+            }else{
+                VariousDataFragment().also { VariousDataPresenter(it) }
+            }
             3 -> InboxFragment()
 //            4 -> ProfileFragment().also { ProfilePresenter(it) }
             4 -> ProfileFragment()
