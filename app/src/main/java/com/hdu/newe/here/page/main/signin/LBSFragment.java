@@ -47,6 +47,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -580,7 +582,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                                 if (e == null) {
                                     Toast.makeText(getActivity(), "开始考勤！", Toast.LENGTH_LONG).show();
                                     initCheckingMsg(classDataBean.getSubjectName(),
-                                            classDataBean.getClassMember().size(), s,classDataBean.getSubjectCode());
+                                            classDataBean.getClassMember().size(), s, classDataBean.getSubjectCode());
                                 } else {
                                     Toast.makeText(getActivity(), "error777:" + e.getMessage(), Toast.LENGTH_LONG).show();
                                     Log.i("报错", e.getMessage());
@@ -618,7 +620,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                         if (e == null) {
                             Toast.makeText(getActivity(), "开始考勤！", Toast.LENGTH_LONG).show();
                             initCheckingMsg(classDataBean.getSubjectName(),
-                                    classDataBean.getClassMember().size(), s,classDataBean.getSubjectCode());
+                                    classDataBean.getClassMember().size(), s, classDataBean.getSubjectCode());
                         } else {
                             Toast.makeText(getActivity(), "error777:" + e.getMessage(), Toast.LENGTH_LONG).show();
                             progressDialog.dismiss();
@@ -642,8 +644,8 @@ public class LBSFragment extends Fragment implements SensorEventListener {
      * @param memberNum   班级人数
      * @param objectId    考勤表中数据的ObjectId
      */
-    private void initCheckingMsg(String subjectName, int memberNum, String objectId,String subjectCode) {
-        tvMessageTitle.setText(subjectName+ "\n" + subjectCode);
+    private void initCheckingMsg(String subjectName, int memberNum, String objectId, String subjectCode) {
+        tvMessageTitle.setText(subjectName + "\n" + subjectCode);
         tvSigninAllPeople.setText(String.valueOf(memberNum));
         tvSigninAttendPeople.setText("0");
         tvSigninAttendance.setText("00.00%");
@@ -740,8 +742,9 @@ public class LBSFragment extends Fragment implements SensorEventListener {
      * 加载未完成考勤的教学班信息 继续考勤
      *
      * @param signInDataBean 未完成考勤的教学班的数据Bean
+     * @param flag 是否显示Toast
      */
-    private void loadUnfinishedCheckingMsg(SignInDataBean signInDataBean) {
+    private void loadUnfinishedCheckingMsg(final SignInDataBean signInDataBean, boolean flag) {
 
         //获取数据加载到Group4中继续上次未完成的考勤
         BmobQuery<ClassDataBean> query = new BmobQuery<>();
@@ -750,7 +753,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
             @Override
             public void done(List<ClassDataBean> list, BmobException e) {
                 if (e == null) {
-                    tvMessageTitle.setText(list.get(0).getSubjectName());
+                    tvMessageTitle.setText(list.get(0).getSubjectName() + "\n" + list.get(0).getSubjectCode());
                 } else {
                     Toast.makeText(getActivity(), "error111:" + e.getMessage(), Toast.LENGTH_LONG).show();
                     Log.i("报错111", e.getMessage());
@@ -771,8 +774,19 @@ public class LBSFragment extends Fragment implements SensorEventListener {
         bindCheckingBtnListener(signInDataBean.getObjectId());
 //        bindDataListener(signInDataBean.getObjectId());
         hideAndShowGroup(1, 4);
-        Toast.makeText(getActivity(), "检测到您之前有未完成的考勤，已为您加载！", Toast.LENGTH_LONG).show();
-        progressDialog.dismiss();
+        if (flag) {
+            Toast.makeText(getActivity(), "检测到您之前有未完成的考勤，已为您加载！", Toast.LENGTH_LONG).show();
+        }
+        if (progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                loadUnfinishedCheckingMsg(signInDataBean,false);
+            }
+        },0,1500);
     }
 
     private void bindCheckingBtnListener(final String objectId) {
@@ -785,12 +799,12 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                 query.getObject(objectId, new QueryListener<SignInDataBean>() {
                     @Override
                     public void done(SignInDataBean signInDataBean, BmobException e) {
-                        if (e == null){
+                        if (e == null) {
                             progressDialog.show();
-                            loadUnfinishedCheckingMsg(signInDataBean);
-                        }else {
-                            Toast.makeText(getActivity(),"error471",Toast.LENGTH_LONG).show();
-                            Log.i("报错471",e.getMessage());
+                            loadUnfinishedCheckingMsg(signInDataBean,false);
+                        } else {
+                            Toast.makeText(getActivity(), "error471", Toast.LENGTH_LONG).show();
+                            Log.i("报错471", e.getMessage());
                             progressDialog.dismiss();
                         }
                     }
@@ -932,7 +946,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                         haveLessonNow();
                     } else {
                         //如果老师之前有未结束的考勤 则先加载未结束的那次考勤
-                        loadUnfinishedCheckingMsg(list.get(0));
+                        loadUnfinishedCheckingMsg(list.get(0),true);
                     }
                 } else {
                     Toast.makeText(getActivity(), "error963\n" + e.getMessage(), Toast.LENGTH_LONG).show();
