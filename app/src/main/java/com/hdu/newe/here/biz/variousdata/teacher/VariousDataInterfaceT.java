@@ -74,6 +74,4 @@ public interface VariousDataInterfaceT {
         void onGetSuccess(List<String> studentList,List<Number> attendanceRateList);
 
     }
-
-
 }

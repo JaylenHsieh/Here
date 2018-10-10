@@ -3,6 +3,7 @@ package com.hdu.newe.here.page.main.variousdata.teacher;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -17,6 +18,7 @@ import com.hdu.newe.here.R;
 import com.hdu.newe.here.biz.signin.bean.SignInDataBean;
 import com.hdu.newe.here.biz.variousdata.teacher.bean.UserBeanForList;
 import com.hdu.newe.here.page.base.BaseFragment;
+import com.hdu.newe.here.page.main.profile.QuestionActivity;
 import com.hdu.newe.here.page.main.variousdata.student.adapter.MyPagerAdapter;
 
 import java.util.ArrayList;
@@ -60,6 +62,7 @@ public class VariousDataFragmentT extends BaseFragment<VariousDataContractT.Pres
     private List<String> titleList;
     private List<String> classList;
     private List<Integer> checkTimes;
+    private List<String> classNameList;
     private MyPagerAdapter myPagerAdapter;
 
     private VariousDataContractT.Presenter presenter;
@@ -84,7 +87,7 @@ public class VariousDataFragmentT extends BaseFragment<VariousDataContractT.Pres
 
         //如果班级列表是空的 那么显示dialog
         if (classList.isEmpty()) {
-            showDialog();
+            showDialog("未检测到您本学期进行辅导员和教学工作，无数据可查看。");
             return;
         }
 
@@ -177,6 +180,9 @@ public class VariousDataFragmentT extends BaseFragment<VariousDataContractT.Pres
                 for (int i = 0; i < checkTimes; i++) {
                     titleList.add("第" + i + "次考勤");
                     fragmentList.add(variousDataOfSubjectFragmentT);
+                }
+                if (checkTimes == 0){
+                    showDialog("该课程暂未发起过考勤，无数据可查看。");
                 }
                 tablayoutVariousDataT.setTabMode(TabLayout.MODE_SCROLLABLE);
                 break;
@@ -323,10 +329,10 @@ public class VariousDataFragmentT extends BaseFragment<VariousDataContractT.Pres
     }
 
     @Override
-    public void showDialog() {
+    public void showDialog(String txt) {
         dialog = new AlertDialog.Builder(getActivity());
         dialog.setTitle("非常抱歉");
-        dialog.setMessage("未检测到您本学期进行辅导员和教学工作，无数据可查看。");
+        dialog.setMessage(txt);
         dialog.setCancelable(false);
         dialog.setPositiveButton("好的", new DialogInterface.OnClickListener() {
             @Override
@@ -337,7 +343,8 @@ public class VariousDataFragmentT extends BaseFragment<VariousDataContractT.Pres
         dialog.setNegativeButton("查看帮助", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                //TODO 后续相应操作
+                Intent intent = new Intent(getActivity(), QuestionActivity.class);
+                startActivity(intent);
             }
         });
         dialog.show();

@@ -36,6 +36,10 @@ public class VariousDataPresenterT extends BasePresenterImpl implements VariousD
 
             @Override
             public void onGetSuccess(List<String> classList, int classCount, List<Integer> checkTimes) {
+                //教师相关班级信息
+                //classList存放了自然班与教学班的班级信息 自然班在前
+                //classCount存放了自然班的班级数量
+                //checkTimes存放了每个教学班的点名次数
                 view.loadClassData(classList, classCount,checkTimes);
             }
 

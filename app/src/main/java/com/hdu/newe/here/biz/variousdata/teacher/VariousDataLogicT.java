@@ -142,7 +142,7 @@ public class VariousDataLogicT extends BaseLogic implements VariousDataInterface
                 if (e == null) {
 
                     //当所带班级列表不为空时，该用户肯定有辅导员身份
-                    if (userBean.getClassList() != null && userBean.getClassList().isEmpty()) {
+                    if (userBean.getClassList() != null && !userBean.getClassList().isEmpty()) {
                         classList = userBean.getClassList();
                     }
 
@@ -177,8 +177,6 @@ public class VariousDataLogicT extends BaseLogic implements VariousDataInterface
                         //若课程列表为空
                         onClassDataCallback.onGetSuccess(classList, classList.size(), checkTimes);
                     }
-
-
                 } else {
                     onClassDataCallback.onGetFailed(e.getMessage());
                 }

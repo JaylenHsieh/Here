@@ -76,7 +76,7 @@ public interface VariousDataContractT {
         /**
          * 显示dialog
          */
-        void showDialog();
+        void showDialog(String txt);
 
     }
 
