@@ -47,8 +47,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -742,7 +740,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
      * 加载未完成考勤的教学班信息 继续考勤
      *
      * @param signInDataBean 未完成考勤的教学班的数据Bean
-     * @param flag 是否显示Toast
+     * @param flag           是否显示Toast
      */
     private void loadUnfinishedCheckingMsg(final SignInDataBean signInDataBean, boolean flag) {
 
@@ -765,9 +763,13 @@ public class LBSFragment extends Fragment implements SensorEventListener {
         int absentNum = signInDataBean.getAbsentStudentList().size();
         tvSigninAllPeople.setText(String.valueOf(memberNum));
         tvSigninAttendPeople.setText(String.valueOf(memberNum - absentNum));
-        double attendance = ((memberNum - absentNum) / memberNum) * 10;
-        DecimalFormat df = new DecimalFormat("#0.00");
-        tvSigninAttendance.setText(String.valueOf(df.format(attendance) + "%"));
+        if (memberNum == absentNum) {
+            tvSigninAttendance.setText("0.00%");
+        } else {
+            double attendance = ((memberNum - absentNum) / memberNum) * 100;
+            DecimalFormat df = new DecimalFormat("#0.00");
+            tvSigninAttendance.setText(String.valueOf(df.format(attendance) + "%"));
+        }
         tvSigninAbsentPeople.setText(String.valueOf(absentNum));
         //TODO 获取请假人数
         tvSigninLeavePeople.setText(null);
@@ -780,13 +782,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
         if (progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                loadUnfinishedCheckingMsg(signInDataBean,false);
-            }
-        },0,1500);
+
     }
 
     private void bindCheckingBtnListener(final String objectId) {
@@ -801,7 +797,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                     public void done(SignInDataBean signInDataBean, BmobException e) {
                         if (e == null) {
                             progressDialog.show();
-                            loadUnfinishedCheckingMsg(signInDataBean,false);
+                            loadUnfinishedCheckingMsg(signInDataBean, false);
                         } else {
                             Toast.makeText(getActivity(), "error471", Toast.LENGTH_LONG).show();
                             Log.i("报错471", e.getMessage());
@@ -946,7 +942,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                         haveLessonNow();
                     } else {
                         //如果老师之前有未结束的考勤 则先加载未结束的那次考勤
-                        loadUnfinishedCheckingMsg(list.get(0),true);
+                        loadUnfinishedCheckingMsg(list.get(0), true);
                     }
                 } else {
                     Toast.makeText(getActivity(), "error963\n" + e.getMessage(), Toast.LENGTH_LONG).show();
