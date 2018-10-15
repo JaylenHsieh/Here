@@ -111,6 +111,25 @@ public class LeaveRequestBean extends BmobObject {
      */
     private List<String> leaveRequestTime;
 
+    private List<String> leaveStartTime;
+    private List<String> leaveFinishTime;
+
+    public List<String> getLeaveStartTime() {
+        return leaveStartTime;
+    }
+
+    public void setLeaveStartTime(List<String> leaveStartTime) {
+        this.leaveStartTime = leaveStartTime;
+    }
+
+    public List<String> getLeaveFinishTime() {
+        return leaveFinishTime;
+    }
+
+    public void setLeaveFinishTime(List<String> leaveFinishTime) {
+        this.leaveFinishTime = leaveFinishTime;
+    }
+
     /**
      * 请假学生列表
      */

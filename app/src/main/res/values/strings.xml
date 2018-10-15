@@ -78,5 +78,6 @@
     <string name="create_subject">创建教学班</string>
     <string name="join_subject_notice">抱歉！您当前无教学班正在上课，无法使用考勤。是否需要加入新的教学班？</string>
     <string name="join_subject">加入教学班</string>
+    <string name="title_activity_leave_request_t2">LeaveRequestActivityT2</string>
 
 </resources>

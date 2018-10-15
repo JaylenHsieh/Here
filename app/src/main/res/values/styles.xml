@@ -65,6 +65,7 @@
         <item name="android:gravity">center</item>
         <item name="android:letterSpacing">0.02</item>
     </style>
+
     <style name="Text.Button.Highlight">
         <item name="android:textColor">@drawable/selector_button_text_highlight</item>
     </style>
@@ -98,5 +99,9 @@
         <item name="android:gravity">center_horizontal</item>
         <item name="android:orientation">vertical</item>
     </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

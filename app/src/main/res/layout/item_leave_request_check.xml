@@ -264,6 +264,7 @@
             android:layout_height="120dp"
             android:src="@mipmap/ic_agree"
             android:visibility="gone"
+            tools:visibility="visible"
             app:layout_constraintEnd_toEndOf="@+id/imgRefuse"
             app:layout_constraintStart_toStartOf="@+id/imgRefuse"
             app:layout_constraintTop_toTopOf="@+id/imgRefuse" />
