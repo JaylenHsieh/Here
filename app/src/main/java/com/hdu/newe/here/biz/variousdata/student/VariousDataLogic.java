@@ -51,7 +51,7 @@ public class VariousDataLogic extends BaseLogic implements VariousDataInterface 
                         onVariousDataCallback.onGetSuccess(list.get(0));
                     }
                 } else {
-                    onVariousDataCallback.onGetFailed(e.getMessage());
+                    onVariousDataCallback.onGetFailed("error471654"+e.getMessage());
                 }
             }
         });
@@ -68,7 +68,7 @@ public class VariousDataLogic extends BaseLogic implements VariousDataInterface 
                         onVariousDataCallback.onGetSuccess(list.get(0));
                     }
                 } else {
-                    onVariousDataCallback.onGetFailed(e.getMessage());
+                    onVariousDataCallback.onGetFailed("error913246" + e.getMessage());
                 }
             }
         });

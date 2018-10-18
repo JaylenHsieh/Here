@@ -178,7 +178,7 @@ public class VariousDataLogicT extends BaseLogic implements VariousDataInterface
                         onClassDataCallback.onGetSuccess(classList, classList.size(), checkTimes);
                     }
                 } else {
-                    onClassDataCallback.onGetFailed(e.getMessage());
+                    onClassDataCallback.onGetFailed("error25478" + e.getMessage());
                 }
             }
         });

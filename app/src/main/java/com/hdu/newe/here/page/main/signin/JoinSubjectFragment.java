@@ -33,6 +33,8 @@ import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.UpdateListener;
 
+import static com.hdu.newe.here.biz.profile.bean.ClassDataBean.changeToDescription;
+
 /**
  * A simple {@link Fragment} subclass.
  *
@@ -122,7 +124,7 @@ public class JoinSubjectFragment extends Fragment {
                         int building = Integer.valueOf(placeCode.substring(0, 2));
                         int classroom = Integer.valueOf(placeCode.substring(2));
                         tvPlace.setText("上课地点：" + building + "教" + classroom);
-                        tvTime.setText("上课时间：" + classDataBean.changeToDescription(classDataBean.getSubjectCode().substring(3)));
+                        tvTime.setText("上课时间：" + changeToDescription(classDataBean.getSubjectCode().substring(3)));
                         tvStudentNumber.setText("课程人数：" + classDataBean.getClassMember().size() + "人");
                         btnJoin.setOnClickListener(new View.OnClickListener() {
                             @Override

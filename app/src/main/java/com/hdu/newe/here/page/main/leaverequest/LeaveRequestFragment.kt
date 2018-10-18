@@ -3,23 +3,21 @@ package com.hdu.newe.here.page.main.leaverequest
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.support.v7.widget.Toolbar
 import android.widget.Toast
 import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.QueryListener
 import cn.bmob.v3.listener.UpdateListener
-
 import com.hdu.newe.here.R
-import com.hdu.newe.here.biz.variousdata.student.bean.LeaveRequestBean
 import com.hdu.newe.here.biz.user.entity.UserBean
+import com.hdu.newe.here.biz.variousdata.student.bean.LeaveRequestBean
 import com.hdu.newe.here.page.main.profile.PersonalInfoActivity
 import com.hdu.newe.here.utils.AdvancedTimePicker
 import kotlinx.android.synthetic.main.fragment_leave_request.*
-
 import java.util.*
 
 /**
@@ -55,7 +53,11 @@ class LeaveRequestFragment : Fragment(), View.OnClickListener {
                 mTvUserNumber.text = user.userNumber
                 mTvStuFaculty.text = user.userCollege
                 mTvStuSpeciality.text = user.userMajor
-                mTvStuInstructor.text = user.userInstructor
+                bmobUserQuery.getObject(user.instructorId, object : QueryListener<UserBean>() {
+                    override fun done(user: UserBean, e: BmobException?) {
+                        mTvStuInstructor.text = user.userName
+                    }
+                })
             }
         })
 

@@ -16,17 +16,21 @@ public class UserBean extends BmobObject {
 
     /**
      * 用户数据表关键字
-     * 姓名 学/工号 班级 班级号 专业 学院 辅导员 手机序列号 是否为教师 是否为辅导员 头像 所带班级列表 任课列表 请假的objId
+     * 姓名 性别 学/工号 班级 班级号 专业 学院 辅导员Id 手机序列号 是否为教师 是否为辅导员
+     * 头像 所带班级列表 任课列表 请假的objId 地址 更换手机的限制时间
      */
     private String userName;
+    private String userSex;
     private String userNumber;
     private String userClass;
     private String userClassNum;
     private String userMajor;
     private String userCollege;
-    private String userInstructor;
+    private String instructorId;
     private String imei;
     private String leaveRequestObjId;
+    private String userAddr;
+    private String userPhoneNum;
     private long imeiTimeLimit;
 
 
@@ -36,6 +40,38 @@ public class UserBean extends BmobObject {
     private URL userAvatar;
     private List<String> classList;
     private List<String> subjectList;
+
+    public String getUserPhoneNum() {
+        return userPhoneNum;
+    }
+
+    public void setUserPhoneNum(String userPhoneNum) {
+        this.userPhoneNum = userPhoneNum;
+    }
+
+    public String getUserSex() {
+        return userSex;
+    }
+
+    public void setUserSex(String userSex) {
+        this.userSex = userSex;
+    }
+
+    public String getUserAddr() {
+        return userAddr;
+    }
+
+    public void setUserAddr(String userAddr) {
+        this.userAddr = userAddr;
+    }
+
+    public String getInstructorId() {
+        return instructorId;
+    }
+
+    public void setInstructorId(String instructorId) {
+        this.instructorId = instructorId;
+    }
 
     public List<String> getClassList() {
         return classList;
@@ -99,14 +135,6 @@ public class UserBean extends BmobObject {
 
     public void setUserCollege(String userCollege) {
         this.userCollege = userCollege;
-    }
-
-    public String getUserInstructor() {
-        return userInstructor;
-    }
-
-    public void setUserInstructor(String userInstructor) {
-        this.userInstructor = userInstructor;
     }
 
     public URL getUserAvatar() {

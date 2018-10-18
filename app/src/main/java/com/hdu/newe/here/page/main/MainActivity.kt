@@ -11,8 +11,8 @@ import android.widget.Toast
 import com.hdu.newe.here.R
 import com.hdu.newe.here.biz.ModelFactory
 import com.hdu.newe.here.page.main.inbox.InboxFragment
-import com.hdu.newe.here.page.main.leaverequest.LeaveRequestActivity
-import com.hdu.newe.here.page.main.leaverequest.teacher.LeaveRequestActivityTeacher
+import com.hdu.newe.here.page.main.leaverequest.LeaveRequestActivity2
+import com.hdu.newe.here.page.main.leaverequest.teacher.LeaveRequestActivityT2
 import com.hdu.newe.here.page.main.login.LoginActivity
 import com.hdu.newe.here.page.main.profile.PersonalInfoActivity
 import com.hdu.newe.here.page.main.profile.ProfileFragment
@@ -64,10 +64,10 @@ class MainActivity : AppCompatActivity() {
                     if ("".equals(leaveRequestObjId)) {
                         Toast.makeText(this@MainActivity, "请前往个人信息页面编辑个人信息后才可以请假", Toast.LENGTH_LONG).show()
                     } else if (isTeacher) {
-                        val intent = Intent(this@MainActivity, LeaveRequestActivityTeacher::class.java)
+                        val intent = Intent(this@MainActivity, LeaveRequestActivityT2::class.java)
                         startActivity(intent)
                     } else {
-                        val intent = Intent(this@MainActivity, LeaveRequestActivity::class.java)
+                        val intent = Intent(this@MainActivity, LeaveRequestActivity2::class.java)
                         startActivity(intent)
                     }
 

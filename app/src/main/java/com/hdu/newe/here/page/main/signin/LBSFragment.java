@@ -63,6 +63,8 @@ import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.ValueEventListener;
 
 import static android.content.Context.SENSOR_SERVICE;
+import static com.hdu.newe.here.biz.profile.bean.ClassDataBean.changeToDescription;
+import static com.hdu.newe.here.biz.profile.bean.ClassDataBean.changeToMinTime;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -384,7 +386,7 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                     tvClassPlace2.setVisibility(View.VISIBLE);
                     tvClassPlace2.setText("上课地点：" + building + "教" + classroom);
                     tvClassTime2.setVisibility(View.VISIBLE);
-                    tvClassTime2.setText("上课时间：" + classDataBean.changeToDescription(classDataBean.getSubjectCode().substring(3)));
+                    tvClassTime2.setText("上课时间：" + changeToDescription(classDataBean.getSubjectCode().substring(3)));
                     tvStudentNumber2.setVisibility(View.VISIBLE);
                     tvStudentNumber2.setText("课程人数：" + classDataBean.getClassMember().size() + "人");
                     if (isTeacher) {
@@ -715,8 +717,8 @@ public class LBSFragment extends Fragment implements SensorEventListener {
                         int timeCodeNow = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
                         for (int j = 0; j < idList.size(); j++) {
                             String id = idList.get(j);
-                            int startTime = Integer.valueOf(classDataBean.changeToMinTime(id.substring(0, 3)).substring(0, 4));
-                            int finishTime = Integer.valueOf(classDataBean.changeToMinTime(id.substring(0, 3)).substring(4, 8));
+                            int startTime = Integer.valueOf(changeToMinTime(id.substring(0, 3)).substring(0, 4));
+                            int finishTime = Integer.valueOf(changeToMinTime(id.substring(0, 3)).substring(4, 8));
                             if (timeCodeNow >= startTime && timeCodeNow <= finishTime) {
                                 //说明当前有课，并加载该课程信息
                                 hideAndShowGroup(1, 2);

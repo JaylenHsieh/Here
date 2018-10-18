@@ -22,7 +22,7 @@ public class LeaveRequestBean extends BmobObject {
 
     /**
      * 以下为表示学生端和教师端请假状态的各个常量
-     * 表示含义依次为：已同意/已驳回/审核中/待联系/有效/失效
+     * 表示含义依次为：已批准/已驳回/审核中/待联系/有效/失效
      */
     public final static int STATE_AGREED = 666;
     public final static int STATE_DISAGREE = 555;

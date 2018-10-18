@@ -2,6 +2,7 @@ package com.hdu.newe.here.page.main.inbox
 
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -11,7 +12,6 @@ import android.widget.Toast
 import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.QueryListener
-
 import com.hdu.newe.here.R
 import com.hdu.newe.here.biz.variousdata.student.bean.LeaveRequestBean
 import com.hdu.newe.here.page.main.profile.PersonalInfoActivity
@@ -43,11 +43,20 @@ class InboxFragment : Fragment() {
                 getSharedPreferences("user", Context.MODE_PRIVATE)?.
                 getString(PersonalInfoActivity.LEAVE_REQUEST_OBJ_ID, "")
 
+        if(leaveRequestObjId.equals("")){
+            Toast.makeText(context,"请先完善个人信息",Toast.LENGTH_LONG).show()
+            var intent = Intent()
+            intent.setClass(context,PersonalInfoActivity().javaClass)
+            startActivity(intent)
+        }
 
         val bmobQuery = BmobQuery<LeaveRequestBean>()
         bmobQuery.getObject(leaveRequestObjId, object : QueryListener<LeaveRequestBean>() {
             override fun done(leaveRequest: LeaveRequestBean, e: BmobException?) {
                 if (e == null) {
+                    if (leaveRequest.leaveRequestReason.isEmpty() || leaveRequest.leaveRequestState.isEmpty()){
+                        return
+                    }
                     tvRequestReason.text = leaveRequest.leaveRequestReason.last()
                     tvRequestState.text = leaveRequest.leaveRequestState.last()
                 }

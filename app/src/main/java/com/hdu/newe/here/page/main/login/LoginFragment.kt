@@ -17,7 +17,6 @@ import com.hdu.newe.here.page.base.BaseFragment
 import com.hdu.newe.here.page.main.MainActivity
 import com.hdu.newe.here.utils.takeString
 import kotlinx.android.synthetic.main.fragment_login.*
-import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import kotlin.properties.Delegates
@@ -81,7 +80,7 @@ class LoginFragment : BaseFragment<LoginContract.Presenter>(),
     override fun render() {
 
         btnLogin.setOnClickListener {
-            Toast.makeText(context, "请稍等...", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "请稍等...", Toast.LENGTH_SHORT).show()
             mPresenter.clickLogin(edUserNumber.takeString(), tvIMEI.takeString(), checkStatus.isChecked, checkStatusIsInstructor.isChecked)
         }
     }
@@ -131,6 +130,7 @@ class LoginFragment : BaseFragment<LoginContract.Presenter>(),
     }
 
     override fun loginSucceed() {
+        Toast.makeText(context, "登录成功！", Toast.LENGTH_SHORT).show()
         startActivity(Intent(context, MainActivity::class.java))
         activity?.finish()
     }

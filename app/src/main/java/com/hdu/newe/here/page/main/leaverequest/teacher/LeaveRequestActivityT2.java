@@ -1,15 +1,18 @@
 package com.hdu.newe.here.page.main.leaverequest.teacher;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.hdu.newe.here.R;
 import com.hdu.newe.here.biz.variousdata.student.bean.LeaveRequestBean;
+import com.hdu.newe.here.page.main.profile.PersonalInfoActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,10 +46,13 @@ public class LeaveRequestActivityT2 extends Activity {
 
         //判断获取到的两个Id是否有效
         if (userObjId.equals("") || userLeaveObjId.equals("")) {
-            Toast.makeText(LeaveRequestActivityT2.this, "error789459", Toast.LENGTH_LONG).show();
+            Toast.makeText(LeaveRequestActivityT2.this, "请先完善您的个人信息", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(LeaveRequestActivityT2.this, PersonalInfoActivity.class);
+            startActivity(intent);
+            finish();
         } else {
             //有效则开始获取请假表数据
-            getLeaveRequestData(userObjId);
+            getLeaveRequestData(userLeaveObjId);
         }
     }
 
@@ -64,6 +70,7 @@ public class LeaveRequestActivityT2 extends Activity {
             public void done(LeaveRequestBean leaveRequestBean, BmobException e) {
                 if (e != null) {
                     Toast.makeText(LeaveRequestActivityT2.this, "error5465465", Toast.LENGTH_LONG).show();
+                    Log.i("报错5465465",e.getMessage());
                 } else {
                     //加载列表
                     loadList(leaveRequestBean);
@@ -81,7 +88,7 @@ public class LeaveRequestActivityT2 extends Activity {
         //配置列表适配器并加载显示
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(LeaveRequestActivityT2.this);
         leaveRequestList2.setLayoutManager(layoutManager);
-        LeaveRequestAdapterT adapterT = new LeaveRequestAdapterT(leaveRequestBean);
+        LeaveRequestAdapterT adapterT = new LeaveRequestAdapterT(leaveRequestBean,LeaveRequestActivityT2.this);
         leaveRequestList2.setAdapter(adapterT);
     }
 }

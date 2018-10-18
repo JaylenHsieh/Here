@@ -100,7 +100,12 @@ public class ExpandRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> 
 
         switch (expandDataBean.getParentTitle()) {
             case "请假历史":
-                count = expandDataBean.getLeaveRequestReason().size();
+                List<String> list1 = expandDataBean.getLeaveRequestReason();
+                if (list1 == null || list1.isEmpty()){
+                    count = 0;
+                }else {
+                    count = list1.size();
+                }
                 showType = ExpandDataBean.ITEM_CHILD_LEAVE_REQUEST;
                 break;
             case "警示历史":
@@ -108,16 +113,16 @@ public class ExpandRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> 
                 if (list == null || list.isEmpty()) {
                     count = 0;
                 } else {
-                    count = expandDataBean.getChildBean().getWarningContent().size();
+                    count = list.size();
                 }
                 showType = ExpandDataBean.ITEM_CHILD_WARNING;
                 break;
             case "手机更换历史":
-                List<String> list1 = expandDataBean.getChildBean().getNewIMEI();
-                if (list1 == null || list1.isEmpty()) {
+                List<String> list11 = expandDataBean.getChildBean().getNewIMEI();
+                if (list11 == null || list11.isEmpty()) {
                     count = 0;
                 } else {
-                    count = expandDataBean.getChildBean().getNewIMEI().size();
+                    count = list11.size();
                 }
                 showType = ExpandDataBean.ITEM_CHILD_CHANGE;
                 break;

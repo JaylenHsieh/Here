@@ -103,7 +103,7 @@ public class UserLogic extends BaseLogic implements UserInterface {
         editor.putString("userClassNum",user.getUserClassNum());
         editor.putString("userMajor",user.getUserMajor());
         editor.putString("userCollege",user.getUserCollege());
-        editor.putString("userInstructor",user.getUserInstructor());
+        editor.putString("instructorId",user.getInstructorId());
         editor.putString("IMEI", user.getImei());
         editor.putBoolean("isTeacher", user.isTeacher());
         editor.putBoolean(db.IS_INSTRUCTOR,user.isInstructor());
